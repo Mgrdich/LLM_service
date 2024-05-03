@@ -1,0 +1,76 @@
+name: Frontend CI
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+
+env:
+  node_version: "18.17.1"
+  pnpm_version: 8
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: ${{ env.pnpm_version }}
+          run_install: false
+          standalone: true
+          dest: ~/setup-pnpm
+
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.node_version }}
+          cache: "pnpm"
+          cache-dependency-path: "./frontend/pnpm-lock.yaml"
+
+      - name: install dependencies
+        run: |
+          cd ./frontend
+          pnpm install --frozen-lockfile
+
+      - name: Runs lint
+        run: |
+          cd ./frontend
+          pnpm lint
+
+
+  build:
+    needs: [ lint ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: ${{ env.pnpm_version }}
+          run_install: false
+          standalone: true
+          dest: ~/setup-pnpm
+
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.node_version }}
+          cache: "pnpm"
+          cache-dependency-path: "./frontend/pnpm-lock.yaml"
+
+      - name: install dependencies
+        run: |
+          cd ./frontend
+          pnpm install --frozen-lockfile
+
+      - name: build the application
+        run: |
+          cd ./frontend
+          pnpm build

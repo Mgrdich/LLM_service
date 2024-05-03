@@ -48,5 +48,9 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "prettier-eslint": "^16.3.0",
     "typescript": "~5.4.2"
+  },
+  "engines" : {
+    "node" : ">=18.17.1",
+    "pnpm": ">=8.15.0"
   }
 }
