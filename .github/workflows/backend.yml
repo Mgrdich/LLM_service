@@ -3,14 +3,14 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'backend/**' # Only trigger on changes in the frontend directory
+      - 'backend/**' # Only trigger on changes in the backend directory
       - 'mvnw'
       - 'mvnw.cmd'
       - 'pom.xml'
   pull_request:
     branches: [ main ]
     paths:
-      - 'backend/**' # Only trigger on changes in the frontend directory
+      - 'backend/**' # Only trigger on changes in the backend directory
       - 'mvnw'
       - 'mvnw.cmd'
       - 'pom.xml'
