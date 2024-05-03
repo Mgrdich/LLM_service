@@ -2,11 +2,6 @@ name: Backend CI
 on:
   push:
     branches: [ main ]
-    paths:
-      - 'backend/**' # Only trigger on changes in the backend directory
-      - 'mvnw'
-      - 'mvnw.cmd'
-      - 'pom.xml'
   pull_request:
     branches: [ main ]
     paths:
