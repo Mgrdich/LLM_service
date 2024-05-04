@@ -5,5 +5,4 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ConversationService {
-}
+public class ConversationService {}
