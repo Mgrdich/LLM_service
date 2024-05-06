@@ -32,4 +32,6 @@ build/
 ### VS Code ###
 .vscode/
 
-backend/src/main/resources/model/**
+model
+
+llama.log

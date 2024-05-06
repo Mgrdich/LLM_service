@@ -1,6 +1,6 @@
 package com.llm_service.llm_service.service;
 
-import com.llm_service.llm_service.controller.ConversationRequest;
+import com.llm_service.llm_service.controller.conversation.ConversationRequest;
 import com.llm_service.llm_service.exception.conversation.ConversationNotFound;
 import com.llm_service.llm_service.model.Conversation;
 import java.util.UUID;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ConversationService {
-    LLMService llmService;
+    private final LLMService llmService;
 
     public Conversation start() {
         return null;

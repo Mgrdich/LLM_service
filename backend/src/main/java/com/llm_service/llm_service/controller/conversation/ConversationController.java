@@ -1,4 +1,4 @@
-package com.llm_service.llm_service.controller;
+package com.llm_service.llm_service.controller.conversation;
 
 import com.llm_service.llm_service.exception.conversation.ConversationNotFound;
 import com.llm_service.llm_service.model.Conversation;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/conversation")
 public class ConversationController {
 
-    ConversationService conversationService;
+    private final ConversationService conversationService;
 
     @GetMapping("/{id}")
     public ResponseEntity<Conversation> getConversationById(@PathVariable UUID id) throws ConversationNotFound {
