@@ -12,4 +12,7 @@ public class ConversationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID id;
+
+    @Column(name = "text")
+    String text;
 }

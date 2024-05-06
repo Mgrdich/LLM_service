@@ -21,10 +21,13 @@ public class ConversationService {
     }
 
     public Conversation update(UUID id, ConversationRequest conversationRequest) throws ConversationNotFound {
-        return null;
+        return Conversation.builder()
+                .id(id)
+                .text(getPrediction(id, conversationRequest.getText()))
+                .build();
     }
 
-    public String getPrediction(UUID id, String text) {
-        return llmService.generate(text);
+    private String getPrediction(UUID id, String text) {
+        return llmService.generate(text).toString();
     }
 }

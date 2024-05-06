@@ -6,4 +6,5 @@ import lombok.Builder;
 @Builder(toBuilder = true)
 public class Conversation {
     UUID id;
+    String text;
 }
