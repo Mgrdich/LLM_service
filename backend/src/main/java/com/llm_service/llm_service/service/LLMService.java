@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LLMService {
-    final private ModelParameters modelParameters;
-    final private LlamaModel llamaModel;
+    private final ModelParameters modelParameters;
+    private final LlamaModel llamaModel;
 
     final String prefix = "def remove_non_ascii(s: str) -> str:\n    \"\"\" ";
     final String suffix = "\n    return result\n";
@@ -19,16 +19,14 @@ public class LLMService {
     }
 
     public StringBuffer generate(String text) {
-            InferenceParameters inferParams =
-                    new InferenceParameters(text)
-                            .setNPredict(128);
+        InferenceParameters inferParams = new InferenceParameters(text).setNPredict(128);
 
-            StringBuffer buffer = new StringBuffer();
+        StringBuffer buffer = new StringBuffer();
 
-            for (LlamaModel.Output output : llamaModel.generate(inferParams)) {
-                buffer.append(output.text);
-            }
+        for (LlamaModel.Output output : llamaModel.generate(inferParams)) {
+            buffer.append(output.text);
+        }
 
-            return buffer;
+        return buffer;
     }
 }
