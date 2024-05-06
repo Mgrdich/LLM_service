@@ -1,10 +1,8 @@
 package com.llm_service.llm_service.persistance.entities;
 
-
 import jakarta.persistence.*;
-import lombok.Data;
-
 import java.util.UUID;
+import lombok.Data;
 
 @Entity
 @Table(name = "conversation")
