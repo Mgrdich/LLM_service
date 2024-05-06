@@ -23,7 +23,7 @@ public class ConversationController {
         return ResponseEntity.status(HttpStatus.OK).body(conversation);
     }
 
-    @PostMapping("/")
+    @PostMapping()
     public ResponseEntity<Conversation> createConversation() {
         Conversation conversation = conversationService.start();
 
