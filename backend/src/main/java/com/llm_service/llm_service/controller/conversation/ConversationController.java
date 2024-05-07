@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class ConversationController {
 
     private final ConversationService conversationService;
+    private final ConversationControllerMapper conversationControllerMapper;
 
     @GetMapping("/{id}")
     public ResponseEntity<Conversation> getConversationById(@PathVariable UUID id)
@@ -32,12 +33,12 @@ public class ConversationController {
     }
 
     @PutMapping("/{id}/continue")
-    public ResponseEntity<Conversation> continueConversation(
+    public ResponseEntity<ConversationResponse> continueConversation(
             @PathVariable UUID id, @RequestBody ConversationRequest conversationRequest)
             throws ConversationNotFoundException {
         Conversation conversation = conversationService.update(id, conversationRequest);
 
-        return ResponseEntity.status(HttpStatus.OK).body(conversation);
+        return ResponseEntity.status(HttpStatus.OK).body(conversationControllerMapper.map(conversation));
     }
 
     @ExceptionHandler(ConversationNotFoundException.class)
