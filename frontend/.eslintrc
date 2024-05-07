@@ -14,7 +14,8 @@
   "ignorePatterns": [
     "dist",
     "tailwind.config.js",
-    "postcss.config.js"
+    "postcss.config.js",d
+    "vite.config.ts"
   ],
   "parser": "@typescript-eslint/parser",
   "plugins": [

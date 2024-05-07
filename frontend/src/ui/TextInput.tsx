@@ -2,8 +2,8 @@ import { ComponentProps } from "react";
 
 interface TextInputProps extends ComponentProps<"textarea"> {}
 
-function TextInput(props: TextInputProps) {
-  return <textarea {...props} />;
+function TextInput({ ...rest }: TextInputProps) {
+  return <textarea {...rest} />;
 }
 
 export default TextInput;
