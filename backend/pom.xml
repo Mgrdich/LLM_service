@@ -65,6 +65,11 @@
 			<artifactId>mapstruct</artifactId>
 			<version>1.5.5.Final</version>
 		</dependency>
+		<dependency>
+			<groupId>de.kherud</groupId>
+			<artifactId>llama</artifactId>
+			<version>3.0.1</version>
+		</dependency>
 	</dependencies>
 
 
