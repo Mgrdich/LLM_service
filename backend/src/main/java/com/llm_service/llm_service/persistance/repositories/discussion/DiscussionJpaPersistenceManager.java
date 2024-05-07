@@ -1,16 +1,15 @@
 package com.llm_service.llm_service.persistance.repositories.discussion;
 
 import com.llm_service.llm_service.model.Discussion;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class DiscussionJpaPersistenceManager implements DiscussionPersistenceManager{
+public class DiscussionJpaPersistenceManager implements DiscussionPersistenceManager {
     private final DiscussionRepository discussionRepository;
     private final DiscussionEntityMapper discussionEntityMapper;
 
@@ -33,6 +32,6 @@ public class DiscussionJpaPersistenceManager implements DiscussionPersistenceMan
 
     @Override
     public void delete(UUID id) {
-    discussionRepository.deleteById(id);
+        discussionRepository.deleteById(id);
     }
 }

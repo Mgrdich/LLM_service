@@ -7,5 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface DiscussionEntityMapper {
     Discussion map(DiscussionEntity discussionEntity);
+
     DiscussionEntity map(Discussion discussion);
 }
