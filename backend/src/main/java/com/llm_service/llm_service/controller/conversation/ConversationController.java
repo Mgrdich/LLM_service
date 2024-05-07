@@ -1,6 +1,6 @@
 package com.llm_service.llm_service.controller.conversation;
 
-import com.llm_service.llm_service.exception.conversation.ConversationNotFound;
+import com.llm_service.llm_service.exception.conversation.ConversationNotFoundException;
 import com.llm_service.llm_service.model.Conversation;
 import com.llm_service.llm_service.service.ConversationService;
 import java.util.UUID;
@@ -17,7 +17,8 @@ public class ConversationController {
     private final ConversationService conversationService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Conversation> getConversationById(@PathVariable UUID id) throws ConversationNotFound {
+    public ResponseEntity<Conversation> getConversationById(@PathVariable UUID id)
+            throws ConversationNotFoundException {
         Conversation conversation = conversationService.getByID(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(conversation);
@@ -32,9 +33,16 @@ public class ConversationController {
 
     @PutMapping("/{id}/continue")
     public ResponseEntity<Conversation> continueConversation(
-            @PathVariable UUID id, @RequestBody ConversationRequest conversationRequest) throws ConversationNotFound {
+            @PathVariable UUID id, @RequestBody ConversationRequest conversationRequest)
+            throws ConversationNotFoundException {
         Conversation conversation = conversationService.update(id, conversationRequest);
 
         return ResponseEntity.status(HttpStatus.OK).body(conversation);
+    }
+
+    @ExceptionHandler(ConversationNotFoundException.class)
+    public ResponseEntity<String> handleConversationNotFoundException(
+            ConversationNotFoundException conversationNotFoundException) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(conversationNotFoundException.getMessage());
     }
 }

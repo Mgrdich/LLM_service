@@ -1,7 +1,7 @@
 package com.llm_service.llm_service.service;
 
 import com.llm_service.llm_service.controller.conversation.ConversationRequest;
-import com.llm_service.llm_service.exception.conversation.ConversationNotFound;
+import com.llm_service.llm_service.exception.conversation.ConversationNotFoundException;
 import com.llm_service.llm_service.model.Conversation;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -16,11 +16,11 @@ public class ConversationService {
         return null;
     }
 
-    public Conversation getByID(UUID id) throws ConversationNotFound {
+    public Conversation getByID(UUID id) throws ConversationNotFoundException {
         return null;
     }
 
-    public Conversation update(UUID id, ConversationRequest conversationRequest) throws ConversationNotFound {
+    public Conversation update(UUID id, ConversationRequest conversationRequest) throws ConversationNotFoundException {
         return Conversation.builder()
                 .id(id)
                 .text(getPrediction(id, conversationRequest.getText()))
