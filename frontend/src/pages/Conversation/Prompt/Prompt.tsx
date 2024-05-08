@@ -1,5 +1,5 @@
-import TextInput from "../../../ui/TextInput.tsx";
-import Button from "../../../ui/Button.tsx";
+import TextInput from "@/ui/TextInput.tsx";
+import Button from "@/ui/Button.tsx";
 
 function Prompt() {
   return (
