@@ -10,6 +10,8 @@ export default defineConfig({
       'ui': path.resolve(__dirname, './src/ui'),
       'hooks': path.resolve(__dirname, './src/hooks'),
       'pages': path.resolve(__dirname, './src/pages'),
+      'utils': path.resolve(__dirname, './src/utils'),
+      'models': path.resolve(__dirname, './src/models'),
     }
   }
 })

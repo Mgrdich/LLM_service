@@ -1,9 +1,19 @@
 import { ComponentProps } from "react";
+import { twMerge } from "tailwind-merge";
 
-interface ButtonProps extends ComponentProps<"button"> {}
+export interface ButtonProps extends ComponentProps<"button"> {}
 
-function Button(props: ButtonProps) {
-  return <button type="button" {...props} />;
+function Button({ className, ...rest }: ButtonProps) {
+  return (
+    <button
+      className={twMerge(
+        "bg-blue-500 p-2 hover:bg-blue-300 disabled:bg-blue-200 disabled:cursor-not-allowed",
+        className,
+      )}
+      type="button"
+      {...rest}
+    />
+  );
 }
 
 export default Button;

@@ -1,0 +1,24 @@
+import { useMutation } from "@tanstack/react-query";
+import useApi from "hooks/useApi.ts";
+import { Conversation } from "models/Conversation.ts";
+import { ConversationsPath } from "./constants.ts";
+
+type OnSuccessCallback = (conversation: Conversation) => void;
+
+export default function useStartConversation(onSuccessCallback: OnSuccessCallback) {
+  const callApi = useApi();
+
+  return useMutation<Conversation>({
+    mutationFn: async () => {
+      const conversation = await callApi<Conversation>({
+        url: ConversationsPath,
+        method: "POST",
+      });
+      // TODO add zod validation
+      return conversation;
+    },
+    onSuccess: (conversation) => {
+      onSuccessCallback(conversation);
+    },
+  });
+}
