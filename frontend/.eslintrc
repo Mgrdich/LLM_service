@@ -32,13 +32,21 @@
       "@typescript-eslint/parser": [".ts", ".tsx"]
     },
     "import/resolver": {
-      "typescript": {
-        "alwaysTryTypes": true
-      }
+      "typescript": {}
     }
   },
   "rules": {
-    "import/no-relative-packages": "error",
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          {
+            "group": ["../"],
+            "message": "Relative imports are not allowed."
+          }
+        ]
+      }
+    ],
     "prettier/prettier": [
       "error"
     ],
