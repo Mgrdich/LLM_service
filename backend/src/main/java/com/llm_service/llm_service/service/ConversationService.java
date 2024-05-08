@@ -19,14 +19,18 @@ public class ConversationService {
     private final ConversationPersistenceManager conversationPersistenceManager;
 
     public Conversation start() {
-        return null;
+        Conversation conversation = Conversation.builder()
+                .text(null)
+                .discussions(null)
+                .build();
+        return conversationPersistenceManager.save(conversation);
     }
 
     public List<Conversation> getAll() {
         return conversationPersistenceManager.findAll();
     }
 
-    public Optional<Conversation> getByID(UUID id) throws ConversationNotFoundException {
+    public Optional<Conversation> getByID(UUID id) {
         return conversationPersistenceManager.findById(id);
     }
 
