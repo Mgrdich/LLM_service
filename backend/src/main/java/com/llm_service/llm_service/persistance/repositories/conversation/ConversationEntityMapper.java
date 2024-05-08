@@ -13,5 +13,9 @@ public interface ConversationEntityMapper {
 
     ConversationEntity map(Conversation conversation);
 
-    List<DiscussionEntity> map(List<UUID> discussionUUIDs);
+    List<UUID> map(List<DiscussionEntity> discussionEntities);
+
+    List<DiscussionEntity> mapToEntities(List<UUID> discussionIds);
+
+    UUID map(DiscussionEntity discussionEntity);
 }
