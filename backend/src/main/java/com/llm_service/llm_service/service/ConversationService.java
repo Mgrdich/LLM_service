@@ -17,8 +17,7 @@ public class ConversationService {
     private final ConversationPersistenceManager conversationPersistenceManager;
 
     public Conversation start() {
-        Conversation conversation =
-                Conversation.builder().text(null).discussions(null).build();
+        Conversation conversation = Conversation.builder().discussions(null).build();
         return conversationPersistenceManager.save(conversation);
     }
 
@@ -31,10 +30,7 @@ public class ConversationService {
     }
 
     public Conversation update(UUID id, ConversationRequest conversationRequest) throws ConversationNotFoundException {
-        return Conversation.builder()
-                .id(id)
-                .text(getPrediction(id, conversationRequest.getText()))
-                .build();
+        return Conversation.builder().id(id).build();
     }
 
     private String getPrediction(UUID id, String text) {

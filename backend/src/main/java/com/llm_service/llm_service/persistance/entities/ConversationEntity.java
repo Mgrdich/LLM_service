@@ -10,9 +10,6 @@ import lombok.EqualsAndHashCode;
 @Table(name = "conversation")
 @Data
 public class ConversationEntity extends BaseEntity {
-    @Column(name = "title")
-    private String title;
-
     @OneToMany
     private List<DiscussionEntity> discussions;
 }

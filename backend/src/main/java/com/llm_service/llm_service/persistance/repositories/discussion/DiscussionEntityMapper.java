@@ -12,9 +12,11 @@ public interface DiscussionEntityMapper {
 
     DiscussionEntity map(Discussion discussion);
 
+    // TODO Thee mappings should be removed,
+    //  should be done with @Mapper annotation
     List<UUID> map(List<DiscussionEntity> discussionEntities);
 
-    UUID maptoId(DiscussionEntity discussionEntity);
+    UUID mapToId(DiscussionEntity discussionEntity);
 
     List<DiscussionEntity> mapToEntities(List<UUID> discussionIds);
 
