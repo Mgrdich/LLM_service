@@ -3,7 +3,11 @@ package com.llm_service.llm_service.service;
 import com.llm_service.llm_service.controller.conversation.ConversationRequest;
 import com.llm_service.llm_service.exception.conversation.ConversationNotFoundException;
 import com.llm_service.llm_service.model.Conversation;
+
+import java.util.List;
 import java.util.UUID;
+
+import com.llm_service.llm_service.persistance.repositories.conversation.ConversationPersistenceManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +15,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ConversationService {
     private final LLMService llmService;
+    private final ConversationPersistenceManager conversationPersistenceManager;
 
     public Conversation start() {
         return null;
+    }
+
+    public List<Conversation> getAll() {
+        return conversationPersistenceManager.findAll();
     }
 
     public Conversation getByID(UUID id) throws ConversationNotFoundException {

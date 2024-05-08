@@ -3,6 +3,8 @@ package com.llm_service.llm_service.controller.conversation;
 import com.llm_service.llm_service.exception.conversation.ConversationNotFoundException;
 import com.llm_service.llm_service.model.Conversation;
 import com.llm_service.llm_service.service.ConversationService;
+
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,14 @@ public class ConversationController {
 
     private final ConversationService conversationService;
     private final ConversationControllerMapper conversationControllerMapper;
+
+
+    @GetMapping()
+    public ResponseEntity<List<ConversationResponse>> getAllConversations() {
+        return ResponseEntity.ok(conversationService.getAll().stream()
+                .map(conversationControllerMapper::map)
+                .toList());
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Conversation> getConversationById(@PathVariable UUID id)
