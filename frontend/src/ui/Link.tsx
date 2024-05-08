@@ -13,7 +13,8 @@ export default function Link({ className = "", href, children }: LinkProps) {
     <a
       href={href}
       className={twMerge(
-        "text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out ml-2 hover:underline",
+        "text-blue-600 hover:text-blue-700 focus:text-blue-700 " +
+          "transition duration-200 ease-in-out ml-2 hover:underline",
         className,
       )}
     >
