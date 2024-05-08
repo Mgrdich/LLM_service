@@ -41,7 +41,7 @@ function Login() {
             </div>
             <div className="ml-4">
               <a
-                href="#!"
+                href="/"
                 className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out"
               >
                 Forgot password?
@@ -57,7 +57,7 @@ function Login() {
           <p className="text-gray-800 mt-6 text-center">
             Not a member?
             <a
-              href="#!"
+              href="/register"
               className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out ml-2"
             >
               Register
