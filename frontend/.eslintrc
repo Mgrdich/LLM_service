@@ -10,7 +10,10 @@
     "plugin:react-hooks/recommended",
     "prettier",
     "airbnb",
-    "plugin:@tanstack/eslint-plugin-query/recommended"
+    "plugin:@tanstack/eslint-plugin-query/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript"
   ],
   "ignorePatterns": [
     "dist",
@@ -21,9 +24,29 @@
   "parser": "@typescript-eslint/parser",
   "plugins": [
     "react-refresh",
-    "prettier"
+    "prettier",
+    "import"
   ],
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
   "rules": {
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          {
+            "group": ["../"],
+            "message": "Relative imports are not allowed."
+          }
+        ]
+      }
+    ],
     "prettier/prettier": [
       "error"
     ],
