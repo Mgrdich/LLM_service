@@ -1,8 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Welcome from "./pages/Welcome/Welcome.tsx";
-import Conversation from "./pages/Conversation/Conversation.tsx";
-import Login from "./pages/Auth/Login.tsx";
-import Register from "./pages/Auth/Register.tsx";
+import Welcome from "pages/Welcome/Welcome.tsx";
+import Conversation from "pages/Conversation/Conversation.tsx";
+import Login from "pages/Auth/Login.tsx";
+import Register from "pages/Auth/Register.tsx";
+import ForgotPassword from "pages/Auth/ForgotPassword.tsx";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     Component: Register,
+  },
+  {
+    path: "/forgot-password",
+    Component: ForgotPassword,
   },
 ]);
 

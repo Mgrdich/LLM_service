@@ -1,3 +1,5 @@
+import Grid from "ui/Grid/Grid.tsx";
+import GridItem from "ui/Grid/GridItem.tsx";
 import Navbar from "./Navbar/Navbar.tsx";
 import Discussions from "./Discussions/Discussions.tsx";
 import Prompt from "./Prompt/Prompt.tsx";
@@ -5,17 +7,17 @@ import Prompt from "./Prompt/Prompt.tsx";
 // TODO this might need an id in the future
 function Conversation() {
   return (
-    <div className="grid grid-rows-2 grid-flow-row grid-cols-2 h-full">
-      <div className="row-span-2 w-40 bg-amber-400">
+    <Grid className="h-full" gridTemplateColumns="0.15fr 0.85fr" gridTemplateRows="85% 15%">
+      <GridItem gridColumn="1/3" gridRow="1/3" className="bg-amber-900">
         <Navbar />
-      </div>
-      <div className="bg-amber-900">
+      </GridItem>
+      <GridItem gridColumn="2" gridRow="1/2" className="bg-amber-400 overflow-auto">
         <Discussions />
-      </div>
-      <div className="h-8">
+      </GridItem>
+      <GridItem gridColumn="2" gridRow="2" className="bg-warmGray-400">
         <Prompt />
-      </div>
-    </div>
+      </GridItem>
+    </Grid>
   );
 }
 
