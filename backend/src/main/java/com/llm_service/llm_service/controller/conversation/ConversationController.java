@@ -3,7 +3,6 @@ package com.llm_service.llm_service.controller.conversation;
 import com.llm_service.llm_service.exception.conversation.ConversationNotFoundException;
 import com.llm_service.llm_service.model.Conversation;
 import com.llm_service.llm_service.service.ConversationService;
-
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,6 @@ public class ConversationController {
     private final ConversationService conversationService;
     private final ConversationControllerMapper conversationControllerMapper;
 
-
     @GetMapping()
     public ResponseEntity<List<ConversationResponse>> getAllConversations() {
         return ResponseEntity.ok(conversationService.getAll().stream()
@@ -30,8 +28,8 @@ public class ConversationController {
     @GetMapping("/{id}")
     public ResponseEntity<ConversationResponse> getConversationById(@PathVariable UUID id)
             throws ConversationNotFoundException {
-        Conversation conversation = conversationService.getByID(id)
-                .orElseThrow(() -> new ConversationNotFoundException(id));
+        Conversation conversation =
+                conversationService.getByID(id).orElseThrow(() -> new ConversationNotFoundException(id));
 
         return ResponseEntity.status(HttpStatus.OK).body(conversationControllerMapper.map(conversation));
     }
