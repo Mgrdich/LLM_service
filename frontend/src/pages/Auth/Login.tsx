@@ -8,7 +8,9 @@ function Login() {
         <form>
           <div className="form-group mb-6">
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-            <label className="form-label inline-block mb-2 text-gray-700">Email</label>
+            <label htmlFor="exampleInputEmail2" className="form-label inline-block mb-2 text-gray-700">
+              Email
+            </label>
             <input
               type="email"
               className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
@@ -19,7 +21,9 @@ function Login() {
           </div>
           <div className="form-group mb-6">
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-            <label className="form-label inline-block mb-2 text-gray-700">Password</label>
+            <label htmlFor="exampleInputPassword2" className="form-label inline-block mb-2 text-gray-700">
+              Password
+            </label>
             <input
               type="password"
               className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
