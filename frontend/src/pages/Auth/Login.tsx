@@ -1,3 +1,8 @@
+import InputWithLabel from "ui/InputWithLabel.tsx";
+import Link from "ui/Link.tsx";
+import Checkbox from "ui/Checkbox.tsx";
+import FormSubmitButton from "./components/FormSubmitButton.tsx";
+
 function Login() {
   return (
     <div className="bg-neutral-50 min-h-screen flex flex-col items-center justify-center dark:bg-neutral-900">
@@ -7,61 +12,25 @@ function Login() {
       <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm ">
         <form>
           <div className="form-group mb-6">
-            <label htmlFor="email" className="form-label inline-block mb-2 text-gray-700 w-full">
-              Email
-              <input
-                type="email"
-                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                id="email"
-                aria-describedby="emailHelp"
-                placeholder="Enter email"
-              />
-            </label>
+            <InputWithLabel label="Email" name="email" placeholder="Enter Email" />
           </div>
           <div className="form-group mb-6">
-            <label htmlFor="password" className="form-label inline-block mb-2 text-gray-700 w-full">
-              Password
-              <input
-                type="password"
-                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                id="password"
-                placeholder="Password"
-              />
-            </label>
+            <InputWithLabel label="Password" name="password" placeholder="Enter Password" />
           </div>
           <div className="flex justify-between items-center mb-6">
             <div className="form-group form-check">
-              <input
-                type="checkbox"
-                className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                id="exampleCheck2"
-              />
+              <Checkbox name="remeber_me" />
               <span className="form-check-label inline-block text-gray-800">Remember me</span>
             </div>
             <div className="ml-4">
-              <a
-                href="/"
-                className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out"
-              >
-                Forgot password?
-              </a>
+              <Link href="/">Forgot password ?</Link>
             </div>
           </div>
-          <button
-            type="submit"
-            className="w-full px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-          >
-            Sign in
-          </button>
-          <p className="text-gray-800 mt-6 text-center">
+          <FormSubmitButton>Sign In</FormSubmitButton>
+          <div className="text-gray-800 mt-6 text-center">
             Not a member?
-            <a
-              href="/register"
-              className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out ml-2"
-            >
-              Register
-            </a>
-          </p>
+            <Link href="/register">Register</Link>
+          </div>
         </form>
       </div>
     </div>
