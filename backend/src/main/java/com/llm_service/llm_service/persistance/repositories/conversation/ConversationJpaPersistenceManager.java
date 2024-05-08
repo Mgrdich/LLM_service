@@ -1,6 +1,6 @@
 package com.llm_service.llm_service.persistance.repositories.conversation;
 
-import com.llm_service.llm_service.model.Conversation;
+import com.llm_service.llm_service.dto.Conversation;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
