@@ -5,6 +5,7 @@ import com.llm_service.llm_service.exception.conversation.ConversationNotFoundEx
 import com.llm_service.llm_service.model.Conversation;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import com.llm_service.llm_service.persistance.repositories.conversation.ConversationPersistenceManager;
@@ -25,8 +26,8 @@ public class ConversationService {
         return conversationPersistenceManager.findAll();
     }
 
-    public Conversation getByID(UUID id) throws ConversationNotFoundException {
-        return null;
+    public Optional<Conversation> getByID(UUID id) throws ConversationNotFoundException {
+        return conversationPersistenceManager.findById(id);
     }
 
     public Conversation update(UUID id, ConversationRequest conversationRequest) throws ConversationNotFoundException {

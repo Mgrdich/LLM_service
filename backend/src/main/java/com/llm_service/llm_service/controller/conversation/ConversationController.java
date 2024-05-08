@@ -28,11 +28,12 @@ public class ConversationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Conversation> getConversationById(@PathVariable UUID id)
+    public ResponseEntity<ConversationResponse> getConversationById(@PathVariable UUID id)
             throws ConversationNotFoundException {
-        Conversation conversation = conversationService.getByID(id);
+        Conversation conversation = conversationService.getByID(id)
+                .orElseThrow(() -> new ConversationNotFoundException(id));
 
-        return ResponseEntity.status(HttpStatus.OK).body(conversation);
+        return ResponseEntity.status(HttpStatus.OK).body(conversationControllerMapper.map(conversation));
     }
 
     @PostMapping()
