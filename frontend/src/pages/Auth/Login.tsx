@@ -7,7 +7,6 @@ function Login() {
       <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm ">
         <form>
           <div className="form-group mb-6">
-            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label htmlFor="exampleInputEmail2" className="form-label inline-block mb-2 text-gray-700">
               Email
             </label>
@@ -20,7 +19,6 @@ function Login() {
             />
           </div>
           <div className="form-group mb-6">
-            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label htmlFor="exampleInputPassword2" className="form-label inline-block mb-2 text-gray-700">
               Password
             </label>
