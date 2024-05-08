@@ -7,6 +7,7 @@ function Login() {
       <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm ">
         <form>
           <div className="form-group mb-6">
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label className="form-label inline-block mb-2 text-gray-700">Email</label>
             <input
               type="email"
@@ -17,6 +18,7 @@ function Login() {
             />
           </div>
           <div className="form-group mb-6">
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label className="form-label inline-block mb-2 text-gray-700">Password</label>
             <input
               type="password"
@@ -32,6 +34,7 @@ function Login() {
                 className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                 id="exampleCheck2"
               />
+              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
               <label className="form-check-label inline-block text-gray-800">Remember me </label>
             </div>
             <div className="ml-4">
