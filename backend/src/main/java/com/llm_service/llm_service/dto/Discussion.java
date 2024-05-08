@@ -1,4 +1,4 @@
-package com.llm_service.llm_service.model;
+package com.llm_service.llm_service.dto;
 
 import com.llm_service.llm_service.persistance.entities.DiscussionRole;
 import java.util.UUID;
@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 @EqualsAndHashCode(callSuper = true)
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 @Data
 public class Discussion extends Base {
     UUID id;

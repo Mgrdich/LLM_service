@@ -1,4 +1,4 @@
-package com.llm_service.llm_service.model;
+package com.llm_service.llm_service.dto;
 
 import java.util.List;
 import java.util.UUID;
@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 @EqualsAndHashCode(callSuper = true)
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 @Data
 public class Conversation extends Base {
     List<UUID> discussions;

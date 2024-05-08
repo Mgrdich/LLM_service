@@ -1,6 +1,6 @@
 package com.llm_service.llm_service.persistance.repositories.discussion;
 
-import com.llm_service.llm_service.model.Discussion;
+import com.llm_service.llm_service.dto.Discussion;
 import com.llm_service.llm_service.persistance.entities.DiscussionEntity;
 import java.util.List;
 import java.util.UUID;
