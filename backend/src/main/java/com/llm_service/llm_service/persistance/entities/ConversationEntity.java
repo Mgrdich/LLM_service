@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = "conversation")
 @Data
 public class ConversationEntity extends BaseEntity {
-    @OneToMany(mappedBy = "conversation")
+    @OneToMany(mappedBy = "conversation", orphanRemoval = true)
     private List<DiscussionEntity> discussions;
 
     @Column(name = "title")
