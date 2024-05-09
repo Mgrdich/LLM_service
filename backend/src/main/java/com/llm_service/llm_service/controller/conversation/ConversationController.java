@@ -26,7 +26,7 @@ public class ConversationController {
             value = {
                 @ApiResponse(
                         responseCode = "200",
-                        description = "Found conversations",
+                        description = "List of the conversations with the Chatto",
                         content = {@Content(mediaType = "application/json")})
             })
     @Operation(summary = "Get all conversations")
@@ -73,7 +73,7 @@ public class ConversationController {
             value = {
                 @ApiResponse(
                         responseCode = "200",
-                        description = "Conversation updated",
+                        description = "Conversation Continuation",
                         content = {@Content(mediaType = "application/json")})
             })
     @Operation(summary = "Continue conversation using conversation ID")
