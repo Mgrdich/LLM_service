@@ -22,7 +22,7 @@ function Register() {
           <FormSubmitButton>Register</FormSubmitButton>
           <div className="text-gray-800 mt-6 text-center">
             Already have an account
-            <Link href="/login">Register</Link>
+            <Link href="/login">Log In</Link>
           </div>
         </form>
       </div>

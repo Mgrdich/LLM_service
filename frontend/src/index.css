@@ -4,6 +4,7 @@
 
 
 html, body, #root {
+    @apply font-mono;
     height: 100%;
     width: 100%;
 }
