@@ -3,20 +3,22 @@ package com.llm_service.llm_service.service;
 import de.kherud.llama.InferenceParameters;
 import de.kherud.llama.LlamaModel;
 import de.kherud.llama.ModelParameters;
-import java.io.File;
+import java.io.IOException;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LLMService {
-    private final ModelParameters modelParameters;
     private final LlamaModel llamaModel;
 
     final String prefix = "def remove_non_ascii(s: str) -> str:\n    \"\"\" ";
     final String suffix = "\n    return result\n";
 
-    public LLMService() {
-        modelParameters =
-                new ModelParameters().setModelFilePath("model" + File.separator + "model/llama-2-13b-chat.Q5_K_S.gguf");
+    public LLMService(ResourceLoader resourceLoader) throws IOException {
+        Resource resource = resourceLoader.getResource("classpath:llama-2-13b-chat.Q5_K_S.gguf");
+        ModelParameters modelParameters = new ModelParameters();
+        modelParameters.setModelFilePath(resource.getFile().getAbsolutePath());
         llamaModel = new LlamaModel(modelParameters);
     }
 

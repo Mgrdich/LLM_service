@@ -1,8 +1,8 @@
 package com.llm_service.llm_service.service;
 
 import com.llm_service.llm_service.controller.conversation.ConversationRequest;
-import com.llm_service.llm_service.dto.Conversation;
-import com.llm_service.llm_service.dto.Discussion;
+import com.llm_service.llm_service.model.Conversation;
+import com.llm_service.llm_service.model.Discussion;
 import com.llm_service.llm_service.exception.conversation.ConversationNotFoundException;
 import com.llm_service.llm_service.persistance.entities.DiscussionRole;
 import com.llm_service.llm_service.persistance.repositories.conversation.ConversationPersistenceManager;

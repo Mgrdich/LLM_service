@@ -1,4 +1,4 @@
-package com.llm_service.llm_service.dto;
+package com.llm_service.llm_service.model;
 
 import java.time.Instant;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package com.llm_service.llm_service.dto;
+package com.llm_service.llm_service.model;
 
 import java.util.List;
 import lombok.Data;

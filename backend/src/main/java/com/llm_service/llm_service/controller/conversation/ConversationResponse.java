@@ -1,6 +1,6 @@
 package com.llm_service.llm_service.controller.conversation;
 
-import com.llm_service.llm_service.dto.Discussion;
+import com.llm_service.llm_service.model.Discussion;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;

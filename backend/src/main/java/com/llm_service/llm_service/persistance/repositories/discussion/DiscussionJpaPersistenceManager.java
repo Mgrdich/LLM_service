@@ -1,7 +1,7 @@
 package com.llm_service.llm_service.persistance.repositories.discussion;
 
-import com.llm_service.llm_service.dto.Conversation;
-import com.llm_service.llm_service.dto.Discussion;
+import com.llm_service.llm_service.model.Conversation;
+import com.llm_service.llm_service.model.Discussion;
 import com.llm_service.llm_service.persistance.entities.DiscussionEntity;
 import com.llm_service.llm_service.persistance.repositories.conversation.ConversationEntityMapper;
 import java.util.List;

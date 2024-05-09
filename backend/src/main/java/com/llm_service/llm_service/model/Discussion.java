@@ -1,4 +1,4 @@
-package com.llm_service.llm_service.dto;
+package com.llm_service.llm_service.model;
 
 import com.llm_service.llm_service.persistance.entities.DiscussionRole;
 import java.util.UUID;
