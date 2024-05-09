@@ -80,7 +80,11 @@ public class ConversationService {
         conversationPersistenceManager.delete(id);
     }
 
-    private String getPrediction(String text) {
+    public Conversation edit(UUID id) {
+        return Conversation.builder().build();
+    }
+
+    private String getPrediction(UUID id, String text) {
         return llmService.generate(text).toString();
     }
 }

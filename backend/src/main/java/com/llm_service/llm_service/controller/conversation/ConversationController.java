@@ -85,9 +85,19 @@ public class ConversationController {
             @PathVariable UUID id, @RequestBody ConversationRequest conversationRequest)
             throws ConversationNotFoundException {
         List<Discussion> discussions = conversationService.askLLMQuestion(id, conversationRequest);
-
+        // TODO check if the id exists, else throw exception,
+        //  conversation can built with builder and passed
+        //  as a parameter for the update method
         return ResponseEntity.status(HttpStatus.OK)
                 .body(discussions.stream().map(conversationApiMapper::map).toList());
+    }
+
+    @PutMapping("/{id}/edit")
+    public ResponseEntity<ConversationResponse> editConversation(@PathVariable UUID id)
+            throws ConversationNotFoundException {
+        Conversation conversation = conversationService.edit(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(conversationControllerMapper.map(conversation));
     }
 
     @DeleteMapping("/{id}")
