@@ -5,6 +5,10 @@ import com.llm_service.llm_service.exception.conversation.ConversationNotFoundEx
 import com.llm_service.llm_service.service.ConversationService;
 import java.util.List;
 import java.util.UUID;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +22,14 @@ public class ConversationController {
     private final ConversationService conversationService;
     private final ConversationControllerMapper conversationControllerMapper;
 
+    @ApiResponses(
+            value = {
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "Found conversations",
+                        content = {@Content(mediaType = "application/json")})
+            })
+    @Operation(summary = "Get all conversations")
     @GetMapping()
     public ResponseEntity<List<ConversationResponse>> getAllConversations() {
         return ResponseEntity.ok(conversationService.getAll().stream()
@@ -25,6 +37,14 @@ public class ConversationController {
                 .toList());
     }
 
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Found the conversation",
+                            content = {@Content(mediaType = "application/json")})
+            })
+    @Operation(summary = "Get conversation by ID")
     @GetMapping("/{id}")
     public ResponseEntity<ConversationResponse> getConversationById(@PathVariable UUID id)
             throws ConversationNotFoundException {
@@ -34,6 +54,14 @@ public class ConversationController {
         return ResponseEntity.status(HttpStatus.OK).body(conversationControllerMapper.map(conversation));
     }
 
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Created new conversation",
+                            content = {@Content(mediaType = "application/json")})
+            })
+    @Operation(summary = "Create new conversation")
     @PostMapping()
     public ResponseEntity<Conversation> createConversation() {
         Conversation conversation = conversationService.start();
@@ -41,6 +69,14 @@ public class ConversationController {
         return ResponseEntity.status(HttpStatus.OK).body(conversation);
     }
 
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Conversation updated",
+                            content = {@Content(mediaType = "application/json")})
+            })
+    @Operation(summary = "Continue conversation using conversation ID")
     @PutMapping("/{id}/continue")
     public ResponseEntity<ConversationResponse> continueConversation(
             @PathVariable UUID id, @RequestBody ConversationRequest conversationRequest)
