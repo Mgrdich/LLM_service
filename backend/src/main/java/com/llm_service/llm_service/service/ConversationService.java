@@ -3,7 +3,6 @@ package com.llm_service.llm_service.service;
 import com.llm_service.llm_service.controller.conversation.ConversationRequest;
 import com.llm_service.llm_service.dto.Conversation;
 import com.llm_service.llm_service.dto.Discussion;
-import com.llm_service.llm_service.exception.conversation.ConversationNotFoundException;
 import com.llm_service.llm_service.persistance.entities.DiscussionRole;
 import com.llm_service.llm_service.persistance.repositories.conversation.ConversationPersistenceManager;
 import com.llm_service.llm_service.persistance.repositories.discussion.DiscussionPersistenceManager;
@@ -35,26 +34,21 @@ public class ConversationService {
     }
 
     // TODO optimize this fetching mechanism
-    public List<Discussion> askLLMQuestion(UUID id, ConversationRequest conversationRequest)
-            throws ConversationNotFoundException {
-        Optional<Conversation> conversation = conversationPersistenceManager.findById(id);
-
-        if (conversation.isEmpty()) {
-            throw new ConversationNotFoundException(id);
-        }
+    public List<Discussion> askLLMQuestion(ConversationRequest conversationRequest, Conversation conversation) {
 
         Discussion discussionFromUserParam = Discussion.builder()
                 .promptRole(DiscussionRole.USER)
                 .text(conversationRequest.getText())
                 .build();
 
-        Discussion discussionFromUser = discussionPersistenceManager.save(discussionFromUserParam, conversation.get());
+        Discussion discussionFromUser = discussionPersistenceManager.save(discussionFromUserParam, conversation);
 
-        if (conversation.get().getDiscussions().isEmpty()) {
-            // TOOO investigate why the title is not changing
-            conversationPersistenceManager.save(conversation.get().toBuilder()
-                    .title(discussionFromUser.getText().substring(0, 20))
-                    .build());
+        if (conversation.getDiscussions().isEmpty()) {
+            String title = discussionFromUser
+                    .getText()
+                    .substring(0, Math.min(20, discussionFromUser.getText().length()));
+            conversationPersistenceManager.save(
+                    conversation.toBuilder().title(title).build());
         }
 
         // TODO might needed to process the text
@@ -66,7 +60,7 @@ public class ConversationService {
                 .build();
 
         Discussion discussionFromAssistance =
-                discussionPersistenceManager.save(discussionFromAssistanceParam, conversation.get());
+                discussionPersistenceManager.save(discussionFromAssistanceParam, conversation);
 
         List<Discussion> newDiscussions = new ArrayList<>();
 
@@ -84,8 +78,9 @@ public class ConversationService {
         conversationPersistenceManager.deleteAll();
     }
 
-    public Conversation edit(UUID id) {
-        return Conversation.builder().build();
+    public Conversation editTitle(UUID id, String title) {
+        return conversationPersistenceManager.save(
+                getByID(id).get().toBuilder().title(title).build());
     }
 
     private String getPrediction(String text) {
