@@ -7,6 +7,9 @@ export default {
     extend: {
       colors: {
         ...colors
+      },
+      fontFamily: {
+        'mono': ['Fira Code', 'monospace']
       }
     },
   },
