@@ -3,12 +3,12 @@ package com.llm_service.llm_service.controller.conversation;
 import com.llm_service.llm_service.dto.Conversation;
 import com.llm_service.llm_service.exception.conversation.ConversationNotFoundException;
 import com.llm_service.llm_service.service.ConversationService;
-import java.util.List;
-import java.util.UUID;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,10 +39,10 @@ public class ConversationController {
 
     @ApiResponses(
             value = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Found the conversation",
-                            content = {@Content(mediaType = "application/json")})
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "Found the conversation",
+                        content = {@Content(mediaType = "application/json")})
             })
     @Operation(summary = "Get conversation by ID")
     @GetMapping("/{id}")
@@ -56,10 +56,10 @@ public class ConversationController {
 
     @ApiResponses(
             value = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Created new conversation",
-                            content = {@Content(mediaType = "application/json")})
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "Created new conversation",
+                        content = {@Content(mediaType = "application/json")})
             })
     @Operation(summary = "Create new conversation")
     @PostMapping()
@@ -71,10 +71,10 @@ public class ConversationController {
 
     @ApiResponses(
             value = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Conversation updated",
-                            content = {@Content(mediaType = "application/json")})
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "Conversation updated",
+                        content = {@Content(mediaType = "application/json")})
             })
     @Operation(summary = "Continue conversation using conversation ID")
     @PutMapping("/{id}/continue")
