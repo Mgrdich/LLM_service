@@ -76,10 +76,10 @@ public class ConversationService {
         conversationPersistenceManager.deleteAll();
     }
 
-    public Conversation edit(UUID id) {
-        return Conversation.builder().build();
+    public void editTitle(Conversation conversation, String title) {
+        conversationPersistenceManager.save(
+                conversation.toBuilder().title(title).build());
     }
-
     private String getPrediction(String text) {
         return llmService.generateFullResponse(text);
     }
