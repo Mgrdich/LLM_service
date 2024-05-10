@@ -1,7 +1,7 @@
 package com.llm_service.llm_service.controller.user;
 
-import com.llm_service.llm_service.service.jwt.AuthenticationResponse;
 import com.llm_service.llm_service.dto.User;
+import com.llm_service.llm_service.service.jwt.AuthenticationResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

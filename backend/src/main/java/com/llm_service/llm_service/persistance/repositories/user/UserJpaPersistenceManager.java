@@ -1,10 +1,9 @@
 package com.llm_service.llm_service.persistance.repositories.user;
 
+import com.llm_service.llm_service.dto.User;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
-import com.llm_service.llm_service.dto.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

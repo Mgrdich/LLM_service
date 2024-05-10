@@ -1,16 +1,15 @@
 package com.llm_service.llm_service.service.jwt;
 
-import java.util.List;
-
 import com.llm_service.llm_service.controller.user.LoginRequest;
 import com.llm_service.llm_service.controller.user.UserRequest;
+import com.llm_service.llm_service.dto.User;
 import com.llm_service.llm_service.exception.user.UserNotFoundException;
 import com.llm_service.llm_service.exception.user.UsernameAlreadyExistsException;
 import com.llm_service.llm_service.persistance.entities.UserEntity;
 import com.llm_service.llm_service.persistance.repositories.token.TokenPersistenceManager;
 import com.llm_service.llm_service.persistance.repositories.user.UserEntityMapper;
 import com.llm_service.llm_service.persistance.repositories.user.UserPersistenceManager;
-import com.llm_service.llm_service.dto.User;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -1,8 +1,8 @@
 package com.llm_service.llm_service.persistance.repositories.user;
 
+import com.llm_service.llm_service.dto.User;
 import com.llm_service.llm_service.persistance.entities.FullName;
 import com.llm_service.llm_service.persistance.entities.UserEntity;
-import com.llm_service.llm_service.dto.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

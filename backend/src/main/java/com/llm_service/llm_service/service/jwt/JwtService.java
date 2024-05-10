@@ -1,7 +1,7 @@
 package com.llm_service.llm_service.service.jwt;
 
-import com.llm_service.llm_service.persistance.repositories.token.TokenRepository;
 import com.llm_service.llm_service.dto.User;
+import com.llm_service.llm_service.persistance.repositories.token.TokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 public class JwtService {
     private final String SECRET_KEY = "4bb6d1dfbafb64a681139d1586b6f1160d18159afd57c8c79136d7490630407c";
     private final TokenRepository tokenRepository;
-
 
     public JwtService(TokenRepository tokenRepository) {
         this.tokenRepository = tokenRepository;

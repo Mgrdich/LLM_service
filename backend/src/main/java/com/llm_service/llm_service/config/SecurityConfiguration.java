@@ -34,13 +34,12 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         return http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(
-                        req -> req.requestMatchers("/login/**", "/register/**", "/forget-password/**")
-                                .permitAll()
-                                .requestMatchers("/paid/**")
-                                .hasAuthority(Role.PAID.name())
-                                .anyRequest()
-                                .authenticated())
+                .authorizeHttpRequests(req -> req.requestMatchers("/login/**", "/register/**", "/forget-password/**")
+                        .permitAll()
+                        .requestMatchers("/paid/**")
+                        .hasAuthority(Role.PAID.name())
+                        .anyRequest()
+                        .authenticated())
                 .userDetailsService(userDetailsServiceImp)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
