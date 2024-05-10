@@ -9,7 +9,14 @@ function Welcome() {
             <h1 className="mt-2 mb-16 text-5xl text-white font-bold tracking-tight md:text-6xl xl:text-7xl">
               Welcome to
               <br />
-              <span className="text-primary text-blue-500">Chatto!</span>
+              <br />
+              <span
+                className="relative text-blue-500 w-[max-content] before:absolute before:inset-0
+                           before:animate-typewriter before:bg-neutral-900 after:absolute after:inset-0
+                           after:w-[0.125em] after:animate-caret after:bg-blue-500"
+              >
+                Chatto!
+              </span>
             </h1>
             <Link
               className="mb-2 inline-block bg-blue-500 rounded bg-primary px-12 pt-4 pb-3.5 text-sm
