@@ -1,5 +1,5 @@
-import Link from "ui/Link.tsx";
 import InputWithLabel from "ui/InputWithLabel.tsx";
+import LinkText from "ui/LinkText.tsx";
 import FormSubmitButton from "./components/FormSubmitButton.tsx";
 
 function ForgotPassword() {
@@ -16,7 +16,7 @@ function ForgotPassword() {
           <FormSubmitButton>Submit</FormSubmitButton>
           <div className="text-gray-800 mt-6 text-center">
             Go to
-            <Link href="/login">Login</Link>
+            <LinkText to="/login">Login</LinkText>
           </div>
         </form>
       </div>
