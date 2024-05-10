@@ -42,9 +42,9 @@ public class AuthenticationService {
 
     private final UserEntityMapper userEntityMapper;
 
-    private User register(UserRequest userRequest, Role role) throws UsernameAlreadyExistsException {
+    public User register(UserRequest userRequest) throws UsernameAlreadyExistsException {
         User user = User.builder()
-                .role(role)
+                .role(userRequest.getRole())
                 .username(userRequest.getUsername())
                 .password(userRequest.getPassword())
                 .firstName(userRequest.getFirstName())
@@ -69,20 +69,6 @@ public class AuthenticationService {
         saveUserToken(jwt, savedUser);
 
         return savedUser;
-    }
-
-    public Admin registerAdmin(AdminRequest adminRequest) throws UsernameAlreadyExistsException {
-        User user = register(adminRequest, Role.ADMIN);
-        Admin admin = Admin.builder()
-                .user(user)
-                .build();
-        return adminPersistenceManager.save(admin);
-    }
-
-    public Customer registerCustomer(CustomerRequest customerRequest) throws UsernameAlreadyExistsException {
-        User user = register(customerRequest, Role.CUSTOMER);
-        Customer customer = Customer.builder().user(user).build();
-        return customerPersistenceManager.save(customer);
     }
 
     public AuthenticationResponse authenticate(LoginRequest loginRequest)

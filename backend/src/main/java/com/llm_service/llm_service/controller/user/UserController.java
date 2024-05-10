@@ -1,9 +1,8 @@
 package com.llm_service.llm_service.controller.user;
 
-import com.llm_service.llm_service.service.admin.Admin;
-import com.llm_service.llm_service.service.customer.Customer;
 import com.llm_service.llm_service.service.jwt.AuthenticationResponse;
 import com.llm_service.llm_service.service.jwt.AuthenticationService;
+import com.llm_service.llm_service.service.user.User;
 import com.llm_service.llm_service.service.user.exceptions.UsernameAlreadyExistsException;
 import com.llm_service.llm_service.service.user.exceptions.UsernameNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -24,21 +23,11 @@ public class UserController {
         this.userApiMapper = userApiMapper;
     }
 
-    // TODO this should be hidden some other way for it to be completely secure
-    //  but for this current purpose it is fine
-    //  or done by migration or the project setup
-    @PostMapping("/register_admin")
-    public ResponseEntity<UserResponse> registerAdmin(@RequestBody AdminRequest adminRequest)
-            throws UsernameAlreadyExistsException {
-        Admin admin = authenticationService.registerAdmin(adminRequest);
-        return ResponseEntity.status(HttpStatus.OK).body(userApiMapper.map(admin));
-    }
-
     @PostMapping("/register")
-    public ResponseEntity<UserResponse> register(@RequestBody CustomerRequest customerRequest)
+    public ResponseEntity<UserResponse> register(@RequestBody UserRequest userRequest)
             throws UsernameAlreadyExistsException {
-        Customer customer = authenticationService.registerCustomer(customerRequest);
-        return ResponseEntity.status(HttpStatus.OK).body(userApiMapper.map(customer));
+        User user= authenticationService.register(userRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(userApiMapper.map(user));
     }
 
     @PostMapping("/login")

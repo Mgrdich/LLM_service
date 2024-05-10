@@ -31,12 +31,6 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<TokenEntity> tokens;
 
-    @OneToOne(mappedBy = "user")
-    private AdminEntity adminUser;
-
-    @OneToOne(mappedBy = "user")
-    private CustomerEntity customerUser;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
