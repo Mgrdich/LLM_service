@@ -5,25 +5,38 @@ services:
       image: 'postgres:15.2'
       container_name: db
       environment:
-        - POSTGRES_USER= postgres
-        - POSTGRES_PASSWORD= postgres
-        - POSTGRES_DB= llm_service
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+        - POSTGRES_DB=llm_service
+      volumes:
+        - /tmp/postgres:/var/lib/postgresql/data/
       ports:
-        - "5432:15432"  # Assuming you want to use port 8080 locally
+        - "5433:5432"  # Assuming you want to use port 8080 locally
 
-    app-api:
-      image: 'docker-spring-boot-postgres:latest'
+#    app-api:
+#      image: 'docker-spring-boot-postgres:latest'
+#      build:
+#        context: .
+##      container_name: app-api
+#      aaplatform: linux/amd64
+#      depends_on:
+#        - db
+#      ports:
+#        - "8080:8080"  # Assuming you want to use port 8080 locally
+#      environment:
+#        - POSTGRES_USER=postgres
+#        - POSTGRES_PASSWORD=postgres
+#        - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/llm_service
+#        - SPRING_DATASOURCE_USERNAME=postgres
+#        - SPRING_DATASOURCE_PASSWORD=postgres
+#        - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+
+    run-fe:
+      container_name: llm_service_ui
       build:
-        context: .
-      container_name: app-api
+        context: ./frontend/
       depends_on:
         - db
       ports:
-        - "8080:8080"  # Assuming you want to use port 8080 locally
-      environment:
-        - POSTGRES_USER= postgres
-        - POSTGRES_PASSWORD= postgres
-        - SPRING_DATASOURCE_URL=jdbc:postgresql://db:15432/llm_service
-        - SPRING_DATASOURCE_USERNAME= postgres
-        - SPRING_DATASOURCE_PASSWORD= postgres
-        - SPRING_JPA_HIBERNATE_DDL_AUTO= update
+        - "4040:4040"
