@@ -12,14 +12,18 @@ function Conversation() {
   if (!id) return null;
 
   return (
-    <Grid className="h-full" gridTemplateColumns="0.15fr 0.85fr" gridTemplateRows="85% 15%">
-      <GridItem gridColumn="1/2" gridRow="1/3" className="bg-amber-900">
+    <Grid
+      className="h-screen bg-neutral-50 dark:bg-neutral-900"
+      gridTemplateColumns="20% 80%"
+      gridTemplateRows="90.30% 9.70%"
+    >
+      <GridItem gridColumn="1" gridRow="1/3" className="bg-neutral-900 ml-2 mr-2">
         <Navbar id={id} />
       </GridItem>
-      <GridItem gridColumn="2" gridRow="1/2" className="bg-amber-400 overflow-auto">
+      <GridItem gridColumn="2" gridRow="1" className="bg-neutral-800 overflow-auto">
         <Discussions id={id} />
       </GridItem>
-      <GridItem gridColumn="2" gridRow="2" className="bg-warmGray-400">
+      <GridItem gridColumn="2" gridRow="2" className="bg-neutral-800">
         <Prompt id={id} />
       </GridItem>
     </Grid>

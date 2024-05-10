@@ -18,8 +18,7 @@ export default function Modal({ open, onClose, title, children }: FrameProps) {
       <div className="relative w-full max-w-sm mx-auto mt-8">
         <button
           type="button"
-          className="absolute right-0 flex justify-center
-          h-8 w-8 bg-gray-600 cursor-pointer shadow-xl"
+          className="absolute right-0 flex justify-center h-8 w-8 bg-gray-600 cursor-pointer shadow-xl"
           onClick={onClose}
         >
           <span className="text-2xl leading-7 select-none">&times;</span>

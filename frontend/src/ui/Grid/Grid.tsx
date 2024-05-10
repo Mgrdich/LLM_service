@@ -20,7 +20,7 @@ type GridApplicationProps = GridApplicationCondProps &
 
 export default function Grid({ children, className, ...props }: GridApplicationProps) {
   return (
-    <div className={twMerge("grid w-full h-full", className)} style={props}>
+    <div className={twMerge("grid w-full h-full bg-neutral-50 dark:bg-neutral-900", className)} style={props}>
       {children}
     </div>
   );
