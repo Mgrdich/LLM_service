@@ -107,6 +107,12 @@ public class ConversationController {
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
+    @DeleteMapping
+    public ResponseEntity<Void> deleteConversation() {
+        conversationService.deleteAll();
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
     @ExceptionHandler(ConversationNotFoundException.class)
     public ResponseEntity<String> handleConversationNotFoundException(
             ConversationNotFoundException conversationNotFoundException) {

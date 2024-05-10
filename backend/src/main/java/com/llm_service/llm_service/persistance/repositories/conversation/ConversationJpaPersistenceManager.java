@@ -34,4 +34,9 @@ public class ConversationJpaPersistenceManager implements ConversationPersistenc
     public void delete(UUID id) {
         conversationRepository.deleteById(id);
     }
+
+    @Override
+    public void deleteAll() {
+        conversationRepository.deleteAll();
+    }
 }
