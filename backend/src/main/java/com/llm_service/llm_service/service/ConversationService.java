@@ -76,6 +76,10 @@ public class ConversationService {
         return newDiscussions;
     }
 
+    public void delete(UUID id) {
+        conversationPersistenceManager.delete(id);
+    }
+
     private String getPrediction(String text) {
         return llmService.generate(text).toString();
     }

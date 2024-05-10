@@ -90,6 +90,13 @@ public class ConversationController {
                 .body(discussions.stream().map(conversationApiMapper::map).toList());
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteConversation(@PathVariable UUID id) throws ConversationNotFoundException {
+        conversationService.getByID(id).orElseThrow(() -> new ConversationNotFoundException(id));
+        conversationService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
     @ExceptionHandler(ConversationNotFoundException.class)
     public ResponseEntity<String> handleConversationNotFoundException(
             ConversationNotFoundException conversationNotFoundException) {
