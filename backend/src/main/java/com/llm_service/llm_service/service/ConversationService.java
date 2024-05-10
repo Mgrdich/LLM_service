@@ -59,7 +59,7 @@ public class ConversationService {
 
         String prompt = initializeModel();
         prompt += preprocessPrompt(conversation.get().getDiscussions());
-        prompt += conversationRequest.getText() + " [/INST] ";
+        prompt += conversationRequest.getText() + LLMService.USERINST;
         String resultFromAssistant = getPrediction(prompt);
 
         Discussion discussionFromAssistanceParam = Discussion.builder()

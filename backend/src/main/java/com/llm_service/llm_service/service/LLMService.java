@@ -14,6 +14,9 @@ public class LLMService {
     private final ModelParameters modelParameters;
     private final LlamaModel llamaModel;
 
+    public static final String USERINST = " [/INST] ";
+    public static final String SYSTEMINST = " </s><s>[INST] ";
+
     final String prefix = "def remove_non_ascii(s: str) -> str:\n    \"\"\" ";
     final String suffix = "\n    return result\n";
 
@@ -51,9 +54,9 @@ public class LLMService {
         String messages = "";
         for (Discussion discussion : discussions) {
             if (discussion.getPromptRole() == DiscussionRole.USER) {
-                messages += discussion.getText() + " [/INST] ";
+                messages += discussion.getText() + USERINST;
             } else {
-                messages += discussion.getText() + " </s><s>[INST] ";
+                messages += discussion.getText() + SYSTEMINST;
             }
         }
         return messages;
