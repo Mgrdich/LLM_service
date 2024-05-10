@@ -107,7 +107,7 @@ public class ConversationController {
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
-    @DeleteMapping()
+    @DeleteMapping
     public ResponseEntity<Void> deleteConversation() {
         conversationService.clear();
         return ResponseEntity.status(HttpStatus.OK).body(null);
