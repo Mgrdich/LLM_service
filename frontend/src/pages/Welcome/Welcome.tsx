@@ -41,13 +41,7 @@ function Welcome() {
             </Link>
           </div>
           <div className="mb-12 lg:mb-0">
-            <img
-              src="/chat-bot-bro.png"
-              className="w-full rounded-lg shadow-lg dark:shadow-black/20"
-              alt=""
-              width="600"
-              height="600"
-            />
+            <img src="/chat-bot-bro.png" className="w-full rounded-lg" alt="" width="600" height="600" />
           </div>
         </div>
       </div>
