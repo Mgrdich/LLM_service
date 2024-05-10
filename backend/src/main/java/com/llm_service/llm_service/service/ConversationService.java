@@ -50,9 +50,11 @@ public class ConversationService {
 
         Discussion discussionFromUser = discussionPersistenceManager.save(discussionFromUserParam, conversation.get());
 
-        if(conversation.get().getDiscussions().isEmpty()) {
+        if (conversation.get().getDiscussions().isEmpty()) {
             // TOOO investigate why the title is not changing
-            conversationPersistenceManager.save(conversation.get().toBuilder().title(discussionFromUser.getText().substring(0,20)).build());
+            conversationPersistenceManager.save(conversation.get().toBuilder()
+                    .title(discussionFromUser.getText().substring(0, 20))
+                    .build());
         }
 
         // TODO might needed to process the text

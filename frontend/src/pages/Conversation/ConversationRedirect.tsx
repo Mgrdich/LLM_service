@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import useStartConversation from "hooks/api/useStartConversation.ts";
-import PageLoader from "../Loader/PageLoader.tsx";
+import PageLoader from "pages/Loader/PageLoader.tsx";
 
 function ConversationRedirect() {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ function ConversationRedirect() {
       isCalledRef.current = true;
       mutate();
     }
-  }, [data, navigate]);
+  }, [data, mutate]);
 
   useEffect(() => {
     if (isError) {

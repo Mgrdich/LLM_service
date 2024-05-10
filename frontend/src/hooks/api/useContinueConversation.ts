@@ -12,14 +12,17 @@ export default function useContinueConversation(id: ConversationId) {
   const tempId = "tempId";
 
   return useMutation({
-    mutationFn: (text: string) =>
-      callApi<Discussion[]>({
-      url: getContinueConversationPath(id),
-      method: "PUT",
-      body: {
-        text,
-      },
-    }),
+    mutationFn: async (text: string) => {
+      const discussions = await callApi<Discussion[]>({
+        url: getContinueConversationPath(id),
+        method: "PUT",
+        body: {
+          text,
+        },
+      });
+
+      return discussions;
+    },
     onMutate: async (variables) => {
       const queryKey = [Queries.Conversation, id];
       queryClient.setQueryData(queryKey, (old: Conversation) => {

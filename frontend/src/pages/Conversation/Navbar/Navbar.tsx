@@ -16,8 +16,8 @@ function Navbar({ id }: NavbarProps) {
   const navigate = useNavigate();
   const [modalConversationId, setModalConversationId] = useState("");
 
-  const onConversationClick = (id: ConversationId) => {
-    navigate(`/conversation/${id}`);
+  const onConversationClick = (conversationId: ConversationId) => {
+    navigate(`/conversation/${conversationId}`);
   };
 
   return (
