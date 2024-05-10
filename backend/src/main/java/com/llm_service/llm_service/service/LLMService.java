@@ -16,7 +16,7 @@ public class LLMService {
 
     public LLMService() {
         modelParameters =
-                new ModelParameters().setModelFilePath("model" + File.separator + "llama-2-13b-chat.Q5_K_S.gguf");
+                new ModelParameters().setModelFilePath("model" + File.separator + "model/llama-2-13b-chat.Q5_K_S.gguf");
         llamaModel = new LlamaModel(modelParameters);
     }
 
