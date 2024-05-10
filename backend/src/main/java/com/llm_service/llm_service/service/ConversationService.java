@@ -84,7 +84,7 @@ public class ConversationService {
         return Conversation.builder().build();
     }
 
-    private String getPrediction(UUID id, String text) {
+    private String getPrediction(String text) {
         return llmService.generate(text).toString();
     }
 }

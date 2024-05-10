@@ -97,7 +97,7 @@ public class ConversationController {
             throws ConversationNotFoundException {
         Conversation conversation = conversationService.edit(id);
 
-        return ResponseEntity.status(HttpStatus.OK).body(conversationControllerMapper.map(conversation));
+        return ResponseEntity.status(HttpStatus.OK).body(conversationApiMapper.map(conversation));
     }
 
     @DeleteMapping("/{id}")
