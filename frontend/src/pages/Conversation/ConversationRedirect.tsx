@@ -22,7 +22,7 @@ function ConversationRedirect() {
     if (isError) {
       navigate("/500");
     }
-  }, [isError]);
+  }, [isError, navigate]);
 
   return <PageLoader />;
 }
