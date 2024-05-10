@@ -1,9 +1,12 @@
 package com.llm_service.llm_service.service;
 
+import com.llm_service.llm_service.dto.Discussion;
+import com.llm_service.llm_service.persistance.entities.DiscussionRole;
 import de.kherud.llama.InferenceParameters;
 import de.kherud.llama.LlamaModel;
 import de.kherud.llama.ModelParameters;
 import java.io.File;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,5 +33,29 @@ public class LLMService {
         }
 
         return buffer;
+    }
+
+    public String generateFullResponse(String text) {
+        InferenceParameters inferParams = new InferenceParameters(text).setNPredict(128);
+        return llamaModel.complete(inferParams);
+    }
+
+    public String initializeModelSystem() {
+        return "<s>[INST] <<SYS>>\n"
+                + "You are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe. If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information.\n"
+                + "<</SYS>>\n"
+                + " \n";
+    }
+
+    public String preprocessPrompt(List<Discussion> discussions) {
+        String messages = "";
+        for (Discussion discussion : discussions) {
+            if (discussion.getPromptRole() == DiscussionRole.USER) {
+                messages += discussion.getText() + " [/INST] ";
+            } else {
+                messages += discussion.getText() + " </s><s>[INST] ";
+            }
+        }
+        return messages;
     }
 }

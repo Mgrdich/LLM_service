@@ -57,8 +57,10 @@ public class ConversationService {
                     .build());
         }
 
-        // TODO might needed to process the text
-        String resultFromAssistant = getPrediction(conversationRequest.getText());
+        String prompt = initializeModel();
+        prompt += preprocessPrompt(conversation.get().getDiscussions());
+        prompt += conversationRequest.getText() + " [/INST] ";
+        String resultFromAssistant = getPrediction(prompt);
 
         Discussion discussionFromAssistanceParam = Discussion.builder()
                 .promptRole(DiscussionRole.ASSISTANT)
@@ -89,6 +91,14 @@ public class ConversationService {
     }
 
     private String getPrediction(String text) {
-        return llmService.generate(text).toString();
+        return llmService.generateFullResponse(text);
+    }
+
+    private String initializeModel() {
+        return llmService.initializeModelSystem();
+    }
+
+    private String preprocessPrompt(List<Discussion> discussions) {
+        return llmService.preprocessPrompt(discussions);
     }
 }
