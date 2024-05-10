@@ -13,5 +13,16 @@ export default defineConfig({
       'utils': path.resolve(__dirname, './src/utils'),
       'models': path.resolve(__dirname, './src/models'),
     }
-  }
+  },
+  server: {
+    port: 4040,
+    host: true,
+    watch: {
+      usePolling: true
+    }
+  },
+  preview: {
+    port: 4040,
+    strictPort: true,
+  },
 })
