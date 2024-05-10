@@ -13,4 +13,6 @@ public interface ConversationPersistenceManager {
     Conversation save(Conversation conversation);
 
     void delete(UUID id);
+
+    void deleteAll();
 }

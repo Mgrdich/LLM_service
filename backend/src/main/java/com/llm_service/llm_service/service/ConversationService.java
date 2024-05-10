@@ -80,6 +80,10 @@ public class ConversationService {
         conversationPersistenceManager.delete(id);
     }
 
+    public void clear() {
+        conversationPersistenceManager.deleteAll();
+    }
+
     public Conversation edit(UUID id) {
         return Conversation.builder().build();
     }
