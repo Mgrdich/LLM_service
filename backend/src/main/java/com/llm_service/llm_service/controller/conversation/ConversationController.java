@@ -92,11 +92,12 @@ public class ConversationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ConversationResponse> editConversation(@PathVariable UUID id, @RequestBody ConversationTitleRequest conversationTitleRequest)
+    public ResponseEntity<ConversationResponse> editConversation(
+            @PathVariable UUID id, @RequestBody ConversationTitleRequest conversationTitleRequest)
             throws ConversationNotFoundException {
         Conversation conversation =
                 conversationService.getByID(id).orElseThrow(() -> new ConversationNotFoundException(id));
-                conversationService.editTitle(conversation, conversationTitleRequest.getTitle());
+        conversationService.editTitle(conversation, conversationTitleRequest.getTitle());
 
         return ResponseEntity.status(HttpStatus.OK).body(conversationApiMapper.map(conversation));
     }

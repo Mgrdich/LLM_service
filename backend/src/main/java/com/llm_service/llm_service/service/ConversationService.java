@@ -80,6 +80,7 @@ public class ConversationService {
         conversationPersistenceManager.save(
                 conversation.toBuilder().title(title).build());
     }
+
     private String getPrediction(String text) {
         return llmService.generateFullResponse(text);
     }
