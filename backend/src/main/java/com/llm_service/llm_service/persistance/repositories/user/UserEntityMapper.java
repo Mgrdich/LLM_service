@@ -2,9 +2,7 @@ package com.llm_service.llm_service.persistance.repositories.user;
 
 import com.llm_service.llm_service.persistance.entities.FullName;
 import com.llm_service.llm_service.persistance.entities.UserEntity;
-import com.llm_service.llm_service.service.admin.Admin;
-import com.llm_service.llm_service.service.customer.Customer;
-import com.llm_service.llm_service.service.user.User;
+import com.llm_service.llm_service.dto.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -20,9 +18,4 @@ public interface UserEntityMapper {
     @Mapping(target = "fullName.firstName", source = "firstName")
     @Mapping(target = "fullName.lastName", source = "lastName")
     UserEntity map(User user);
-
-    User map(Admin admin);
-
-    User map(Customer customer);
-
 }

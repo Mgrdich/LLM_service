@@ -1,6 +1,6 @@
 package com.llm_service.llm_service.persistance.repositories.user;
 
-import com.llm_service.llm_service.service.user.User;
+import com.llm_service.llm_service.dto.User;
 
 import java.util.List;
 import java.util.Optional;

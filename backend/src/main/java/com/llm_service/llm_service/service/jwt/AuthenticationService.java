@@ -2,22 +2,15 @@ package com.llm_service.llm_service.service.jwt;
 
 import java.util.List;
 
-import com.llm_service.llm_service.controller.user.AdminRequest;
-import com.llm_service.llm_service.controller.user.CustomerRequest;
 import com.llm_service.llm_service.controller.user.LoginRequest;
 import com.llm_service.llm_service.controller.user.UserRequest;
-import com.llm_service.llm_service.persistance.entities.Role;
+import com.llm_service.llm_service.exception.user.UserNotFoundException;
+import com.llm_service.llm_service.exception.user.UsernameAlreadyExistsException;
 import com.llm_service.llm_service.persistance.entities.UserEntity;
-import com.llm_service.llm_service.persistance.repositories.admin.AdminPersistenceManager;
-import com.llm_service.llm_service.persistance.repositories.customer.CustomerPersistenceManager;
 import com.llm_service.llm_service.persistance.repositories.token.TokenPersistenceManager;
 import com.llm_service.llm_service.persistance.repositories.user.UserEntityMapper;
 import com.llm_service.llm_service.persistance.repositories.user.UserPersistenceManager;
-import com.llm_service.llm_service.service.admin.Admin;
-import com.llm_service.llm_service.service.customer.Customer;
-import com.llm_service.llm_service.service.user.User;
-import com.llm_service.llm_service.service.user.exceptions.UsernameAlreadyExistsException;
-import com.llm_service.llm_service.service.user.exceptions.UsernameNotFoundException;
+import com.llm_service.llm_service.dto.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,8 +23,6 @@ import org.springframework.stereotype.Service;
 public class AuthenticationService {
 
     private final UserPersistenceManager userPersistenceManager;
-    private final AdminPersistenceManager adminPersistenceManager;
-    private final CustomerPersistenceManager customerPersistenceManager;
 
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
@@ -72,13 +63,13 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(LoginRequest loginRequest)
-            throws UsernameNotFoundException, AuthenticationException {
+            throws UserNotFoundException, AuthenticationException {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         User user = userPersistenceManager
                 .findByUsername(loginRequest.getUsername())
-                .orElseThrow(() -> new UsernameNotFoundException(loginRequest.getUsername()));
+                .orElseThrow(UserNotFoundException::new);
         String jwt = jwtService.generateToken(user);
 
         revokeAllTokenByUser(user);

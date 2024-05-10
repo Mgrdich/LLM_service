@@ -1,4 +1,4 @@
-package com.llm_service.llm_service.service.user;
+package com.llm_service.llm_service.dto;
 
 import com.llm_service.llm_service.persistance.entities.Role;
 import java.util.UUID;

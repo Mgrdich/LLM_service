@@ -1,7 +1,7 @@
 package com.llm_service.llm_service.service.jwt;
 
 import com.llm_service.llm_service.persistance.repositories.token.TokenRepository;
-import com.llm_service.llm_service.service.user.User;
+import com.llm_service.llm_service.dto.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;

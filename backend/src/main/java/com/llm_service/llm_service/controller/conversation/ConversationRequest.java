@@ -1,6 +1,7 @@
 package com.llm_service.llm_service.controller.conversation;
 
 import lombok.Builder;
+import lombok.NonNull;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 
@@ -8,5 +9,6 @@ import lombok.extern.jackson.Jacksonized;
 @Builder
 @Jacksonized
 public class ConversationRequest {
+    @NonNull
     String text;
 }

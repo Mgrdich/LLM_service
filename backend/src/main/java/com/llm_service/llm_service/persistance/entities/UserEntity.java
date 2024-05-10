@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Data
 public class UserEntity extends BaseEntity implements UserDetails {
 

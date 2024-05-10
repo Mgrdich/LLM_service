@@ -35,7 +35,7 @@ public class SecurityConfiguration {
 
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
-                        req -> req.requestMatchers("/login/**", "/register/**", "/forget-password")
+                        req -> req.requestMatchers("/login/**", "/register/**", "/forget-password/**")
                                 .permitAll()
                                 .requestMatchers("/paid/**")
                                 .hasAuthority(Role.PAID.name())

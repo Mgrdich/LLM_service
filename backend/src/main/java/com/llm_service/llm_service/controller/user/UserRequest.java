@@ -1,15 +1,22 @@
 package com.llm_service.llm_service.controller.user;
 
 import com.llm_service.llm_service.persistance.entities.Role;
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 
-@SuperBuilder
-@Data
-public abstract class UserRequest {
-    protected String username;
-    protected String password;
-    protected String firstName;
-    protected String lastName;
-    protected Role role;
+@Value
+@Builder
+@Jacksonized
+public class UserRequest {
+    @NonNull
+    String username;
+    @NonNull
+    String password;
+    @NonNull
+    String firstName;
+    @NonNull
+    String lastName;
+    @NonNull
+    Role role;
 }
