@@ -6,4 +6,8 @@ public class UserNotFoundException extends Exception {
     public UserNotFoundException(UUID id) {
         super("User with id " + id + " is not found");
     }
+
+    public UserNotFoundException() {
+        super("User with is not found");
+    }
 }

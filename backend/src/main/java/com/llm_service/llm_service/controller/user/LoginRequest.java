@@ -1,4 +1,4 @@
-package com.llm_service.llm_service.controller.conversation;
+package com.llm_service.llm_service.controller.user;
 
 import lombok.Builder;
 import lombok.NonNull;
@@ -8,7 +8,10 @@ import lombok.extern.jackson.Jacksonized;
 @Value
 @Builder
 @Jacksonized
-public class ConversationRequest {
+public class LoginRequest {
     @NonNull
-    String text;
+    String username;
+
+    @NonNull
+    String password;
 }
