@@ -80,7 +80,7 @@ public class ConversationService {
         conversationPersistenceManager.delete(id);
     }
 
-    public void clear() {
+    public void deleteAll() {
         conversationPersistenceManager.deleteAll();
     }
 

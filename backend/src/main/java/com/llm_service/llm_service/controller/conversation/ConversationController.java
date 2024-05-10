@@ -109,7 +109,7 @@ public class ConversationController {
 
     @DeleteMapping
     public ResponseEntity<Void> deleteConversation() {
-        conversationService.clear();
+        conversationService.deleteAll();
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
