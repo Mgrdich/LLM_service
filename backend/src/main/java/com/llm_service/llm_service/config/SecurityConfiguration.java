@@ -35,7 +35,8 @@ public class SecurityConfiguration {
 
         // TODO fix the swagger security config
         return http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(req -> req.requestMatchers("/login/**", "/register/**", "/forget-password/**","/swagger-ui/**","/v3/api-docs/**")
+                .authorizeHttpRequests(req -> req.requestMatchers(
+                                "/login/**", "/register/**", "/forget-password/**", "/swagger-ui/**", "/v3/api-docs/**")
                         .permitAll()
                         .requestMatchers("/paid/**")
                         .hasAuthority(Role.PAID.name())

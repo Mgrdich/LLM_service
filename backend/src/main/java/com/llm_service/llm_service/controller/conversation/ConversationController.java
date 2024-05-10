@@ -93,10 +93,10 @@ public class ConversationController {
 
     @ApiResponses(
             value = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Update a conversation",
-                            content = {@Content(mediaType = "application/json")})
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "Update a conversation",
+                        content = {@Content(mediaType = "application/json")})
             })
     @Operation(summary = "update conversation title")
     @PutMapping("/{id}")
@@ -112,10 +112,10 @@ public class ConversationController {
 
     @ApiResponses(
             value = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Deletes a conversation",
-                            content = {@Content(mediaType = "application/json")})
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "Deletes a conversation",
+                        content = {@Content(mediaType = "application/json")})
             })
     @Operation(summary = "deletes a conversation")
     @DeleteMapping("/{id}")
@@ -127,10 +127,10 @@ public class ConversationController {
 
     @ApiResponses(
             value = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Deletes all conversation",
-                            content = {@Content(mediaType = "application/json")})
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "Deletes all conversation",
+                        content = {@Content(mediaType = "application/json")})
             })
     @Operation(summary = "deletes all conversations")
     @DeleteMapping
