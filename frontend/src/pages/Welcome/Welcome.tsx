@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Welcome() {
   return (
     <div className="bg-neutral-50 px-2 py-6 text-center dark:bg-neutral-900 md:px-12 lg:text-left min-h-screen">
@@ -9,7 +11,7 @@ function Welcome() {
               <br />
               <span className="text-primary text-blue-500">Chatto!</span>
             </h1>
-            <a
+            <Link
               className="mb-2 inline-block bg-blue-500 rounded bg-primary px-12 pt-4 pb-3.5 text-sm
               font-medium uppercase
               leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition
@@ -25,15 +27,15 @@ function Welcome() {
               md:mr-2 md:mb-0"
               data-te-ripple-init=""
               data-te-ripple-color="light"
-              href="/login"
+              to="/login"
               role="button"
             >
               Get started
-            </a>
+            </Link>
           </div>
           <div className="mb-12 lg:mb-0">
             <img
-              src="chat"
+              src="/chat-bot-bro.png"
               className="w-full rounded-lg shadow-lg dark:shadow-black/20"
               alt=""
               width="600"

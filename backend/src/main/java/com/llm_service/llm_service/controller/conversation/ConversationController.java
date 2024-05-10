@@ -1,8 +1,13 @@
 package com.llm_service.llm_service.controller.conversation;
 
 import com.llm_service.llm_service.dto.Conversation;
+import com.llm_service.llm_service.dto.Discussion;
 import com.llm_service.llm_service.exception.conversation.ConversationNotFoundException;
 import com.llm_service.llm_service.service.ConversationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -10,44 +15,79 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin("http://localhost:5173")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/conversation")
 public class ConversationController {
 
     private final ConversationService conversationService;
-    private final ConversationControllerMapper conversationControllerMapper;
+    private final ConversationApiMapper conversationApiMapper;
 
-    @GetMapping()
-    public ResponseEntity<List<ConversationResponse>> getAllConversations() {
+    // TODO this should be paginated , maybe grouped by date
+    @ApiResponses(
+            value = {
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "List of the conversations with the Chatto",
+                        content = {@Content(mediaType = "application/json")})
+            })
+    @Operation(summary = "Get all conversations")
+    @GetMapping
+    public ResponseEntity<List<ConversationResponseCompact>> getAllConversations() {
         return ResponseEntity.ok(conversationService.getAll().stream()
-                .map(conversationControllerMapper::map)
+                .map(conversationApiMapper::mapList)
                 .toList());
     }
 
+    @ApiResponses(
+            value = {
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "Found the conversation",
+                        content = {@Content(mediaType = "application/json")})
+            })
+    @Operation(summary = "Get conversation by ID")
     @GetMapping("/{id}")
     public ResponseEntity<ConversationResponse> getConversationById(@PathVariable UUID id)
             throws ConversationNotFoundException {
         Conversation conversation =
                 conversationService.getByID(id).orElseThrow(() -> new ConversationNotFoundException(id));
 
-        return ResponseEntity.status(HttpStatus.OK).body(conversationControllerMapper.map(conversation));
+        return ResponseEntity.status(HttpStatus.OK).body(conversationApiMapper.map(conversation));
     }
 
-    @PostMapping()
-    public ResponseEntity<Conversation> createConversation() {
+    @ApiResponses(
+            value = {
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "Created new conversation",
+                        content = {@Content(mediaType = "application/json")})
+            })
+    @Operation(summary = "Create new conversation")
+    @PostMapping
+    public ResponseEntity<ConversationResponse> createConversation() {
         Conversation conversation = conversationService.start();
 
-        return ResponseEntity.status(HttpStatus.OK).body(conversation);
+        return ResponseEntity.status(HttpStatus.OK).body(conversationApiMapper.map(conversation));
     }
 
+    @ApiResponses(
+            value = {
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "Conversation Continuation",
+                        content = {@Content(mediaType = "application/json")})
+            })
+    @Operation(summary = "Continue conversation using conversation ID")
     @PutMapping("/{id}/continue")
-    public ResponseEntity<ConversationResponse> continueConversation(
+    public ResponseEntity<List<DiscussionResponse>> continueConversation(
             @PathVariable UUID id, @RequestBody ConversationRequest conversationRequest)
             throws ConversationNotFoundException {
-        Conversation conversation = conversationService.update(id, conversationRequest);
+        List<Discussion> discussions = conversationService.askLLMQuestion(id, conversationRequest);
 
-        return ResponseEntity.status(HttpStatus.OK).body(conversationControllerMapper.map(conversation));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(discussions.stream().map(conversationApiMapper::map).toList());
     }
 
     @ExceptionHandler(ConversationNotFoundException.class)

@@ -13,5 +13,4 @@ public class Discussion extends Base {
     UUID id;
     String text;
     DiscussionRole promptRole;
-    Conversation conversation;
 }

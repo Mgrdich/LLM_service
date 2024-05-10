@@ -1,5 +1,5 @@
 import InputWithLabel from "ui/InputWithLabel.tsx";
-import Link from "ui/Link.tsx";
+import LinkText from "ui/LinkText.tsx";
 import FormSubmitButton from "./components/FormSubmitButton.tsx";
 
 function Register() {
@@ -22,7 +22,7 @@ function Register() {
           <FormSubmitButton>Register</FormSubmitButton>
           <div className="text-gray-800 mt-6 text-center">
             Already have an account
-            <Link href="/login">Register</Link>
+            <LinkText to="/login">Log In</LinkText>
           </div>
         </form>
       </div>

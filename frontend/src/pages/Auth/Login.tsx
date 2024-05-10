@@ -1,6 +1,6 @@
 import InputWithLabel from "ui/InputWithLabel.tsx";
-import Link from "ui/Link.tsx";
 import Checkbox from "ui/Checkbox.tsx";
+import LinkText from "ui/LinkText.tsx";
 import FormSubmitButton from "./components/FormSubmitButton.tsx";
 
 function Login() {
@@ -23,13 +23,13 @@ function Login() {
               <span className="form-check-label inline-block text-gray-800">Remember me</span>
             </div>
             <div className="ml-4">
-              <Link href="/forgot-password">Forgot password ?</Link>
+              <LinkText to="/forgot-password">Forgot password ?</LinkText>
             </div>
           </div>
           <FormSubmitButton>Sign In</FormSubmitButton>
           <div className="text-gray-800 mt-6 text-center">
             Not a member?
-            <Link href="/register">Register</Link>
+            <LinkText to="/register">Register</LinkText>
           </div>
         </form>
       </div>
