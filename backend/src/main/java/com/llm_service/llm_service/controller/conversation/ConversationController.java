@@ -91,6 +91,14 @@ public class ConversationController {
                 .body(discussions.stream().map(conversationApiMapper::map).toList());
     }
 
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Update a conversation",
+                            content = {@Content(mediaType = "application/json")})
+            })
+    @Operation(summary = "update conversation title")
     @PutMapping("/{id}")
     public ResponseEntity<ConversationResponse> editConversation(
             @PathVariable UUID id, @RequestBody ConversationTitleRequest conversationTitleRequest)
@@ -102,6 +110,14 @@ public class ConversationController {
         return ResponseEntity.status(HttpStatus.OK).body(conversationApiMapper.map(conversation));
     }
 
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Deletes a conversation",
+                            content = {@Content(mediaType = "application/json")})
+            })
+    @Operation(summary = "deletes a conversation")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteConversation(@PathVariable UUID id) throws ConversationNotFoundException {
         conversationService.getByID(id).orElseThrow(() -> new ConversationNotFoundException(id));
@@ -109,6 +125,14 @@ public class ConversationController {
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Deletes all conversation",
+                            content = {@Content(mediaType = "application/json")})
+            })
+    @Operation(summary = "deletes all conversations")
     @DeleteMapping
     public ResponseEntity<Void> deleteConversation() {
         conversationService.deleteAll();
