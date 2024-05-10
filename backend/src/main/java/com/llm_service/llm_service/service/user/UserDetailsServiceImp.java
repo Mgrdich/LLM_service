@@ -1,7 +1,7 @@
 package com.llm_service.llm_service.service.user;
 
-import com.aua.flightreservationsystem.persistence.repository.user.UserEntityMapper;
-import com.aua.flightreservationsystem.persistence.repository.user.UserPersistenceManager;
+import com.llm_service.llm_service.persistance.repositories.user.UserEntityMapper;
+import com.llm_service.llm_service.persistance.repositories.user.UserPersistenceManager;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

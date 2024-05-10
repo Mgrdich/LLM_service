@@ -1,6 +1,6 @@
 package com.llm_service.llm_service.persistance.repositories.customer;
 
-import com.aua.flightreservationsystem.core.customer.Customer;
+import com.llm_service.llm_service.service.customer.Customer;
 
 import java.util.List;
 import java.util.Optional;

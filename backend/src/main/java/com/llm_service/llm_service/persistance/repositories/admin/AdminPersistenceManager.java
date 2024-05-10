@@ -1,6 +1,6 @@
 package com.llm_service.llm_service.persistance.repositories.admin;
 
-import com.aua.flightreservationsystem.core.admin.Admin;
+import com.llm_service.llm_service.service.admin.Admin;
 
 import java.util.List;
 import java.util.Optional;

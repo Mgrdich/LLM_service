@@ -1,14 +1,13 @@
 package com.llm_service.llm_service.persistance.entities;
 
 import jakarta.persistence.*;
+import java.util.Collection;
+import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
-import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -34,9 +33,6 @@ public class UserEntity extends BaseEntity implements UserDetails {
 
     @OneToOne(mappedBy = "user")
     private AdminEntity adminUser;
-
-    @OneToOne(mappedBy = "user")
-    private EmployeeEntity employeeUser;
 
     @OneToOne(mappedBy = "user")
     private CustomerEntity customerUser;

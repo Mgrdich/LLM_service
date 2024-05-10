@@ -1,7 +1,7 @@
 package com.llm_service.llm_service.service.jwt.config;
 
-import com.aua.flightreservationsystem.persistence.model.TokenEntity;
-import com.aua.flightreservationsystem.persistence.repository.token.TokenRepository;
+import com.llm_service.llm_service.persistance.entities.TokenEntity;
+import com.llm_service.llm_service.persistance.repositories.token.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Configuration;

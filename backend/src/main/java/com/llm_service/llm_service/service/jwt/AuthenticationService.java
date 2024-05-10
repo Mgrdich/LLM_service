@@ -1,28 +1,29 @@
 package com.llm_service.llm_service.service.jwt;
 
-import com.aua.flightreservationsystem.api.user.*;
-import com.aua.flightreservationsystem.core.admin.Admin;
-import com.aua.flightreservationsystem.core.customer.Customer;
-import com.aua.flightreservationsystem.core.employee.Employee;
-import com.aua.flightreservationsystem.core.user.User;
-import com.aua.flightreservationsystem.core.user.exceptions.UsernameAlreadyExistsException;
-import com.aua.flightreservationsystem.core.user.exceptions.UsernameNotFoundException;
-import com.aua.flightreservationsystem.persistence.model.Role;
-import com.aua.flightreservationsystem.persistence.model.UserEntity;
-import com.aua.flightreservationsystem.persistence.repository.admin.AdminPersistenceManager;
-import com.aua.flightreservationsystem.persistence.repository.customer.CustomerPersistenceManager;
-import com.aua.flightreservationsystem.persistence.repository.employee.EmployeePersistenceManager;
-import com.aua.flightreservationsystem.persistence.repository.token.TokenPersistenceManager;
-import com.aua.flightreservationsystem.persistence.repository.user.UserEntityMapper;
-import com.aua.flightreservationsystem.persistence.repository.user.UserPersistenceManager;
+import java.util.List;
+
+import com.llm_service.llm_service.controller.user.AdminRequest;
+import com.llm_service.llm_service.controller.user.CustomerRequest;
+import com.llm_service.llm_service.controller.user.LoginRequest;
+import com.llm_service.llm_service.controller.user.UserRequest;
+import com.llm_service.llm_service.persistance.entities.Role;
+import com.llm_service.llm_service.persistance.entities.UserEntity;
+import com.llm_service.llm_service.persistance.repositories.admin.AdminPersistenceManager;
+import com.llm_service.llm_service.persistance.repositories.customer.CustomerPersistenceManager;
+import com.llm_service.llm_service.persistance.repositories.token.TokenPersistenceManager;
+import com.llm_service.llm_service.persistance.repositories.user.UserEntityMapper;
+import com.llm_service.llm_service.persistance.repositories.user.UserPersistenceManager;
+import com.llm_service.llm_service.service.admin.Admin;
+import com.llm_service.llm_service.service.customer.Customer;
+import com.llm_service.llm_service.service.user.User;
+import com.llm_service.llm_service.service.user.exceptions.UsernameAlreadyExistsException;
+import com.llm_service.llm_service.service.user.exceptions.UsernameNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -31,7 +32,6 @@ public class AuthenticationService {
     private final UserPersistenceManager userPersistenceManager;
     private final AdminPersistenceManager adminPersistenceManager;
     private final CustomerPersistenceManager customerPersistenceManager;
-    private final EmployeePersistenceManager employeePersistenceManager;
 
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
@@ -75,7 +75,6 @@ public class AuthenticationService {
         User user = register(adminRequest, Role.ADMIN);
         Admin admin = Admin.builder()
                 .user(user)
-                .roleInCompany(adminRequest.getRoleInCompany())
                 .build();
         return adminPersistenceManager.save(admin);
     }
@@ -84,16 +83,6 @@ public class AuthenticationService {
         User user = register(customerRequest, Role.CUSTOMER);
         Customer customer = Customer.builder().user(user).build();
         return customerPersistenceManager.save(customer);
-    }
-
-    public Employee registerEmployee(EmployeeRequest employeeRequest) throws UsernameAlreadyExistsException {
-        User user = register(employeeRequest, Role.EMPLOYEE);
-        Employee employee = Employee.builder()
-                .user(user)
-                .contact(employeeRequest.getContact())
-                .salary(employeeRequest.getSalary())
-                .build();
-        return employeePersistenceManager.save(employee);
     }
 
     public AuthenticationResponse authenticate(LoginRequest loginRequest)

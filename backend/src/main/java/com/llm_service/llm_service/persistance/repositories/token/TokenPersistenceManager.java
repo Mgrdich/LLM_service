@@ -1,6 +1,6 @@
 package com.llm_service.llm_service.persistance.repositories.token;
 
-import com.aua.flightreservationsystem.core.jwt.Token;
+import com.llm_service.llm_service.service.jwt.Token;
 
 import java.util.List;
 import java.util.Optional;

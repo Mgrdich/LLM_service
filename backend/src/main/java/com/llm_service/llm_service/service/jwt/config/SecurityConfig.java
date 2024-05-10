@@ -1,8 +1,8 @@
 package com.llm_service.llm_service.service.jwt.config;
 
-import com.aua.flightreservationsystem.core.jwt.filter.JwtAuthenticationFilter;
-import com.aua.flightreservationsystem.core.user.UserDetailsServiceImp;
-import com.aua.flightreservationsystem.persistence.model.Role;
+import com.llm_service.llm_service.persistance.entities.Role;
+import com.llm_service.llm_service.service.jwt.filter.JwtAuthenticationFilter;
+import com.llm_service.llm_service.service.user.UserDetailsServiceImp;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -42,12 +42,12 @@ public class SecurityConfig {
 
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
-                        req -> req.requestMatchers("/login/**", "/register/**", "/register_admin/**", "/allow/**")
+                        req -> req.requestMatchers("/login/**", "/register/**", "/register_admin/**")
                                 .permitAll()
-                                .requestMatchers("/admin_only/**")
+                                .requestMatchers("/admin/**")
                                 .hasAuthority(Role.ADMIN.name())
-                                .requestMatchers("/admin_employee/**")
-                                .hasAnyAuthority(Role.ADMIN.name(), Role.EMPLOYEE.name())
+                                .requestMatchers("/admin/**")
+                                .hasAnyAuthority(Role.ADMIN.name())
                                 .anyRequest()
                                 .authenticated())
                 .userDetailsService(userDetailsServiceImp)

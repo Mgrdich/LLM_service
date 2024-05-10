@@ -1,4 +1,4 @@
-package com.llm_service.llm_service.service.jwt;
+package com.llm_service.llm_service.service.customer;
 
 import java.util.UUID;
 
@@ -8,9 +8,7 @@ import lombok.Value;
 
 @Value
 @Builder(toBuilder = true)
-public class Token {
+public class Customer {
     UUID id;
-    String token;
-    boolean loggedOut;
     User user;
 }

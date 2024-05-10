@@ -1,4 +1,4 @@
-package com.llm_service.llm_service.service.jwt;
+package com.llm_service.llm_service.service.admin;
 
 import java.util.UUID;
 
@@ -8,9 +8,7 @@ import lombok.Value;
 
 @Value
 @Builder(toBuilder = true)
-public class Token {
+public class Admin {
     UUID id;
-    String token;
-    boolean loggedOut;
     User user;
 }

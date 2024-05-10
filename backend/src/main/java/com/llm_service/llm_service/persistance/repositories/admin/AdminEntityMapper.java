@@ -1,7 +1,7 @@
 package com.llm_service.llm_service.persistance.repositories.admin;
 
-import com.aua.flightreservationsystem.core.admin.Admin;
-import com.aua.flightreservationsystem.persistence.model.AdminEntity;
+import com.llm_service.llm_service.persistance.entities.AdminEntity;
+import com.llm_service.llm_service.service.admin.Admin;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

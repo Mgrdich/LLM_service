@@ -1,12 +1,12 @@
 package com.llm_service.llm_service.persistance.repositories.admin;
 
-import com.aua.flightreservationsystem.core.admin.Admin;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import com.llm_service.llm_service.service.admin.Admin;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class AdminJpaPersistenceManager implements AdminPersistenceManager {

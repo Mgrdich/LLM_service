@@ -1,5 +1,11 @@
 package com.llm_service.llm_service.controller.user;
 
+import com.llm_service.llm_service.service.admin.Admin;
+import com.llm_service.llm_service.service.customer.Customer;
+import com.llm_service.llm_service.service.jwt.AuthenticationResponse;
+import com.llm_service.llm_service.service.jwt.AuthenticationService;
+import com.llm_service.llm_service.service.user.exceptions.UsernameAlreadyExistsException;
+import com.llm_service.llm_service.service.user.exceptions.UsernameNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
@@ -26,13 +32,6 @@ public class UserController {
             throws UsernameAlreadyExistsException {
         Admin admin = authenticationService.registerAdmin(adminRequest);
         return ResponseEntity.status(HttpStatus.OK).body(userApiMapper.map(admin));
-    }
-
-    @PostMapping("/admin_only/register_employee")
-    public ResponseEntity<UserResponse> registerEmployee(@RequestBody EmployeeRequest employeeRequest)
-            throws UsernameAlreadyExistsException {
-        Employee employee = authenticationService.registerEmployee(employeeRequest);
-        return ResponseEntity.status(HttpStatus.OK).body(userApiMapper.map(employee));
     }
 
     @PostMapping("/register")

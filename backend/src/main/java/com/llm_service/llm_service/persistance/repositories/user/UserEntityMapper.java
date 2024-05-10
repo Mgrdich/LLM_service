@@ -1,11 +1,10 @@
 package com.llm_service.llm_service.persistance.repositories.user;
 
-import com.aua.flightreservationsystem.core.admin.Admin;
-import com.aua.flightreservationsystem.core.customer.Customer;
-import com.aua.flightreservationsystem.core.employee.Employee;
-import com.aua.flightreservationsystem.core.user.User;
-import com.aua.flightreservationsystem.persistence.model.FullName;
-import com.aua.flightreservationsystem.persistence.model.UserEntity;
+import com.llm_service.llm_service.persistance.entities.FullName;
+import com.llm_service.llm_service.persistance.entities.UserEntity;
+import com.llm_service.llm_service.service.admin.Admin;
+import com.llm_service.llm_service.service.customer.Customer;
+import com.llm_service.llm_service.service.user.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -26,5 +25,4 @@ public interface UserEntityMapper {
 
     User map(Customer customer);
 
-    User map(Employee employee);
 }

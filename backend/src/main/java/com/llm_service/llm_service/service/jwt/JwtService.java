@@ -1,22 +1,22 @@
 package com.llm_service.llm_service.service.jwt;
 
-import com.aua.flightreservationsystem.core.user.User;
-import com.aua.flightreservationsystem.persistence.repository.token.TokenRepository;
+import com.llm_service.llm_service.persistance.repositories.token.TokenRepository;
+import com.llm_service.llm_service.service.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
-
-import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.function.Function;
+import javax.crypto.SecretKey;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 @Service
 public class JwtService {
     private final String SECRET_KEY = "4bb6d1dfbafb64a681139d1586b6f1160d18159afd57c8c79136d7490630407c";
     private final TokenRepository tokenRepository;
+
 
     public JwtService(TokenRepository tokenRepository) {
         this.tokenRepository = tokenRepository;

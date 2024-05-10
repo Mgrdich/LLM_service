@@ -1,12 +1,12 @@
 package com.llm_service.llm_service.persistance.repositories.customer;
 
-import com.aua.flightreservationsystem.core.customer.Customer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import com.llm_service.llm_service.service.customer.Customer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerJpaPersistenceManager implements CustomerPersistenceManager {
