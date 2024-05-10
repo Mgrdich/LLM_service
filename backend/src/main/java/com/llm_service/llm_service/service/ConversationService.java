@@ -80,7 +80,7 @@ public class ConversationService {
         conversationPersistenceManager.delete(id);
     }
 
-        private String getPrediction(String text) {
-            return llmService.generate(text).toString();
-        }
+    private String getPrediction(String text) {
+        return llmService.generate(text).toString();
+    }
 }
