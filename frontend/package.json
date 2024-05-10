@@ -47,10 +47,5 @@
   "engines": {
     "node": "18.17.1",
     "pnpm": ">=8.0.0"
-  },
-  "pnpm": {
-    "overrides": {
-      "rollup": "npm:@rollup/wasm-node"
-    }
   }
 }
