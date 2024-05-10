@@ -84,18 +84,20 @@ public class ConversationController {
     public ResponseEntity<List<DiscussionResponse>> continueConversation(
             @PathVariable UUID id, @RequestBody ConversationRequest conversationRequest)
             throws ConversationNotFoundException {
-        List<Discussion> discussions = conversationService.askLLMQuestion(id, conversationRequest);
-        // TODO check if the id exists, else throw exception,
-        //  conversation can built with builder and passed
-        //  as a parameter for the update method
+        Conversation conversation =
+                conversationService.getByID(id).orElseThrow(() -> new ConversationNotFoundException(id));
+        List<Discussion> discussions = conversationService.askLlmQuestion(conversation, conversationRequest.getText());
         return ResponseEntity.status(HttpStatus.OK)
                 .body(discussions.stream().map(conversationApiMapper::map).toList());
     }
 
-    @PutMapping("/{id}/edit")
-    public ResponseEntity<ConversationResponse> editConversation(@PathVariable UUID id)
+    @PutMapping("/{id}")
+    public ResponseEntity<ConversationResponse> editConversation(
+            @PathVariable UUID id, @RequestBody ConversationTitleRequest conversationTitleRequest)
             throws ConversationNotFoundException {
-        Conversation conversation = conversationService.edit(id);
+        Conversation conversation =
+                conversationService.getByID(id).orElseThrow(() -> new ConversationNotFoundException(id));
+        conversationService.editTitle(conversation, conversationTitleRequest.getTitle());
 
         return ResponseEntity.status(HttpStatus.OK).body(conversationApiMapper.map(conversation));
     }
