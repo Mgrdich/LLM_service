@@ -2,6 +2,7 @@ package com.llm_service.llm_service.persistance.repositories.discussion;
 
 import com.llm_service.llm_service.dto.Conversation;
 import com.llm_service.llm_service.dto.Discussion;
+import com.llm_service.llm_service.dto.User;
 import com.llm_service.llm_service.persistance.entities.DiscussionEntity;
 import com.llm_service.llm_service.persistance.repositories.conversation.ConversationEntityMapper;
 import java.util.List;
@@ -30,11 +31,11 @@ public class DiscussionJpaPersistenceManager implements DiscussionPersistenceMan
     }
 
     @Override
-    public Discussion save(Discussion discussion, Conversation conversation) {
+    public Discussion save(Discussion discussion, Conversation conversation, User user) {
         DiscussionEntity discussionEntity = DiscussionEntity.builder()
                 .text(discussion.getText())
                 .promptRole(discussion.getPromptRole())
-                .conversation(conversationEntityMapper.map(conversation))
+                .conversation(conversationEntityMapper.map(conversation, user))
                 .build();
         return discussionEntityMapper.map(discussionRepository.save(discussionEntity));
     }

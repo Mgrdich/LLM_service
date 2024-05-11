@@ -2,9 +2,12 @@ package com.llm_service.llm_service.service;
 
 import com.llm_service.llm_service.dto.Conversation;
 import com.llm_service.llm_service.dto.Discussion;
+import com.llm_service.llm_service.dto.User;
+import com.llm_service.llm_service.exception.conversation.ConversationNotFoundException;
 import com.llm_service.llm_service.persistance.entities.DiscussionRole;
 import com.llm_service.llm_service.persistance.repositories.conversation.ConversationPersistenceManager;
 import com.llm_service.llm_service.persistance.repositories.discussion.DiscussionPersistenceManager;
+import com.llm_service.llm_service.service.user.UserContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,33 +21,64 @@ public class ConversationService {
     private final LLMService llmService;
     private final ConversationPersistenceManager conversationPersistenceManager;
     private final DiscussionPersistenceManager discussionPersistenceManager;
+    private final UserContext userContext;
 
-    public Conversation start() {
+    public Conversation start() throws Exception {
+        Optional<User> user = userContext.getUserFromContext();
+
+        if (user.isEmpty()) {
+            // TODO fix it later
+            throw new Exception("");
+        }
+
         Conversation conversation = Conversation.builder().discussions(null).build();
-        return conversationPersistenceManager.save(conversation);
+        return conversationPersistenceManager.save(conversation, user.get());
     }
 
-    public List<Conversation> getAll() {
-        return conversationPersistenceManager.findAll();
+    public List<Conversation> getAll() throws ConversationNotFoundException {
+        Optional<User> user = userContext.getUserFromContext();
+
+        if (user.isEmpty()) {
+            // TODO fix it later
+            throw new ConversationNotFoundException();
+        }
+
+        return conversationPersistenceManager.findAll(user.get().getId());
     }
 
-    public Optional<Conversation> getByID(UUID id) {
-        return conversationPersistenceManager.findById(id);
+    public Optional<Conversation> getByID(UUID id) throws ConversationNotFoundException {
+        Optional<User> user = userContext.getUserFromContext();
+        if (user.isEmpty()) {
+            // TODO fix it later
+            throw new ConversationNotFoundException();
+        }
+
+        return conversationPersistenceManager.findById(id, user.get().getId());
     }
 
     // TODO optimize this fetching mechanism
-    public List<Discussion> askLlmQuestion(Conversation conversation, String text) {
+    public List<Discussion> askLlmQuestion(Conversation conversation, String text)
+            throws ConversationNotFoundException {
+
+        Optional<User> user = userContext.getUserFromContext();
+
+        if (user.isEmpty()) {
+            // TODO fix it later
+            throw new ConversationNotFoundException();
+        }
+
         Discussion discussionFromUserParam =
                 Discussion.builder().promptRole(DiscussionRole.USER).text(text).build();
 
-        Discussion discussionFromUser = discussionPersistenceManager.save(discussionFromUserParam, conversation);
+        Discussion discussionFromUser =
+                discussionPersistenceManager.save(discussionFromUserParam, conversation, user.get());
 
         if (conversation.getDiscussions().isEmpty()) {
             String conversationTitle = discussionFromUser
                     .getText()
                     .substring(0, Math.min(20, discussionFromUser.getText().length()));
             conversationPersistenceManager.save(
-                    conversation.toBuilder().title(conversationTitle).build());
+                    conversation.toBuilder().title(conversationTitle).build(), user.get());
         }
 
         String prompt = initializeModel();
@@ -58,7 +92,7 @@ public class ConversationService {
                 .build();
 
         Discussion discussionFromAssistance =
-                discussionPersistenceManager.save(discussionFromAssistanceParam, conversation);
+                discussionPersistenceManager.save(discussionFromAssistanceParam, conversation, user.get());
 
         List<Discussion> newDiscussions = new ArrayList<>();
 
@@ -76,9 +110,16 @@ public class ConversationService {
         conversationPersistenceManager.deleteAll();
     }
 
-    public void editTitle(Conversation conversation, String title) {
+    public void editTitle(Conversation conversation, String title) throws Exception {
+        Optional<User> user = userContext.getUserFromContext();
+
+        if (user.isEmpty()) {
+            // TODO fix it later
+            throw new Exception("");
+        }
+
         conversationPersistenceManager.save(
-                conversation.toBuilder().title(title).build());
+                conversation.toBuilder().title(title).build(), user.get());
     }
 
     private String getPrediction(String text) {

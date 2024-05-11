@@ -34,9 +34,10 @@ public class ConversationController {
             })
     @Operation(summary = "Get all conversations")
     @GetMapping
-    public ResponseEntity<List<ConversationResponseCompact>> getAllConversations() {
+    public ResponseEntity<List<ConversationResponseCompact>> getAllConversations()
+            throws ConversationNotFoundException {
         return ResponseEntity.ok(conversationService.getAll().stream()
-                .map(conversationApiMapper::mapList)
+                .map(conversationApiMapper::mapCompact)
                 .toList());
     }
 
@@ -66,7 +67,7 @@ public class ConversationController {
             })
     @Operation(summary = "Create new conversation")
     @PostMapping
-    public ResponseEntity<ConversationResponse> createConversation() {
+    public ResponseEntity<ConversationResponse> createConversation() throws Exception {
         Conversation conversation = conversationService.start();
 
         return ResponseEntity.status(HttpStatus.OK).body(conversationApiMapper.map(conversation));
@@ -100,14 +101,13 @@ public class ConversationController {
             })
     @Operation(summary = "update conversation title")
     @PutMapping("/{id}")
-    public ResponseEntity<ConversationResponse> editConversation(
-            @PathVariable UUID id, @RequestBody ConversationTitleRequest conversationTitleRequest)
-            throws ConversationNotFoundException {
+    public ResponseEntity<ConversationResponseCompact> editConversation(
+            @PathVariable UUID id, @RequestBody ConversationTitleRequest conversationTitleRequest) throws Exception {
         Conversation conversation =
                 conversationService.getByID(id).orElseThrow(() -> new ConversationNotFoundException(id));
         conversationService.editTitle(conversation, conversationTitleRequest.getTitle());
 
-        return ResponseEntity.status(HttpStatus.OK).body(conversationApiMapper.map(conversation));
+        return ResponseEntity.status(HttpStatus.OK).body(conversationApiMapper.mapCompact(conversation));
     }
 
     @ApiResponses(
