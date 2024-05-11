@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
+import { useAuth } from "context/AuthContext.tsx";
 import useApi from "./useApi.ts";
 import { LoginPath } from "./api/constants.ts";
-import { useAuth } from "../context/AuthContext.tsx";
 
 interface LoginRequest {
   username: string;
