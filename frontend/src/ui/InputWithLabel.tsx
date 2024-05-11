@@ -3,6 +3,7 @@ import Input from "./Input.tsx";
 
 interface InputWithLabelProps extends ComponentProps<"input"> {
   label: string;
+  type: "text" | "password";
 }
 
 function InputWithLabel({ label, name, ...rest }: InputWithLabelProps) {

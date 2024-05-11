@@ -10,5 +10,6 @@ public interface UserApiMapper {
     LoginResponse map(AuthenticationResponse response);
 
     @Mapping(target = "name", source = "username")
+    @Mapping(target = "role", source = "role")
     UserResponse map(User user);
 }

@@ -2,7 +2,7 @@ import { ApiError, NetworkError } from "models/Errors.ts";
 
 export interface ApiRequest {
   url: string;
-  token?: string;
+  token: string | null;
   method?: Request["method"];
   params?: Record<string, string>;
   headers?: HeadersInit;

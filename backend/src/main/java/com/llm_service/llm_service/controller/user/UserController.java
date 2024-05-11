@@ -1,6 +1,7 @@
 package com.llm_service.llm_service.controller.user;
 
 import com.llm_service.llm_service.dto.User;
+import com.llm_service.llm_service.exception.UnAuthorizedException;
 import com.llm_service.llm_service.exception.user.UserAlreadyExistsException;
 import com.llm_service.llm_service.exception.user.UserNotFoundException;
 import com.llm_service.llm_service.exception.user.UsernameAlreadyExistsException;
@@ -24,6 +25,20 @@ public class UserController {
     public UserController(AuthenticationService authenticationService, UserApiMapper userApiMapper) {
         this.authenticationService = authenticationService;
         this.userApiMapper = userApiMapper;
+    }
+
+    @ApiResponses(
+            value = {
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "Get Current User Data",
+                        content = {@Content(mediaType = "application/json")})
+            })
+    @Operation(summary = "get the current user")
+    @GetMapping("/me")
+    public ResponseEntity<UserResponse> register() throws UnAuthorizedException {
+        User user = authenticationService.getUser().orElseThrow(UnAuthorizedException::new);
+        return ResponseEntity.status(HttpStatus.OK).body(userApiMapper.map(user));
     }
 
     @ApiResponses(
