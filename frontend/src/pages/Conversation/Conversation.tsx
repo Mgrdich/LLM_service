@@ -5,7 +5,6 @@ import Navbar from "./Navbar/Navbar.tsx";
 import Discussions from "./Discussions/Discussions.tsx";
 import Prompt from "./Prompt/Prompt.tsx";
 
-// TODO this might need an id in the future
 function Conversation() {
   const { id } = useParams();
 
