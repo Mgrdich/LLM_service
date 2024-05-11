@@ -14,7 +14,7 @@ function Conversation() {
     <Grid
       className="h-screen bg-neutral-50 dark:bg-neutral-900"
       gridTemplateColumns="20% 80%"
-      gridTemplateRows="90.30% 9.70%"
+      gridTemplateRows="85% 15%"
     >
       <GridItem gridColumn="1" gridRow="1/3" className="bg-neutral-900 ml-2 mr-2">
         <Navbar id={id} />

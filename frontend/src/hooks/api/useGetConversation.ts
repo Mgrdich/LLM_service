@@ -14,5 +14,6 @@ export default function useGetConversation(id: ConversationId) {
       // TODO add zod validation
       return conversation;
     },
+    staleTime: 5 * 60 * 60,
   });
 }
