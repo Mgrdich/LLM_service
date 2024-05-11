@@ -29,15 +29,14 @@ public class UserController {
 
     @ApiResponses(
             value = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Get Current User Data",
-                            content = {@Content(mediaType = "application/json")})
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "Get Current User Data",
+                        content = {@Content(mediaType = "application/json")})
             })
     @Operation(summary = "get the current user")
     @GetMapping("/me")
-    public ResponseEntity<UserResponse> register()
-            throws UnAuthorizedException {
+    public ResponseEntity<UserResponse> register() throws UnAuthorizedException {
         User user = authenticationService.getUser().orElseThrow(UnAuthorizedException::new);
         return ResponseEntity.status(HttpStatus.OK).body(userApiMapper.map(user));
     }
