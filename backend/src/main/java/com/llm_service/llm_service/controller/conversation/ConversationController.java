@@ -2,6 +2,7 @@ package com.llm_service.llm_service.controller.conversation;
 
 import com.llm_service.llm_service.dto.Conversation;
 import com.llm_service.llm_service.dto.Discussion;
+import com.llm_service.llm_service.exception.UnAuthorizedException;
 import com.llm_service.llm_service.exception.conversation.ConversationNotFoundException;
 import com.llm_service.llm_service.service.ConversationService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,8 +35,7 @@ public class ConversationController {
             })
     @Operation(summary = "Get all conversations")
     @GetMapping
-    public ResponseEntity<List<ConversationResponseCompact>> getAllConversations()
-            throws ConversationNotFoundException {
+    public ResponseEntity<List<ConversationResponseCompact>> getAllConversations() throws UnAuthorizedException {
         return ResponseEntity.ok(conversationService.getAll().stream()
                 .map(conversationApiMapper::mapCompact)
                 .toList());
@@ -51,7 +51,7 @@ public class ConversationController {
     @Operation(summary = "Get conversation by ID")
     @GetMapping("/{id}")
     public ResponseEntity<ConversationResponse> getConversationById(@PathVariable UUID id)
-            throws ConversationNotFoundException {
+            throws ConversationNotFoundException, UnAuthorizedException {
         Conversation conversation =
                 conversationService.getByID(id).orElseThrow(() -> new ConversationNotFoundException(id));
 
@@ -84,7 +84,7 @@ public class ConversationController {
     @PutMapping("/{id}/continue")
     public ResponseEntity<List<DiscussionResponse>> continueConversation(
             @PathVariable UUID id, @RequestBody ConversationRequest conversationRequest)
-            throws ConversationNotFoundException {
+            throws ConversationNotFoundException, UnAuthorizedException {
         Conversation conversation =
                 conversationService.getByID(id).orElseThrow(() -> new ConversationNotFoundException(id));
         List<Discussion> discussions = conversationService.askLlmQuestion(conversation, conversationRequest.getText());
@@ -119,7 +119,8 @@ public class ConversationController {
             })
     @Operation(summary = "deletes a conversation")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteConversation(@PathVariable UUID id) throws ConversationNotFoundException {
+    public ResponseEntity<Void> deleteConversation(@PathVariable UUID id)
+            throws ConversationNotFoundException, UnAuthorizedException {
         conversationService.getByID(id).orElseThrow(() -> new ConversationNotFoundException(id));
         conversationService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body(null);
@@ -143,5 +144,10 @@ public class ConversationController {
     public ResponseEntity<String> handleConversationNotFoundException(
             ConversationNotFoundException conversationNotFoundException) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(conversationNotFoundException.getMessage());
+    }
+
+    @ExceptionHandler(UnAuthorizedException.class)
+    public ResponseEntity<String> handleUnAuthorized(UnAuthorizedException unAuthorizedException) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(unAuthorizedException.getMessage());
     }
 }

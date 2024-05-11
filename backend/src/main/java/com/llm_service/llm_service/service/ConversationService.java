@@ -3,7 +3,7 @@ package com.llm_service.llm_service.service;
 import com.llm_service.llm_service.dto.Conversation;
 import com.llm_service.llm_service.dto.Discussion;
 import com.llm_service.llm_service.dto.User;
-import com.llm_service.llm_service.exception.conversation.ConversationNotFoundException;
+import com.llm_service.llm_service.exception.UnAuthorizedException;
 import com.llm_service.llm_service.persistance.entities.DiscussionRole;
 import com.llm_service.llm_service.persistance.repositories.conversation.ConversationPersistenceManager;
 import com.llm_service.llm_service.persistance.repositories.discussion.DiscussionPersistenceManager;
@@ -35,36 +35,32 @@ public class ConversationService {
         return conversationPersistenceManager.save(conversation, user.get());
     }
 
-    public List<Conversation> getAll() throws ConversationNotFoundException {
+    public List<Conversation> getAll() throws UnAuthorizedException {
         Optional<User> user = userContext.getUserFromContext();
 
         if (user.isEmpty()) {
-            // TODO fix it later
-            throw new ConversationNotFoundException();
+            throw new UnAuthorizedException();
         }
 
         return conversationPersistenceManager.findAll(user.get().getId());
     }
 
-    public Optional<Conversation> getByID(UUID id) throws ConversationNotFoundException {
+    public Optional<Conversation> getByID(UUID id) throws UnAuthorizedException {
         Optional<User> user = userContext.getUserFromContext();
         if (user.isEmpty()) {
-            // TODO fix it later
-            throw new ConversationNotFoundException();
+            throw new UnAuthorizedException();
         }
 
         return conversationPersistenceManager.findById(id, user.get().getId());
     }
 
     // TODO optimize this fetching mechanism
-    public List<Discussion> askLlmQuestion(Conversation conversation, String text)
-            throws ConversationNotFoundException {
+    public List<Discussion> askLlmQuestion(Conversation conversation, String text) throws UnAuthorizedException {
 
         Optional<User> user = userContext.getUserFromContext();
 
         if (user.isEmpty()) {
-            // TODO fix it later
-            throw new ConversationNotFoundException();
+            throw new UnAuthorizedException();
         }
 
         Discussion discussionFromUserParam =
