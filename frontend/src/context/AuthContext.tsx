@@ -18,8 +18,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     if (token) {
-      const constructedToken = `Bearer ${token}`;
-      localStorage.setItem("token", constructedToken);
+      localStorage.setItem("token", token);
     } else {
       localStorage.removeItem("token");
       queryClient.clear();

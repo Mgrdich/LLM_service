@@ -3,8 +3,8 @@ import { ConversationId } from "models/Id.ts";
 import { useNavigate } from "react-router-dom";
 import useGetUser from "hooks/api/useGetUser.ts";
 import { Roles } from "models/User.ts";
+import useLogout from "hooks/api/useLogout.ts";
 import Conversations from "./Conversations.tsx";
-import useLogout from "../../../hooks/api/useLogout.ts";
 
 interface NavbarProps {
   id: ConversationId;
@@ -20,7 +20,9 @@ function Navbar({ id }: NavbarProps) {
       <Button className="my-4 w-full bg-blue-500 text-white" onClick={() => navigate("/conversation")}>
         New Chat
       </Button>
-      <Button onClick={logout}>Logout</Button>
+      <Button onClick={logout} className="my-4">
+        Logout
+      </Button>
       {data?.role === Roles.PAID && <Conversations id={id} />}
     </div>
   );
