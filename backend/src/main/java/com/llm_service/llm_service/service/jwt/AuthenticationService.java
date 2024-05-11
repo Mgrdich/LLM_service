@@ -3,6 +3,7 @@ package com.llm_service.llm_service.service.jwt;
 import com.llm_service.llm_service.controller.user.LoginRequest;
 import com.llm_service.llm_service.controller.user.UserRequest;
 import com.llm_service.llm_service.dto.User;
+import com.llm_service.llm_service.exception.UnAuthorizedException;
 import com.llm_service.llm_service.exception.user.UserNotFoundException;
 import com.llm_service.llm_service.exception.user.UsernameAlreadyExistsException;
 import com.llm_service.llm_service.persistance.entities.UserEntity;
@@ -10,6 +11,9 @@ import com.llm_service.llm_service.persistance.repositories.token.TokenPersisten
 import com.llm_service.llm_service.persistance.repositories.user.UserEntityMapper;
 import com.llm_service.llm_service.persistance.repositories.user.UserPersistenceManager;
 import java.util.List;
+import java.util.Optional;
+
+import com.llm_service.llm_service.service.user.UserContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,6 +35,12 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     private final UserEntityMapper userEntityMapper;
+
+    private final UserContext userContext;
+
+    public Optional<User> getUser() {
+        return userContext.getUserFromContext();
+    }
 
     public User register(UserRequest userRequest) throws UsernameAlreadyExistsException {
         User user = User.builder()
