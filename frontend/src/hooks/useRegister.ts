@@ -1,12 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
 import { RolesType } from "models/User.ts";
 import useApi from "./useApi.ts";
-import { LoginPath } from "./api/constants.ts";
+import { RegisterPath } from "./api/constants.ts";
 
 interface RegisterRequest {
   username: string;
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   role: RolesType;
   password: string;
 }
@@ -14,10 +14,10 @@ interface RegisterRequest {
 export default function useRegister() {
   const callApi = useApi();
   return useMutation({
-    mutationFn: ({ username, password, firstname, lastname, role }: RegisterRequest) =>
+    mutationFn: ({ username, password, firstName, lastName, role }: RegisterRequest) =>
       callApi<{ name: string }>({
-        url: LoginPath,
-        body: { username, password, firstname, lastname, role },
+        url: RegisterPath,
+        body: { username, password, firstName, lastName, role },
         method: "POST",
       }),
   });
