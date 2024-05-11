@@ -6,7 +6,7 @@ import ForgotPassword from "pages/Auth/ForgotPassword.tsx";
 import Error404 from "pages/Error/Error404.tsx";
 import Error500 from "pages/Error/Error500.tsx";
 import Conversation from "pages/Conversation/Conversation.tsx";
-import { useAuth } from "context/AuthContext.tsx";
+import useAuth from "context/useAuth.ts";
 import Welcome from "pages/Welcome/Welcome.tsx";
 import ConversationRedirect from "pages/Conversation/ConversationRedirect.tsx";
 import ProtectedRoute from "./ProtectedRoute.tsx";

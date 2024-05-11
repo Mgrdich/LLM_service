@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { api, ApiRequest } from "utils/api.ts";
-import { useAuth } from "context/AuthContext.tsx";
+import useAuth from "context/useAuth.ts";
 
 type CallApiArgs = Omit<ApiRequest, "token">;
 

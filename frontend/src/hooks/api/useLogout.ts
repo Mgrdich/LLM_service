@@ -1,4 +1,4 @@
-import { useAuth } from "context/AuthContext.tsx";
+import useAuth from "context/useAuth.ts";
 
 export default function useLogout() {
   const { setToken } = useAuth();

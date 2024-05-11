@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { useAuth } from "context/AuthContext.tsx";
+import useAuth from "context/useAuth.ts";
 import useApi from "./useApi.ts";
 import { LoginPath } from "./api/constants.ts";
 
