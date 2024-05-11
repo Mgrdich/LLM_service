@@ -6,4 +6,8 @@ public class ConversationNotFoundException extends Exception {
     public ConversationNotFoundException(UUID id) {
         super("Conversation with id " + id + " is not found");
     }
+
+    public ConversationNotFoundException() {
+        super("Conversation with is not found");
+    }
 }

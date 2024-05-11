@@ -17,7 +17,7 @@ public interface ConversationApiMapper {
 
     @Mapping(target = "title", source = "title", defaultValue = "Untitled")
     @Mapping(target = "discussions", source = "discussions")
-    ConversationResponseCompact mapList(Conversation conversation);
+    ConversationResponseCompact mapCompact(Conversation conversation);
 
     default List<Discussion> defaultDiscussions() {
         return new ArrayList<>();

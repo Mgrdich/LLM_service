@@ -15,6 +15,10 @@ public class ConversationEntity extends BaseEntity {
     @OneToMany(mappedBy = "conversation", orphanRemoval = true)
     private List<DiscussionEntity> discussions;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
     @Column(name = "title")
     private String title;
 
