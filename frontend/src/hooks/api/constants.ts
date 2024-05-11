@@ -14,3 +14,5 @@ export const getContinueConversationPath = (id: ConversationId) => `${getConvers
 
 // User
 export const UserPath = `${basePath}/me`;
+export const LoginPath = `${basePath}/login`;
+export const RegisterPath = `${basePath}/register`;
