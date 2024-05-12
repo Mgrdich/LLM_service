@@ -51,7 +51,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(req -> req.requestMatchers(
                                 "/api/v1/login/**", "/api/v1/register/**", "/api/v1/forget-password/**", "/swagger-ui/**", "/v3/api-docs/**")
                         .permitAll()
-                        .requestMatchers("/paid/**")
+                        .requestMatchers("/api/v1/paid/**")
                         .hasAuthority(Role.PAID.name())
                         .anyRequest()
                         .authenticated())

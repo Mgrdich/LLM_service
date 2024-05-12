@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/conversation")
 public class ConversationController {
 
     private final ConversationService conversationService;
@@ -33,7 +32,7 @@ public class ConversationController {
                         content = {@Content(mediaType = "application/json")})
             })
     @Operation(summary = "Get all conversations")
-    @GetMapping("/paid")
+    @GetMapping(value = "/api/v1/paid/conversation")
     public ResponseEntity<List<ConversationResponseCompact>> getAllConversations() throws UnAuthorizedException {
         return ResponseEntity.ok(conversationService.getAll().stream()
                 .map(conversationApiMapper::mapCompact)
@@ -48,7 +47,7 @@ public class ConversationController {
                         content = {@Content(mediaType = "application/json")})
             })
     @Operation(summary = "Get conversation by ID")
-    @GetMapping("/{id}")
+    @GetMapping("/api/v1/conversation/{id}")
     public ResponseEntity<ConversationResponse> getConversationById(@PathVariable UUID id)
             throws ConversationNotFoundException, UnAuthorizedException {
         Conversation conversation =
@@ -65,7 +64,7 @@ public class ConversationController {
                         content = {@Content(mediaType = "application/json")})
             })
     @Operation(summary = "Create new conversation")
-    @PostMapping
+    @PostMapping("/api/v1/conversation")
     public ResponseEntity<ConversationResponse> createConversation() throws Exception {
         Conversation conversation = conversationService.start();
 
@@ -80,7 +79,7 @@ public class ConversationController {
                         content = {@Content(mediaType = "application/json")})
             })
     @Operation(summary = "Continue conversation using conversation ID")
-    @PutMapping("/{id}/continue")
+    @PutMapping("/api/v1/conversation/{id}/continue")
     public ResponseEntity<List<DiscussionResponse>> continueConversation(
             @PathVariable UUID id, @RequestBody ConversationRequest conversationRequest)
             throws ConversationNotFoundException, UnAuthorizedException {
@@ -99,7 +98,7 @@ public class ConversationController {
                         content = {@Content(mediaType = "application/json")})
             })
     @Operation(summary = "update conversation title")
-    @PutMapping("/{id}")
+    @PutMapping("/api/v1/conversation/{id}")
     public ResponseEntity<ConversationResponseCompact> editConversation(
             @PathVariable UUID id, @RequestBody ConversationTitleRequest conversationTitleRequest) throws Exception {
         Conversation conversation =
@@ -117,7 +116,7 @@ public class ConversationController {
                         content = {@Content(mediaType = "application/json")})
             })
     @Operation(summary = "deletes a conversation")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/api/v1/conversation/{id}")
     public ResponseEntity<Void> deleteConversation(@PathVariable UUID id)
             throws ConversationNotFoundException, UnAuthorizedException {
         conversationService.getByID(id).orElseThrow(() -> new ConversationNotFoundException(id));
@@ -133,7 +132,7 @@ public class ConversationController {
                         content = {@Content(mediaType = "application/json")})
             })
     @Operation(summary = "deletes all conversations")
-    @DeleteMapping
+    @DeleteMapping("/api/v1/conversation")
     public ResponseEntity<Void> deleteConversation() {
         conversationService.deleteAll();
         return ResponseEntity.status(HttpStatus.OK).body(null);
