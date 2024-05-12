@@ -41,11 +41,7 @@ function Login() {
               onInput={(e) => setPassword(e.currentTarget.value)}
             />
           </div>
-          <div className="flex justify-between items-center mb-6">
-            <div className="ml-4">
-              <LinkText to="/forgot-password">Forgot password ?</LinkText>
-            </div>
-          </div>
+          <div className="flex justify-between items-center mb-6" />
           <Button disabled={isPending} className="w-full" onClick={onSubmit}>
             Sign In
           </Button>

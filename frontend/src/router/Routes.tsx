@@ -2,7 +2,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useMemo } from "react";
 import Login from "pages/Auth/Login.tsx";
 import Register from "pages/Auth/Register.tsx";
-import ForgotPassword from "pages/Auth/ForgotPassword.tsx";
 import Error404 from "pages/Error/Error404.tsx";
 import Error500 from "pages/Error/Error500.tsx";
 import Conversation from "pages/Conversation/Conversation.tsx";
@@ -56,10 +55,10 @@ const routesForNotAuthenticatedOnly = [
     path: "/register",
     Component: Register,
   },
-  {
-    path: "/forgot-password",
-    Component: ForgotPassword,
-  },
+  // {
+  //   path: "/forgot-password",
+  //   Component: ForgotPassword,
+  // },
 ];
 
 export default function Routes() {

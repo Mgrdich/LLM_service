@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 
 interface FormSubmitButtonProps extends PropsWithChildren {
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 function FormSubmitButton({ children, disabled }: FormSubmitButtonProps) {
