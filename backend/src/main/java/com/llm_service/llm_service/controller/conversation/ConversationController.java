@@ -34,7 +34,7 @@ public class ConversationController {
                         content = {@Content(mediaType = "application/json")})
             })
     @Operation(summary = "Get all conversations")
-    @GetMapping
+    @GetMapping("/paid")
     public ResponseEntity<List<ConversationResponseCompact>> getAllConversations() throws UnAuthorizedException {
         return ResponseEntity.ok(conversationService.getAll().stream()
                 .map(conversationApiMapper::mapCompact)

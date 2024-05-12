@@ -5,8 +5,8 @@ import Button from "ui/Button.tsx";
 import useGetConversations from "hooks/api/useGetConversations.ts";
 import { ConversationId } from "models/Id.ts";
 import { useNavigate } from "react-router-dom";
+import useDeleteConversation from "hooks/api/useDeleteConversation.ts";
 import EditConversationModal from "./EditConversationModal.tsx";
-import useDeleteConversation from "../../../hooks/api/useDeleteConversation.ts";
 
 interface ConversationProps {
   id: ConversationId;
@@ -36,6 +36,8 @@ function Conversations({ id }: ConversationProps) {
     if (data?.[index + 1]) {
       navigate(`/conversation/${data?.[index + 1].id}`);
     }
+
+    navigate("/conversation");
   };
 
   return (

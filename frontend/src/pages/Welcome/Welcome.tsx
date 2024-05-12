@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import useAuth from "context/useAuth.ts";
 
 function Welcome() {
+  const { token } = useAuth();
+
   return (
     <div className="bg-neutral-50 px-2 py-6 text-center dark:bg-neutral-900 md:px-12 lg:text-left min-h-screen">
       <div className="w-100 mx-auto sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl">
@@ -34,7 +37,7 @@ function Welcome() {
               md:mr-2 md:mb-0"
               data-te-ripple-init=""
               data-te-ripple-color="light"
-              to="/login"
+              to={token ? "/conversation" : "/login"}
               role="button"
             >
               Get started

@@ -8,7 +8,7 @@ export const Queries = {
 const basePath = import.meta.env.VITE_APP_BASE_URL;
 
 // Conversation
-export const ConversationsPath = `${basePath}/conversation`;
+export const ConversationsPath = `${basePath}/paid/conversation`;
 export const getConversationPath = (id: ConversationId) => `${basePath}/conversation/${id}`;
 export const getContinueConversationPath = (id: ConversationId) => `${getConversationPath(id)}/continue`;
 
