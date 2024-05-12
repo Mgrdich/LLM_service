@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import useApi from "hooks/useApi.ts";
 import { Conversation } from "models/Conversation.ts";
-import { ConversationsPath } from "./constants.ts";
+import { ConversationStartPath } from "./constants.ts";
 
 type OnSuccessCallback = (conversation: Conversation) => void;
 
@@ -11,7 +11,7 @@ export default function useStartConversation(onSuccessCallback: OnSuccessCallbac
   return useMutation<Conversation>({
     mutationFn: async () => {
       const conversation = await callApi<Conversation>({
-        url: ConversationsPath,
+        url: ConversationStartPath,
         method: "POST",
       });
       // TODO add zod validation
