@@ -9,9 +9,6 @@ import lombok.*;
 @Entity
 @Table(name = "discussion")
 @Data
-@Builder(toBuilder = true)
-@NoArgsConstructor
-@AllArgsConstructor
 public class DiscussionEntity extends BaseEntity {
 
     @Column(name = "text", columnDefinition = "TEXT")

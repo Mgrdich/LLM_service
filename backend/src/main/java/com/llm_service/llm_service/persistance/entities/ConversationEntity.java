@@ -9,9 +9,6 @@ import lombok.*;
         callSuper = true,
         exclude = {"discussions"})
 @Entity
-@Builder(toBuilder = true)
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "conversation")
 @Data
 public class ConversationEntity extends BaseEntity {
