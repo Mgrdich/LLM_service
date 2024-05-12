@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import useApi from "hooks/useApi.ts";
 import { LogoutPath } from "./constants.ts";
 
-export function useLogoutCall() {
+export default function useLogoutCall() {
   const callApi = useApi();
 
   return useMutation({
