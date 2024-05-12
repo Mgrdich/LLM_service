@@ -9,7 +9,7 @@ import lombok.*;
 @Entity
 @Table(name = "discussion")
 @Data
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class DiscussionEntity extends BaseEntity {

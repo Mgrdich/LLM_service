@@ -16,17 +16,20 @@ export default function useEditConversation() {
         body: { title },
       });
       // TODO add zod validation
+
       return conversation;
     },
     onSuccess: (conversation) => {
       const queryKey = [Queries.Conversation];
       queryClient.setQueryData(queryKey, (old: ConversationCompact[]) => {
-        old?.map((item) => {
+        const conversations = old?.map((item) => {
           if (item.id === conversation.id) {
             return conversation;
           }
           return item;
         });
+
+        return conversations;
       });
     },
   });

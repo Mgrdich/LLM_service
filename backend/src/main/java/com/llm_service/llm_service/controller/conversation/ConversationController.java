@@ -101,11 +101,16 @@ public class ConversationController {
     @PutMapping("/api/v1/conversation/{id}")
     public ResponseEntity<ConversationResponseCompact> editConversation(
             @PathVariable UUID id, @RequestBody ConversationTitleRequest conversationTitleRequest) throws Exception {
-        Conversation conversation =
+        Conversation conversationOld =
                 conversationService.getByID(id).orElseThrow(() -> new ConversationNotFoundException(id));
-        conversationService.editTitle(conversation, conversationTitleRequest.getTitle());
+        Conversation conversationNew =
+                conversationService.editTitle(conversationOld, conversationTitleRequest.getTitle());
 
-        return ResponseEntity.status(HttpStatus.OK).body(conversationApiMapper.mapCompact(conversation));
+        // TODO find why save does not return discussions
+        // TEMP Solution
+        conversationNew.setDiscussions(conversationOld.getDiscussions());
+
+        return ResponseEntity.status(HttpStatus.OK).body(conversationApiMapper.mapCompact(conversationNew));
     }
 
     @ApiResponses(
