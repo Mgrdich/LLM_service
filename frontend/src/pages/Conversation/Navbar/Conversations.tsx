@@ -54,7 +54,8 @@ function Conversations({ id }: ConversationProps) {
           <button
             type="button"
             className={clsx(
-              "truncate border-gray-600 border-2 p-2 text-white flex justify-between items-center w-full min-h-6",
+              "truncate border-gray-600 hover:border-blue-600 border-2 p-2 ",
+              "text-white flex justify-between items-center w-full min-h-6",
               {
                 "border-white": conversation.id === id,
               },
