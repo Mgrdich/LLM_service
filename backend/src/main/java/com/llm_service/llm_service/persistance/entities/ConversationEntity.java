@@ -2,7 +2,6 @@ package com.llm_service.llm_service.persistance.entities;
 
 import jakarta.persistence.*;
 import java.util.List;
-
 import lombok.*;
 
 @EqualsAndHashCode(
