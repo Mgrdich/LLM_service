@@ -1,5 +1,5 @@
 import useAuth from "context/useAuth.ts";
-import { useLogoutCall } from "./api/useLogoutCall.ts";
+import useLogoutCall from "./api/useLogoutCall.ts";
 
 export default function useLogout() {
   const { setToken } = useAuth();
