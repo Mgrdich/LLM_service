@@ -3,14 +3,14 @@ import Input from "./Input.tsx";
 
 interface InputWithLabelProps extends ComponentProps<"input"> {
   label: string;
-  type: "text" | "password";
+  type?: "text" | "password";
 }
 
-function InputWithLabel({ label, name, ...rest }: InputWithLabelProps) {
+function InputWithLabel({ type = "text", label, name, ...rest }: InputWithLabelProps) {
   return (
     <label htmlFor={label} className="form-label inline-block mb-2 text-gray-700 w-full">
       {label}
-      <Input id={name} name={name} {...rest} />
+      <Input id={name} type={type} name={name} {...rest} />
     </label>
   );
 }

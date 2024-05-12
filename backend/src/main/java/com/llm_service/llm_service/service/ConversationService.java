@@ -23,12 +23,11 @@ public class ConversationService {
     private final DiscussionPersistenceManager discussionPersistenceManager;
     private final UserContext userContext;
 
-    public Conversation start() throws Exception {
+    public Conversation start() throws UnAuthorizedException {
         Optional<User> user = userContext.getUserFromContext();
 
         if (user.isEmpty()) {
-            // TODO fix it later
-            throw new Exception("");
+            throw new UnAuthorizedException();
         }
 
         Conversation conversation = Conversation.builder().discussions(null).build();
@@ -106,15 +105,14 @@ public class ConversationService {
         conversationPersistenceManager.deleteAll();
     }
 
-    public void editTitle(Conversation conversation, String title) throws Exception {
+    public Conversation editTitle(Conversation conversation, String title) throws UnAuthorizedException {
         Optional<User> user = userContext.getUserFromContext();
 
         if (user.isEmpty()) {
-            // TODO fix it later
-            throw new Exception("");
+            throw new UnAuthorizedException();
         }
 
-        conversationPersistenceManager.save(
+        return conversationPersistenceManager.save(
                 conversation.toBuilder().title(title).build(), user.get());
     }
 

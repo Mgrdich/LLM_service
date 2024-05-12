@@ -10,7 +10,7 @@ export default function SpinLoader({ size }: SpinLoaderProps) {
         aria-hidden="true"
         className={clsx(
           {
-            "w-6 h-6": size === "xs",
+            "w-4 h-4": size === "xs",
             "w-8 h-8": size === "s",
             "w-10 h-10": size === "m",
             "w-16 h-16": size === "l",

@@ -3,7 +3,7 @@ import { ConversationId } from "models/Id.ts";
 import { useNavigate } from "react-router-dom";
 import useGetUser from "hooks/api/useGetUser.ts";
 import { Roles } from "models/User.ts";
-import useLogout from "hooks/api/useLogout.ts";
+import useLogout from "hooks/useLogout.ts";
 import Conversations from "./Conversations.tsx";
 
 interface NavbarProps {

@@ -8,7 +8,7 @@ function Button({ className, ...rest }: ButtonProps) {
     <button
       className={twMerge(
         "bg-blue-500 p-2 rounded hover:bg-blue-300 disabled:bg-blue-200 disabled:cursor-not-allowed" +
-          " px-12 pt-4 pb-3.5 text-white",
+          "px-12 pt-4 pb-3.5 text-white",
         className,
       )}
       type="button"

@@ -5,6 +5,7 @@ import Button from "ui/Button.tsx";
 import useGetConversations from "hooks/api/useGetConversations.ts";
 import { ConversationId } from "models/Id.ts";
 import { useNavigate } from "react-router-dom";
+import useDeleteConversation from "hooks/api/useDeleteConversation.ts";
 import EditConversationModal from "./EditConversationModal.tsx";
 
 interface ConversationProps {
@@ -18,7 +19,27 @@ function Conversations({ id }: ConversationProps) {
   };
 
   const { data, isFetching, isError } = useGetConversations();
+  const { mutateAsync } = useDeleteConversation();
   const [modalConversationId, setModalConversationId] = useState("");
+
+  const onDelete = async (conversationId: ConversationId) => {
+    await mutateAsync(conversationId);
+    const index = data?.findIndex((item) => item.id);
+
+    if (!index) return;
+
+    if (data?.[index - 1]) {
+      navigate(`/conversation/${data?.[index - 1].id}`);
+      return;
+    }
+
+    if (data?.[index + 1]) {
+      navigate(`/conversation/${data?.[index + 1].id}`);
+    }
+
+    navigate("/conversation");
+  };
+
   return (
     <>
       <div
@@ -32,22 +53,36 @@ function Conversations({ id }: ConversationProps) {
         {data?.map((conversation) => (
           <button
             type="button"
-            className={clsx("truncate border-2 p-2 text-white flex justify-between items-center w-full min-h-8", {
-              "border-gray-600": conversation.id === id,
-            })}
+            className={clsx(
+              "truncate border-gray-600 border-2 p-2 text-white flex justify-between items-center w-full min-h-6",
+              {
+                "border-white": conversation.id === id,
+              },
+            )}
             key={conversation.id}
             onClick={() => onConversationClick(conversation.id)}
           >
             {conversation.title || "Untitled"}
-            <Button
-              onClick={(e) => {
-                e.stopPropagation();
-                setModalConversationId(conversation.id);
-              }}
-              className="text-white"
-            >
-              Edit
-            </Button>
+            <div>
+              <Button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setModalConversationId(conversation.id);
+                }}
+                className="bg-transparent hover:bg-transparent hover:text-blue-400"
+              >
+                Edit
+              </Button>
+              <Button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDelete(conversation.id);
+                }}
+                className="bg-transparent hover:bg-transparent hover:text-blue-400"
+              >
+                Delete
+              </Button>
+            </div>
           </button>
         ))}
       </div>

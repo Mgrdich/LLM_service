@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin("http://localhost:4040")
 @RestController
 public class UserController {
     private final AuthenticationService authenticationService;
@@ -35,7 +34,7 @@ public class UserController {
                         content = {@Content(mediaType = "application/json")})
             })
     @Operation(summary = "get the current user")
-    @GetMapping("/me")
+    @GetMapping("/api/v1/me")
     public ResponseEntity<UserResponse> register() throws UnAuthorizedException {
         User user = authenticationService.getUser().orElseThrow(UnAuthorizedException::new);
         return ResponseEntity.status(HttpStatus.OK).body(userApiMapper.map(user));
@@ -49,7 +48,7 @@ public class UserController {
                         content = {@Content(mediaType = "application/json")})
             })
     @Operation(summary = "register the user")
-    @PostMapping("/register")
+    @PostMapping("/api/v1/register")
     public ResponseEntity<UserResponse> register(@RequestBody UserRequest userRequest)
             throws UsernameAlreadyExistsException {
         User user = authenticationService.register(userRequest);
@@ -64,7 +63,7 @@ public class UserController {
                         content = {@Content(mediaType = "application/json")})
             })
     @Operation(summary = "login phase of the user")
-    @PostMapping("/login")
+    @PostMapping("/api/v1/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest)
             throws UserNotFoundException, AuthenticationException {
         AuthenticationResponse authenticationResponse = authenticationService.authenticate(loginRequest);

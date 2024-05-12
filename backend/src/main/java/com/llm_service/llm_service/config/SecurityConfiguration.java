@@ -3,6 +3,8 @@ package com.llm_service.llm_service.config;
 import com.llm_service.llm_service.persistance.entities.Role;
 import com.llm_service.llm_service.service.jwt.filter.JwtAuthenticationFilter;
 import com.llm_service.llm_service.service.user.UserDetailsServiceImp;
+import java.util.Arrays;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
 @EnableWebSecurity
@@ -35,10 +38,21 @@ public class SecurityConfiguration {
 
         // TODO fix the swagger security config
         return http.csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(request -> {
+                    CorsConfiguration config = new CorsConfiguration();
+                    config.setAllowedOrigins(List.of("*"));
+                    config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                    config.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+                    return config;
+                }))
                 .authorizeHttpRequests(req -> req.requestMatchers(
-                                "/login/**", "/register/**", "/forget-password/**", "/swagger-ui/**", "/v3/api-docs/**")
+                                "/api/v1/login/**",
+                                "/api/v1/register/**",
+                                "/api/v1/forget-password/**",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**")
                         .permitAll()
-                        .requestMatchers("/paid/**")
+                        .requestMatchers("/api/v1/paid/**")
                         .hasAuthority(Role.PAID.name())
                         .anyRequest()
                         .authenticated())
@@ -48,7 +62,7 @@ public class SecurityConfiguration {
                 .exceptionHandling(e -> e.accessDeniedHandler((request, response, accessDeniedException) ->
                                 response.setStatus(HttpStatus.FORBIDDEN.value()))
                         .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
-                .logout(l -> l.logoutUrl("/logout")
+                .logout(l -> l.logoutUrl("/api/v1/logout")
                         .addLogoutHandler(logoutHandler)
                         .logoutSuccessHandler(
                                 (request, response, authentication) -> SecurityContextHolder.clearContext()))
