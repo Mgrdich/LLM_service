@@ -17,13 +17,13 @@ function Navbar({ id }: NavbarProps) {
 
   return (
     <div className="bg-neutral-50 p-2 h-full flex flex-col items-center dark:bg-neutral-900">
-      <Button className="my-4 w-full bg-blue-500 text-white" onClick={() => navigate("/conversation")}>
+      <Button className="my-4 w-full" onClick={() => navigate("/conversation")}>
         New Chat
       </Button>
-      <Button onClick={logout} className="my-4">
+      {data?.role === Roles.PAID && <Conversations id={id} />}
+      <Button onClick={logout} className="my-4 w-full bg-red-600 hover:bg-red-800">
         Logout
       </Button>
-      {data?.role === Roles.PAID && <Conversations id={id} />}
     </div>
   );
 }

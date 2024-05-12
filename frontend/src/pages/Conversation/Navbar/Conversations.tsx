@@ -6,6 +6,7 @@ import useGetConversations from "hooks/api/useGetConversations.ts";
 import { ConversationId } from "models/Id.ts";
 import { useNavigate } from "react-router-dom";
 import useDeleteConversation from "hooks/api/useDeleteConversation.ts";
+import { ConversationCompact } from "models/Conversation.ts";
 import EditConversationModal from "./EditConversationModal.tsx";
 
 interface ConversationProps {
@@ -20,7 +21,7 @@ function Conversations({ id }: ConversationProps) {
 
   const { data, isFetching, isError } = useGetConversations();
   const { mutateAsync } = useDeleteConversation();
-  const [modalConversationId, setModalConversationId] = useState("");
+  const [modalConversation, setModalConversation] = useState<ConversationCompact | null>(null);
 
   const onDelete = async (conversationId: ConversationId) => {
     await mutateAsync(conversationId);
@@ -63,31 +64,33 @@ function Conversations({ id }: ConversationProps) {
             key={conversation.id}
             onClick={() => onConversationClick(conversation.id)}
           >
-            {conversation.title || "Untitled"}
+            <div className="w-full truncate text-left">{conversation.title || "Untitled"}</div>
             <div>
               <Button
                 onClick={(e) => {
                   e.stopPropagation();
-                  setModalConversationId(conversation.id);
+                  setModalConversation(conversation);
                 }}
                 className="bg-transparent hover:bg-transparent hover:text-blue-400"
               >
-                Edit
+                <span className="text-blue-400 hover:text-blue-900">Edit</span>
               </Button>
               <Button
                 onClick={(e) => {
                   e.stopPropagation();
                   onDelete(conversation.id);
                 }}
-                className="bg-transparent hover:bg-transparent hover:text-blue-400"
+                className="bg-transparent hover:bg-transparent hover:text-red-400"
               >
-                Delete
+                <span className="text-red-400 hover:text-red-800">Delete</span>
               </Button>
             </div>
           </button>
         ))}
       </div>
-      <EditConversationModal id={modalConversationId} unSetId={() => setModalConversationId("")} />
+      {modalConversation && (
+        <EditConversationModal conversation={modalConversation} unSet={() => setModalConversation(null)} />
+      )}
     </>
   );
 }
