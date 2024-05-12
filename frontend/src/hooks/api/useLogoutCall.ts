@@ -10,6 +10,7 @@ export function useLogoutCall() {
       callApi({
         method: "POST",
         url: LogoutPath,
+        responseAs: "text",
       }),
   });
 }

@@ -5,7 +5,7 @@ export const Queries = {
   User: "User",
 } as const;
 
-const basePath = import.meta.env.VITE_APP_BASE_URL;
+const basePath = `${import.meta.env.VITE_APP_BASE_URL}/api/v1`;
 
 // Conversation
 export const ConversationStartPath = `${basePath}/conversation`;

@@ -13,11 +13,12 @@ export default function useDeleteConversation() {
       await callApi<void>({
         url: getConversationPath(id),
         method: "DELETE",
+        responseAs: "text",
       });
     },
     onSuccess: (_, id) => {
       const queryKey = [Queries.Conversation];
-      queryClient.setQueryData(queryKey, (old: ConversationCompact[]) => old?.filter((item) => item.id === id));
+      queryClient.setQueryData(queryKey, (old: ConversationCompact[]) => old?.filter((item) => item.id !== id));
     },
   });
 }

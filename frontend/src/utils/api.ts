@@ -73,6 +73,7 @@ export const api = async <TData>({
       body: rawBody ? body : JSON.stringify(body),
     });
 
+    console.log("ss");
     if (!response.ok) {
       const errBody = await response.json();
       throw new ApiError(response, errBody);
