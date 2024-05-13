@@ -15,24 +15,22 @@ type LoginForm = {
 
 export const LoginSchema: ZodType<LoginForm> = z.object({
   username: z.string().min(4).max(30),
-  password: z
-    .string()
-    .min(8)
-    .max(30)
-    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/),
+  password: z.string().min(8).max(30),
 });
 
 export default function Login() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isLoading, isValid },
-  } = useForm<LoginForm>({ resolver: zodResolver(LoginSchema) });
+    formState: { errors, isValid, isSubmitting },
+  } = useForm<LoginForm>({ mode: "all", resolver: zodResolver(LoginSchema) });
 
   const { mutateAsync } = useLogin();
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<LoginForm> = async ({ username, password }) => {
+    if (!isValid) return;
+
     await mutateAsync({ username, password });
     navigate("/conversation");
   };
@@ -42,7 +40,7 @@ export default function Login() {
       <h1 className="mt-0 mb-16 text-5xl text-white font-bold tracking-tight md:text-5xl xl:text-5xl self-center">
         Welcome Back :)
       </h1>
-      <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
+      <div className="block p-6 rounded-lg shadow-lg bg-white max-w-l">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group mb-6">
             <InputWithLabel label="Username" type="text" placeholder="Enter Username" {...register("username")} />
@@ -53,7 +51,7 @@ export default function Login() {
             <ErrorLabel error={errors.password} />
           </div>
           <div className="flex justify-between items-center mb-6" />
-          <FormSubmitButton disabled={isLoading || !isValid}>Sign In</FormSubmitButton>
+          <FormSubmitButton disabled={isSubmitting || !isValid}>Sign In</FormSubmitButton>
           <div className="text-gray-800 mt-6 text-center">
             Not a member?
             <LinkText to="/register">Register</LinkText>

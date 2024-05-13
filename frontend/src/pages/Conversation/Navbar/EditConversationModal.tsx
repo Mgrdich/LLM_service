@@ -30,8 +30,9 @@ function EditConversationModal({ conversation, unSet }: EditModalProps) {
   const {
     register,
     handleSubmit,
-    formState: { errors, isLoading, isValid },
+    formState: { errors, isSubmitting, isValid },
   } = useForm<EditTitleForm>({
+    mode: "all",
     defaultValues: { title: conversation.title },
     resolver: zodResolver(getEditSchema(conversation.title)),
   });
@@ -39,6 +40,8 @@ function EditConversationModal({ conversation, unSet }: EditModalProps) {
   const { mutateAsync } = useEditConversation();
 
   const onSubmit: SubmitHandler<EditTitleForm> = async ({ title }) => {
+    if (!isValid) return;
+
     await mutateAsync({ title, id: conversation.id });
     unSet();
   };
@@ -48,7 +51,7 @@ function EditConversationModal({ conversation, unSet }: EditModalProps) {
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputWithLabel labelColor="white" label="New title" {...register("title")} />
         <ErrorLabel error={errors.title} />
-        <FormSubmitButton disabled={isLoading || !isValid}>Submit</FormSubmitButton>
+        <FormSubmitButton disabled={isSubmitting || !isValid}>Submit</FormSubmitButton>
       </form>
     </Modal>
   );

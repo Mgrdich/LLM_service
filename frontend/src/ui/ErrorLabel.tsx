@@ -5,5 +5,5 @@ interface ErrorLabelProps {
 }
 
 export default function ErrorLabel({ error }: ErrorLabelProps) {
-  return error && <div className="text-red-600">{error?.message}</div>;
+  return error && <div className="text-red-600 text-xs">{error?.message}</div>;
 }

@@ -40,12 +40,14 @@ function Register() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isLoading, isValid },
-  } = useForm<RegisterForm>({ resolver: zodResolver(RegisterSchema) });
+    formState: { errors, isSubmitting, isValid },
+  } = useForm<RegisterForm>({ mode: "all", resolver: zodResolver(RegisterSchema) });
 
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<RegisterForm> = async ({ username, password, firstName, lastName, premium }) => {
+    if (isValid) return;
+
     await mutateAsync({
       username,
       password,
@@ -61,7 +63,7 @@ function Register() {
       <h1 className="mt-0 mb-16 text-5xl text-white font-bold tracking-tight md:text-5xl xl:text-5xl self-center">
         Register Now
       </h1>
-      <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
+      <div className="block p-6 rounded-lg shadow-lg bg-white">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group mb-6">
             <InputWithLabel label="Username" type="text" placeholder="Enter Username" {...register("username")} />
@@ -93,7 +95,7 @@ function Register() {
             <Checkbox {...register("premium")} />
             <ErrorLabel error={errors.premium} />
           </div>
-          <FormSubmitButton disabled={isLoading || !isValid}>Register</FormSubmitButton>
+          <FormSubmitButton disabled={isSubmitting || !isValid}>Register</FormSubmitButton>
           <div className="text-gray-800 mt-6 text-center">
             Already have an account
             <LinkText to="/login">Log In</LinkText>

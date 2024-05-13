@@ -13,7 +13,7 @@ function Prompt({ id }: PromptProps) {
   const { mutate, isPending } = useContinueConversation(id);
   const [textValue, setTextValue] = useState("");
 
-  const submitQuestion = async () => {
+  const submitQuestion = () => {
     setTextValue("");
     mutate(textValue);
   };

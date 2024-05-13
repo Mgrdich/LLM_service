@@ -9,7 +9,7 @@ interface InputWithLabelProps extends ComponentProps<"input"> {
 }
 
 const InputWithLabel = forwardRef<HTMLInputElement, InputWithLabelProps>(
-  ({ labelColor = "gray", type = "text", label, name, ...rest }, ref) => (
+  ({ labelColor = "gray", type = "text", label, ...rest }, ref) => (
     <label
       htmlFor={label}
       className={clsx(
@@ -18,7 +18,7 @@ const InputWithLabel = forwardRef<HTMLInputElement, InputWithLabelProps>(
       )}
     >
       {label}
-      <Input id={name} type={type} name={name} {...rest} ref={ref} />
+      <Input id={rest.name} type={type} {...rest} ref={ref} />
     </label>
   ),
 );
