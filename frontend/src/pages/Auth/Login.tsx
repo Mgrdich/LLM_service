@@ -40,7 +40,7 @@ export default function Login() {
       <h1 className="mt-0 mb-16 text-5xl text-white font-bold tracking-tight md:text-5xl xl:text-5xl self-center">
         Welcome Back :)
       </h1>
-      <div className="block p-6 rounded-lg shadow-lg bg-white max-w-l">
+      <div className="block mb-10 p-6 rounded-lg shadow-lg bg-white max-w-lg w-full">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group mb-6">
             <InputWithLabel label="Username" type="text" placeholder="Enter Username" {...register("username")} />
