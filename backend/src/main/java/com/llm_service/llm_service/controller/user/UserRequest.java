@@ -1,6 +1,9 @@
 package com.llm_service.llm_service.controller.user;
 
+import com.llm_service.llm_service.constraint.ValidPassword;
+import com.llm_service.llm_service.constraint.ValidUsername;
 import com.llm_service.llm_service.persistance.entities.Role;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 
@@ -8,16 +11,16 @@ import lombok.extern.jackson.Jacksonized;
 @Builder
 @Jacksonized
 public class UserRequest {
-    @NonNull
+    @ValidUsername
     String username;
 
-    @NonNull
+    @ValidPassword
     String password;
 
-    @NonNull
+    @NotBlank(message = "firstname is required")
     String firstName;
 
-    @NonNull
+    @NotBlank(message = "lastname is required")
     String lastName;
 
     @NonNull

@@ -11,9 +11,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
+import java.util.HashMap;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -49,8 +53,15 @@ public class UserController {
             })
     @Operation(summary = "register the user")
     @PostMapping("/api/v1/register")
-    public ResponseEntity<UserResponse> register(@RequestBody UserRequest userRequest)
+    public ResponseEntity<?> register(@Valid @RequestBody UserRequest userRequest, BindingResult bindingResult)
             throws UsernameAlreadyExistsException {
+        if (bindingResult.hasErrors()) {
+            ValidationErrorResponse errorResponse = new ValidationErrorResponse(new HashMap<>());
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                errorResponse.addError(error.getField(), error.getDefaultMessage());
+            }
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
         User user = authenticationService.register(userRequest);
         return ResponseEntity.status(HttpStatus.OK).body(userApiMapper.map(user));
     }
