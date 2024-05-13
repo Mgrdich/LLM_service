@@ -29,6 +29,8 @@ function Conversations({ id }: ConversationProps) {
 
     if (!index) return;
 
+    // TODO this needs to be tested
+
     if (data?.[index - 1]) {
       navigate(`/conversation/${data?.[index - 1].id}`);
       return;
@@ -52,15 +54,17 @@ function Conversations({ id }: ConversationProps) {
         {isFetching && <SpinLoader size="l" />}
         {!isFetching && data && data.length === 0 && <div>No Conversation</div>}
         {data?.map((conversation) => (
-          <button
-            type="button"
+          <div
+            role="button"
             className={clsx(
               "truncate border-gray-600 hover:border-blue-600 border-2 p-2 ",
-              "text-white flex justify-between items-center w-full min-h-6",
+              "text-white flex justify-between items-center w-full min-h-6 cursor-pointer",
               {
                 "border-white": conversation.id === id,
               },
             )}
+            tabIndex={0}
+            onKeyDown={() => onConversationClick(conversation.id)}
             key={conversation.id}
             onClick={() => onConversationClick(conversation.id)}
           >
@@ -71,7 +75,7 @@ function Conversations({ id }: ConversationProps) {
                   e.stopPropagation();
                   setModalConversation(conversation);
                 }}
-                className="bg-transparent hover:bg-transparent hover:text-blue-400"
+                className="bg-transparent hover:bg-transparent hover:text-blue-400 p-2"
               >
                 <span className="text-blue-400 hover:text-blue-900">Edit</span>
               </Button>
@@ -80,12 +84,12 @@ function Conversations({ id }: ConversationProps) {
                   e.stopPropagation();
                   onDelete(conversation.id);
                 }}
-                className="bg-transparent hover:bg-transparent hover:text-red-400"
+                className="bg-transparent hover:bg-transparent hover:text-red-400 p-2"
               >
                 <span className="text-red-400 hover:text-red-800">Delete</span>
               </Button>
             </div>
-          </button>
+          </div>
         ))}
       </div>
       {modalConversation && (

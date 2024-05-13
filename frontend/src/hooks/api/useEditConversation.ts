@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ConversationCompact } from "models/Conversation.ts";
 import useApi from "hooks/useApi.ts";
 import { ConversationId } from "models/Id.ts";
+import toast from "react-hot-toast";
 import { getConversationPath, Queries } from "./constants.ts";
 
 export default function useEditConversation() {
@@ -31,6 +32,10 @@ export default function useEditConversation() {
 
         return conversations;
       });
+    },
+    onError: () => {
+      // TODO integrate with BE error message
+      toast.error("could not update the title of the conversion");
     },
   });
 }
