@@ -19,3 +19,8 @@
 * after making sure that the database and the frontend are running, run the `LlmServiceApplication`
 * to run the Backend linter `mvn spotless:check` to fix `mvn spotless:check`
 * Backend uses cpp plugin to run the modal , `C++11` `g++` `cmake`
+
+
+## How to use Docker
+* Run `docker compose up -d` 
+* if something is changed in the front end and you want the latest changes `docker compose up -d --no-deps --build build-fe`
