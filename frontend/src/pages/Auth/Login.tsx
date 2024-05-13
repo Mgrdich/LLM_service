@@ -14,8 +14,8 @@ type LoginForm = {
 };
 
 export const LoginSchema: ZodType<LoginForm> = z.object({
-  username: z.string().min(4).max(30),
-  password: z.string().min(8).max(30),
+  username: z.string().min(4, "Minimum length should be 4").max(30, "Maximum length should be 30"),
+  password: z.string().min(8, "Minimum length should be 8").max(30, "Minimum length should be 30"),
 });
 
 export default function Login() {
@@ -40,7 +40,7 @@ export default function Login() {
       <h1 className="mt-0 mb-16 text-5xl text-white font-bold tracking-tight md:text-5xl xl:text-5xl self-center">
         Welcome Back :)
       </h1>
-      <div className="block p-6 rounded-lg shadow-lg bg-white max-w-l">
+      <div className="block mb-10 p-6 rounded-lg shadow-lg bg-white max-w-lg w-full">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group mb-6">
             <InputWithLabel label="Username" type="text" placeholder="Enter Username" {...register("username")} />

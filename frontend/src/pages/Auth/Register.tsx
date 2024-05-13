@@ -23,11 +23,18 @@ const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$
 
 export const RegisterSchema: ZodType<RegisterForm> = z
   .object({
-    username: z.string().min(4).max(30),
-    password: z.string().min(8).max(30).regex(passwordRegex),
-    confirmPassword: z.string().min(8).max(30).regex(passwordRegex),
-    firstName: z.string().min(3).max(30),
-    lastName: z.string().min(3).max(30),
+    username: z.string().min(4, "Minimum length should be 4").max(30, "Minimum length should be 30"),
+    password: z
+      .string()
+      .min(8, "Minimum length should be 8")
+      .max(30, "Minimum length should be 30")
+      .regex(
+        passwordRegex,
+        "Password should contain at least 1 lowercase and 1 uppercase letters and 1 special character and no spaces",
+      ),
+    confirmPassword: z.string(),
+    firstName: z.string().min(3, "Minimum length should be 3").max(30, "Minimum length should be 30"),
+    lastName: z.string().min(3, "Minimum length should be 3").max(30, "Minimum length should be 30"),
     premium: z.boolean(),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -60,10 +67,10 @@ function Register() {
 
   return (
     <div className="bg-neutral-50 min-h-screen flex flex-col items-center justify-center dark:bg-neutral-900">
-      <h1 className="mt-0 mb-16 text-5xl text-white font-bold tracking-tight md:text-5xl xl:text-5xl self-center">
+      <h1 className="mb-10 mt-10 text-5xl text-white font-bold tracking-tight md:text-5xl xl:text-5xl self-center">
         Register Now
       </h1>
-      <div className="block p-6 rounded-lg shadow-lg bg-white">
+      <div className="block mb-10 p-6 rounded-lg shadow-lg bg-white max-w-lg w-full">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group mb-6">
             <InputWithLabel label="Username" type="text" placeholder="Enter Username" {...register("username")} />
