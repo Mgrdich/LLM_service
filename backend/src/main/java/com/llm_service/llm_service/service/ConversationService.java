@@ -120,13 +120,17 @@ public class ConversationService {
         conversation = Conversation.builder()
                 .id(conversation.getId())
                 .discussions(conversation.getDiscussions())
-                .title((conversationPersistenceManager.save(
-                                conversation.toBuilder().title(title).build(), user.get()))
-                        .getTitle())
+                .title(getTitle(conversation, title, user))
                 .createdOn(conversation.getCreatedOn())
                 .lastUpdatedOn(Instant.now())
                 .build();
         return conversation;
+    }
+
+    private String getTitle(Conversation conversation, String title, Optional<User> user) {
+        return (conversationPersistenceManager.save(
+                        conversation.toBuilder().title(title).build(), user.get()))
+                .getTitle();
     }
 
     private String getPrediction(String text) {
