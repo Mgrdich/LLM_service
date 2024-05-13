@@ -21,9 +21,9 @@ const getEditSchema = (title: string) =>
   z.object({
     title: z
       .string()
-      .min(3)
-      .max(30)
-      .refine((value) => value !== title, "it cannot be like the old one"),
+      .min(3, "Minimum length should be 3")
+      .max(30, "Maximum length should be 30")
+      .refine((value) => value !== title, "Cannot be the same as the previous title!"),
   });
 
 function EditConversationModal({ conversation, unSet }: EditModalProps) {

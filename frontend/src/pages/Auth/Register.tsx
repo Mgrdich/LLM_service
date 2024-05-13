@@ -23,11 +23,18 @@ const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$
 
 export const RegisterSchema: ZodType<RegisterForm> = z
   .object({
-    username: z.string().min(4).max(30),
-    password: z.string().min(8).max(30).regex(passwordRegex),
-    confirmPassword: z.string().min(8).max(30).regex(passwordRegex),
-    firstName: z.string().min(3).max(30),
-    lastName: z.string().min(3).max(30),
+    username: z.string().min(4, "Minimum length should be 4").max(30, "Minimum length should be 30"),
+    password: z
+      .string()
+      .min(8, "Minimum length should be 8")
+      .max(30, "Minimum length should be 30")
+      .regex(
+        passwordRegex,
+        "Password should contain at least 1 lowercase and 1 uppercase letters and 1 special character and no spaces",
+      ),
+    confirmPassword: z.string().regex(passwordRegex, "Password does not match!"),
+    firstName: z.string().min(3, "Minimum length should be 3").max(30, "Minimum length should be 30"),
+    lastName: z.string().min(3, "Minimum length should be 3").max(30, "Minimum length should be 30"),
     premium: z.boolean(),
   })
   .refine((data) => data.password === data.confirmPassword, {

@@ -14,8 +14,8 @@ type LoginForm = {
 };
 
 export const LoginSchema: ZodType<LoginForm> = z.object({
-  username: z.string().min(4).max(30),
-  password: z.string().min(8).max(30),
+  username: z.string().min(4, "Minimum length should be 4").max(30, "Maximum length should be 30"),
+  password: z.string().min(8, "Minimum length should be 8").max(30, "Minimum length should be 30"),
 });
 
 export default function Login() {
