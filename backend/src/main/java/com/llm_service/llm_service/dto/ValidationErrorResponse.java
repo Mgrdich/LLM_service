@@ -1,4 +1,4 @@
-package com.llm_service.llm_service.controller.user;
+package com.llm_service.llm_service.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

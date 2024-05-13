@@ -1,9 +1,9 @@
 package com.llm_service.llm_service.controller.conversation;
 
-import com.llm_service.llm_service.controller.user.ValidationErrorResponse;
 import com.llm_service.llm_service.dto.Conversation;
 import com.llm_service.llm_service.dto.Discussion;
-import com.llm_service.llm_service.exception.UnAuthorizedException;
+import com.llm_service.llm_service.dto.ValidationErrorResponse;
+import com.llm_service.llm_service.exception.UnauthorizedException;
 import com.llm_service.llm_service.exception.conversation.ConversationNotFoundException;
 import com.llm_service.llm_service.service.ConversationService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -38,7 +39,7 @@ public class ConversationController {
             })
     @Operation(summary = "Get all conversations")
     @GetMapping(value = "/api/v1/paid/conversation")
-    public ResponseEntity<List<ConversationResponseCompact>> getAllConversations() throws UnAuthorizedException {
+    public ResponseEntity<List<ConversationResponseCompact>> getAllConversations() throws UnauthorizedException {
         return ResponseEntity.ok(conversationService.getAll().stream()
                 .map(conversationApiMapper::mapCompact)
                 .toList());
@@ -54,7 +55,7 @@ public class ConversationController {
     @Operation(summary = "Get conversation by ID")
     @GetMapping("/api/v1/conversation/{id}")
     public ResponseEntity<ConversationResponse> getConversationById(@PathVariable UUID id)
-            throws ConversationNotFoundException, UnAuthorizedException {
+            throws ConversationNotFoundException, UnauthorizedException {
         Conversation conversation =
                 conversationService.getByID(id).orElseThrow(() -> new ConversationNotFoundException(id));
 
@@ -85,9 +86,13 @@ public class ConversationController {
             })
     @Operation(summary = "Continue conversation using conversation ID")
     @PutMapping("/api/v1/conversation/{id}/continue")
-    public ResponseEntity<List<DiscussionResponse>> continueConversation(
-            @PathVariable UUID id, @RequestBody ConversationRequest conversationRequest)
-            throws ConversationNotFoundException, UnAuthorizedException {
+    public ResponseEntity<?> continueConversation(
+            @PathVariable UUID id,
+            @Valid @RequestBody ConversationRequest conversationRequest,
+            BindingResult bindingResult)
+            throws ConversationNotFoundException, UnauthorizedException {
+        ResponseEntity<ValidationErrorResponse> errorResponse = getValidationErrorResponseResponseEntity(bindingResult);
+        if (errorResponse != null) return errorResponse;
         Conversation conversation =
                 conversationService.getByID(id).orElseThrow(() -> new ConversationNotFoundException(id));
         List<Discussion> discussions = conversationService.askLlmQuestion(conversation, conversationRequest.getText());
@@ -110,6 +115,18 @@ public class ConversationController {
             BindingResult bindingResult)
             throws Exception {
 
+        ResponseEntity<ValidationErrorResponse> errorResponse = getValidationErrorResponseResponseEntity(bindingResult);
+        if (errorResponse != null) return errorResponse;
+
+        Conversation conversation =
+                conversationService.getByID(id).orElseThrow(() -> new ConversationNotFoundException(id));
+        conversation = conversationService.editTitle(conversation, conversationTitleRequest.getTitle());
+
+        return ResponseEntity.status(HttpStatus.OK).body(conversationApiMapper.mapCompact(conversation));
+    }
+
+    private static @Nullable ResponseEntity<ValidationErrorResponse> getValidationErrorResponseResponseEntity(
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             ValidationErrorResponse errorResponse = new ValidationErrorResponse(new HashMap<>());
             for (FieldError error : bindingResult.getFieldErrors()) {
@@ -117,12 +134,7 @@ public class ConversationController {
             }
             return ResponseEntity.badRequest().body(errorResponse);
         }
-
-        Conversation conversation =
-                conversationService.getByID(id).orElseThrow(() -> new ConversationNotFoundException(id));
-        conversation = conversationService.editTitle(conversation, conversationTitleRequest.getTitle());
-
-        return ResponseEntity.status(HttpStatus.OK).body(conversationApiMapper.mapCompact(conversation));
+        return null;
     }
 
     @ApiResponses(
@@ -135,7 +147,7 @@ public class ConversationController {
     @Operation(summary = "deletes a conversation")
     @DeleteMapping("/api/v1/conversation/{id}")
     public ResponseEntity<Void> deleteConversation(@PathVariable UUID id)
-            throws ConversationNotFoundException, UnAuthorizedException {
+            throws ConversationNotFoundException, UnauthorizedException {
         conversationService.getByID(id).orElseThrow(() -> new ConversationNotFoundException(id));
         conversationService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body(null);
@@ -161,8 +173,8 @@ public class ConversationController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(conversationNotFoundException.getMessage());
     }
 
-    @ExceptionHandler(UnAuthorizedException.class)
-    public ResponseEntity<String> handleUnAuthorized(UnAuthorizedException unAuthorizedException) {
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<String> handleUnAuthorized(UnauthorizedException unAuthorizedException) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(unAuthorizedException.getMessage());
     }
 }
