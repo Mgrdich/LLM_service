@@ -29,6 +29,8 @@ function Conversations({ id }: ConversationProps) {
 
     if (!index) return;
 
+    // TODO this needs to be tested
+
     if (data?.[index - 1]) {
       navigate(`/conversation/${data?.[index - 1].id}`);
       return;
