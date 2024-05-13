@@ -11,9 +11,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.http.HttpStatus;
@@ -29,7 +27,6 @@ public class ConversationController {
     private final ConversationService conversationService;
     private final ConversationApiMapper conversationApiMapper;
 
-    // TODO this should be paginated , maybe grouped by date
     @ApiResponses(
             value = {
                 @ApiResponse(
@@ -39,10 +36,21 @@ public class ConversationController {
             })
     @Operation(summary = "Get all conversations")
     @GetMapping(value = "/api/v1/paid/conversation")
-    public ResponseEntity<List<ConversationResponseCompact>> getAllConversations() throws UnauthorizedException {
-        return ResponseEntity.ok(conversationService.getAll().stream()
+    public ResponseEntity<List<ConversationResponseCompact>> getAllConversations(
+            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int pageSize)
+            throws UnauthorizedException {
+
+        List<Conversation> allConversations = conversationService.getAll();
+
+        int start = page * pageSize;
+        int end = Math.min(start + pageSize, allConversations.size());
+        List<Conversation> paginatedConversations = allConversations.subList(start, end);
+
+        List<ConversationResponseCompact> conversationResponseList = paginatedConversations.stream()
                 .map(conversationApiMapper::mapCompact)
-                .toList());
+                .toList();
+
+        return ResponseEntity.ok(conversationResponseList);
     }
 
     @ApiResponses(
