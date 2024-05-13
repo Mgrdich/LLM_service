@@ -15,6 +15,7 @@ import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +44,17 @@ public class ConversationService {
         }
 
         return conversationPersistenceManager.findAll(user.get().getId());
+    }
+
+    public List<Conversation> getAll(Pageable pageable) throws UnauthorizedException {
+        Optional<User> user = userContext.getUserFromContext();
+
+        if (user.isEmpty()) {
+            throw new UnauthorizedException();
+        }
+
+        UUID userId = user.get().getId();
+        return conversationPersistenceManager.findAll(userId, pageable);
     }
 
     public Optional<Conversation> getByID(UUID id) throws UnauthorizedException {

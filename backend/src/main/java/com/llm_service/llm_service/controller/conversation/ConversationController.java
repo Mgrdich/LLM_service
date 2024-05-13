@@ -14,6 +14,9 @@ import jakarta.validation.Valid;
 import java.util.*;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -40,13 +43,10 @@ public class ConversationController {
             @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int pageSize)
             throws UnauthorizedException {
 
-        List<Conversation> allConversations = conversationService.getAll();
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by("lastUpdatedOn").descending());
+        List<Conversation> allConversations = conversationService.getAll(pageable);
 
-        int start = page * pageSize;
-        int end = Math.min(start + pageSize, allConversations.size());
-        List<Conversation> paginatedConversations = allConversations.subList(start, end);
-
-        List<ConversationResponseCompact> conversationResponseList = paginatedConversations.stream()
+        List<ConversationResponseCompact> conversationResponseList = allConversations.stream()
                 .map(conversationApiMapper::mapCompact)
                 .toList();
 
