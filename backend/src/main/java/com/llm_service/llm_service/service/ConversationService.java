@@ -112,25 +112,25 @@ public class ConversationService {
         if (user.isEmpty()) {
             throw new UnAuthorizedException();
         }
+        Conversation savedConversation = saveEditedTitle(conversation, title, user);
 
-        return getConversation(conversation, title, user);
+        return getConversation(conversation, savedConversation.getTitle());
     }
 
-    private Conversation getConversation(Conversation conversation, String title, Optional<User> user) {
+    private Conversation getConversation(Conversation conversation, String title) {
         conversation = Conversation.builder()
                 .id(conversation.getId())
                 .discussions(conversation.getDiscussions())
-                .title(getTitle(conversation, title, user))
+                .title(title)
                 .createdOn(conversation.getCreatedOn())
                 .lastUpdatedOn(Instant.now())
                 .build();
         return conversation;
     }
 
-    private String getTitle(Conversation conversation, String title, Optional<User> user) {
-        return (conversationPersistenceManager.save(
-                        conversation.toBuilder().title(title).build(), user.get()))
-                .getTitle();
+    private Conversation saveEditedTitle(Conversation conversation, String title, Optional<User> user) {
+        return conversationPersistenceManager.save(
+                conversation.toBuilder().title(title).build(), user.get());
     }
 
     private String getPrediction(String text) {
