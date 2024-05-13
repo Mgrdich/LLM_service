@@ -66,7 +66,7 @@ function Register() {
   };
 
   return (
-    <div className="bg-neutral-50 min-h-screen flex flex-col items-center justify-center dark:bg-neutral-900">
+    <div className="bg-neutral-50 min-h-screen flex flex-col items-center justify-center dark:bg-neutral-900 px-4">
       <h1 className="mb-10 mt-10 text-5xl text-white font-bold tracking-tight md:text-5xl xl:text-5xl self-center">
         Register Now
       </h1>
