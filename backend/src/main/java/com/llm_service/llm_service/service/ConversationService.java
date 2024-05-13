@@ -8,6 +8,7 @@ import com.llm_service.llm_service.persistance.entities.DiscussionRole;
 import com.llm_service.llm_service.persistance.repositories.conversation.ConversationPersistenceManager;
 import com.llm_service.llm_service.persistance.repositories.discussion.DiscussionPersistenceManager;
 import com.llm_service.llm_service.service.user.UserContext;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -112,8 +113,20 @@ public class ConversationService {
             throw new UnAuthorizedException();
         }
 
-        return conversationPersistenceManager.save(
-                conversation.toBuilder().title(title).build(), user.get());
+        return getConversation(conversation, title, user);
+    }
+
+    private Conversation getConversation(Conversation conversation, String title, Optional<User> user) {
+        conversation = Conversation.builder()
+                .id(conversation.getId())
+                .discussions(conversation.getDiscussions())
+                .title((conversationPersistenceManager.save(
+                                conversation.toBuilder().title(title).build(), user.get()))
+                        .getTitle())
+                .createdOn(conversation.getCreatedOn())
+                .lastUpdatedOn(Instant.now())
+                .build();
+        return conversation;
     }
 
     private String getPrediction(String text) {
