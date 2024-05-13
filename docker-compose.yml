@@ -32,7 +32,7 @@ services:
 #        - SPRING_JPA_HIBERNATE_DDL_AUTO=update
 
 
-    run-build-fe:
+    build-fe:
       container_name: "llm_service_ui"
       stdin_open: true
       build:
