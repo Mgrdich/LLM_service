@@ -1,23 +1,51 @@
 import InputWithLabel from "ui/InputWithLabel.tsx";
 import LinkText from "ui/LinkText.tsx";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "ui/Button.tsx";
 import useRegister from "hooks/useRegister.ts";
 import Checkbox from "ui/Checkbox.tsx";
 import { Roles } from "models/User.ts";
+import { SubmitHandler, useForm } from "react-hook-form";
+import ErrorLabel from "ui/ErrorLabel.tsx";
+import FormSubmitButton from "ui/FormSubmitButton.tsx";
+import { z, ZodType } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+type RegisterForm = {
+  username: string;
+  password: string;
+  confirmPassword: string;
+  firstName: string;
+  lastName: string;
+  premium: boolean;
+};
+
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+export const RegisterSchema: ZodType<RegisterForm> = z
+  .object({
+    username: z.string().min(4).max(30),
+    password: z.string().min(8).max(30).regex(passwordRegex),
+    confirmPassword: z.string().min(8).max(30).regex(passwordRegex),
+    firstName: z.string().min(3).max(30),
+    lastName: z.string().min(3).max(30),
+    premium: z.boolean(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"], // path of error
+  });
 
 function Register() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordCheck, setCheckPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [premium, setPremium] = useState(false);
-  const { mutateAsync, isPending } = useRegister();
+  const { mutateAsync } = useRegister();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isLoading, isValid },
+  } = useForm<RegisterForm>({ resolver: zodResolver(RegisterSchema) });
+
   const navigate = useNavigate();
 
-  const onSubmit = async () => {
+  const onSubmit: SubmitHandler<RegisterForm> = async ({ username, password, firstName, lastName, premium }) => {
     await mutateAsync({
       username,
       password,
@@ -34,64 +62,38 @@ function Register() {
         Register Now
       </h1>
       <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group mb-6">
-            <InputWithLabel
-              label="Username"
-              name="username"
-              type="text"
-              placeholder="Enter Username"
-              value={username}
-              onInput={(e) => setUsername(e.currentTarget.value)}
-            />
+            <InputWithLabel label="Username" type="text" placeholder="Enter Username" {...register("username")} />
+            <ErrorLabel error={errors.username} />
           </div>
           <div className="form-group mb-6">
-            <InputWithLabel
-              label="Password"
-              type="password"
-              name="password"
-              placeholder="Enter Password"
-              value={password}
-              onInput={(e) => setPassword(e.currentTarget.value)}
-            />
+            <InputWithLabel label="Password" type="password" placeholder="Enter Password" {...register("password")} />
+            <ErrorLabel error={errors.password} />
           </div>
           <div className="form-group mb-6">
             <InputWithLabel
               label="Repeat Password"
               type="password"
-              name="repeat_password"
               placeholder="Enter Password"
-              value={passwordCheck}
-              onInput={(e) => setCheckPassword(e.currentTarget.value)}
+              {...register("confirmPassword")}
             />
+            <ErrorLabel error={errors.confirmPassword} />
           </div>
           <div className="form-group mb-6">
-            <InputWithLabel
-              label="FirstName"
-              name="firstname"
-              type="text"
-              placeholder="Enter Firstname"
-              value={firstName}
-              onInput={(e) => setFirstName(e.currentTarget.value)}
-            />
+            <InputWithLabel label="FirstName" type="text" placeholder="Enter Firstname" {...register("firstName")} />
+            <ErrorLabel error={errors.firstName} />
           </div>
           <div className="form-group mb-6">
-            <InputWithLabel
-              label="LastName"
-              name="lastname"
-              type="text"
-              value={lastName}
-              placeholder="Enter Lastname"
-              onInput={(e) => setLastName(e.currentTarget.value)}
-            />
+            <InputWithLabel label="LastName" type="text" placeholder="Enter Lastname" {...register("lastName")} />
+            <ErrorLabel error={errors.lastName} />
           </div>
           <div>
             Premium
-            <Checkbox onClick={() => setPremium((value) => !value)} checked={premium} />
+            <Checkbox {...register("premium")} />
+            <ErrorLabel error={errors.premium} />
           </div>
-          <Button onClick={onSubmit} disabled={isPending} className="w-full">
-            Register
-          </Button>
+          <FormSubmitButton disabled={isLoading || !isValid}>Register</FormSubmitButton>
           <div className="text-gray-800 mt-6 text-center">
             Already have an account
             <LinkText to="/login">Log In</LinkText>

@@ -1,17 +1,38 @@
 import InputWithLabel from "ui/InputWithLabel.tsx";
 import LinkText from "ui/LinkText.tsx";
-import { useState } from "react";
 import useLogin from "hooks/useLogin.ts";
 import { useNavigate } from "react-router-dom";
-import Button from "ui/Button.tsx";
+import { SubmitHandler, useForm } from "react-hook-form";
+import ErrorLabel from "ui/ErrorLabel.tsx";
+import FormSubmitButton from "ui/FormSubmitButton.tsx";
+import { z, ZodType } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const { mutateAsync, isPending } = useLogin();
+type LoginForm = {
+  username: string;
+  password: string;
+};
+
+export const LoginSchema: ZodType<LoginForm> = z.object({
+  username: z.string().min(4).max(30),
+  password: z
+    .string()
+    .min(8)
+    .max(30)
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/),
+});
+
+export default function Login() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isLoading, isValid },
+  } = useForm<LoginForm>({ resolver: zodResolver(LoginSchema) });
+
+  const { mutateAsync } = useLogin();
   const navigate = useNavigate();
 
-  const onSubmit = async () => {
+  const onSubmit: SubmitHandler<LoginForm> = async ({ username, password }) => {
     await mutateAsync({ username, password });
     navigate("/conversation");
   };
@@ -22,37 +43,23 @@ function Login() {
         Welcome Back :)
       </h1>
       <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
-        <div>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group mb-6">
-            <InputWithLabel
-              label="Username"
-              name="username"
-              type="text"
-              placeholder="Enter Username"
-              onInput={(e) => setUsername(e.currentTarget.value)}
-            />
+            <InputWithLabel label="Username" type="text" placeholder="Enter Username" {...register("username")} />
+            <ErrorLabel error={errors.username} />
           </div>
           <div className="form-group mb-6">
-            <InputWithLabel
-              label="Password"
-              type="password"
-              name="password"
-              placeholder="Enter Password"
-              onInput={(e) => setPassword(e.currentTarget.value)}
-            />
+            <InputWithLabel label="Password" type="password" placeholder="Enter Password" {...register("password")} />
+            <ErrorLabel error={errors.password} />
           </div>
           <div className="flex justify-between items-center mb-6" />
-          <Button disabled={isPending} className="w-full" onClick={onSubmit}>
-            Sign In
-          </Button>
+          <FormSubmitButton disabled={isLoading || !isValid}>Sign In</FormSubmitButton>
           <div className="text-gray-800 mt-6 text-center">
             Not a member?
             <LinkText to="/register">Register</LinkText>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
 }
-
-export default Login;
