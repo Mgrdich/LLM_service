@@ -174,7 +174,7 @@ public class ConversationController {
     }
 
     @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<String> handleUnAuthorized(UnauthorizedException unAuthorizedException) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(unAuthorizedException.getMessage());
+    public ResponseEntity<String> handleUnAuthorized(UnauthorizedException unauthorizedException) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(unauthorizedException.getMessage());
     }
 }
