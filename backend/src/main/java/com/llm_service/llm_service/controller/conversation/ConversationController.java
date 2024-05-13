@@ -1,5 +1,6 @@
 package com.llm_service.llm_service.controller.conversation;
 
+import com.llm_service.llm_service.controller.user.ValidationErrorResponse;
 import com.llm_service.llm_service.dto.Conversation;
 import com.llm_service.llm_service.dto.Discussion;
 import com.llm_service.llm_service.exception.UnAuthorizedException;
@@ -9,11 +10,15 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -99,8 +104,20 @@ public class ConversationController {
             })
     @Operation(summary = "update conversation title")
     @PutMapping("/api/v1/conversation/{id}")
-    public ResponseEntity<ConversationResponseCompact> editConversation(
-            @PathVariable UUID id, @RequestBody ConversationTitleRequest conversationTitleRequest) throws Exception {
+    public ResponseEntity<?> editConversation(
+            @PathVariable UUID id,
+            @Valid @RequestBody ConversationTitleRequest conversationTitleRequest,
+            BindingResult bindingResult)
+            throws Exception {
+
+        if (bindingResult.hasErrors()) {
+            ValidationErrorResponse errorResponse = new ValidationErrorResponse(new HashMap<>());
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                errorResponse.addError(error.getField(), error.getDefaultMessage());
+            }
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+
         Conversation conversation =
                 conversationService.getByID(id).orElseThrow(() -> new ConversationNotFoundException(id));
         conversation = conversationService.editTitle(conversation, conversationTitleRequest.getTitle());
