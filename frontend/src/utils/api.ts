@@ -73,6 +73,10 @@ export const api = async <TData>({
       body: rawBody ? body : JSON.stringify(body),
     });
 
+    if (response.status === 401) {
+      localStorage.removeItem("token");
+    }
+
     if (!response.ok) {
       const contentType = response.headers.get("Content-Type");
 

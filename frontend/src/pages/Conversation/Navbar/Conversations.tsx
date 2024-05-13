@@ -52,15 +52,17 @@ function Conversations({ id }: ConversationProps) {
         {isFetching && <SpinLoader size="l" />}
         {!isFetching && data && data.length === 0 && <div>No Conversation</div>}
         {data?.map((conversation) => (
-          <button
-            type="button"
+          <div
+            role="button"
             className={clsx(
               "truncate border-gray-600 hover:border-blue-600 border-2 p-2 ",
-              "text-white flex justify-between items-center w-full min-h-6",
+              "text-white flex justify-between items-center w-full min-h-6 cursor-pointer",
               {
                 "border-white": conversation.id === id,
               },
             )}
+            tabIndex={0}
+            onKeyDown={() => onConversationClick(conversation.id)}
             key={conversation.id}
             onClick={() => onConversationClick(conversation.id)}
           >
@@ -85,7 +87,7 @@ function Conversations({ id }: ConversationProps) {
                 <span className="text-red-400 hover:text-red-800">Delete</span>
               </Button>
             </div>
-          </button>
+          </div>
         ))}
       </div>
       {modalConversation && (

@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import useAuth from "context/useAuth.ts";
 import useApi from "hooks/useApi.ts";
+import { ApiError } from "models/Errors.ts";
 import { LoginPath } from "./constants.ts";
 
 interface LoginRequest {
@@ -21,9 +22,12 @@ export default function useLogin() {
       setToken(res.token);
     },
     onError: (err) => {
-      console.log(err);
-      // TODO to be integrated with BE errors messages
-      toast.error("Bad credentials");
+      if (err instanceof ApiError) {
+        toast.error(err.message);
+        return;
+      }
+
+      toast.error("Something went wrong with the login");
     },
   });
 }
