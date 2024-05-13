@@ -46,7 +46,7 @@ function Register() {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<RegisterForm> = async ({ username, password, firstName, lastName, premium }) => {
-    if (isValid) return;
+    if (!isValid) return;
 
     await mutateAsync({
       username,
@@ -95,7 +95,9 @@ function Register() {
             <Checkbox {...register("premium")} />
             <ErrorLabel error={errors.premium} />
           </div>
-          <FormSubmitButton disabled={isSubmitting || !isValid}>Register</FormSubmitButton>
+          <FormSubmitButton disabled={isSubmitting || !isValid} isLoading={isSubmitting}>
+            Register
+          </FormSubmitButton>
           <div className="text-gray-800 mt-6 text-center">
             Already have an account
             <LinkText to="/login">Log In</LinkText>

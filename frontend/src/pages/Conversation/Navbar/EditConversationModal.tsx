@@ -51,7 +51,9 @@ function EditConversationModal({ conversation, unSet }: EditModalProps) {
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputWithLabel labelColor="white" label="New title" {...register("title")} />
         <ErrorLabel error={errors.title} />
-        <FormSubmitButton disabled={isSubmitting || !isValid}>Submit</FormSubmitButton>
+        <FormSubmitButton disabled={isSubmitting || !isValid} isLoading={isSubmitting}>
+          Submit
+        </FormSubmitButton>
       </form>
     </Modal>
   );

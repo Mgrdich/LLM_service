@@ -51,7 +51,9 @@ export default function Login() {
             <ErrorLabel error={errors.password} />
           </div>
           <div className="flex justify-between items-center mb-6" />
-          <FormSubmitButton disabled={isSubmitting || !isValid}>Sign In</FormSubmitButton>
+          <FormSubmitButton disabled={isSubmitting || !isValid} isLoading={isSubmitting}>
+            Sign In
+          </FormSubmitButton>
           <div className="text-gray-800 mt-6 text-center">
             Not a member?
             <LinkText to="/register">Register</LinkText>
