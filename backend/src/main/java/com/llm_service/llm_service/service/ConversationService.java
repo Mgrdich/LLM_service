@@ -3,7 +3,7 @@ package com.llm_service.llm_service.service;
 import com.llm_service.llm_service.dto.Conversation;
 import com.llm_service.llm_service.dto.Discussion;
 import com.llm_service.llm_service.dto.User;
-import com.llm_service.llm_service.exception.UnAuthorizedException;
+import com.llm_service.llm_service.exception.UnauthorizedException;
 import com.llm_service.llm_service.persistance.entities.DiscussionRole;
 import com.llm_service.llm_service.persistance.repositories.conversation.ConversationPersistenceManager;
 import com.llm_service.llm_service.persistance.repositories.discussion.DiscussionPersistenceManager;
@@ -24,43 +24,43 @@ public class ConversationService {
     private final DiscussionPersistenceManager discussionPersistenceManager;
     private final UserContext userContext;
 
-    public Conversation start() throws UnAuthorizedException {
+    public Conversation start() throws UnauthorizedException {
         Optional<User> user = userContext.getUserFromContext();
 
         if (user.isEmpty()) {
-            throw new UnAuthorizedException();
+            throw new UnauthorizedException();
         }
 
         Conversation conversation = Conversation.builder().discussions(null).build();
         return conversationPersistenceManager.save(conversation, user.get());
     }
 
-    public List<Conversation> getAll() throws UnAuthorizedException {
+    public List<Conversation> getAll() throws UnauthorizedException {
         Optional<User> user = userContext.getUserFromContext();
 
         if (user.isEmpty()) {
-            throw new UnAuthorizedException();
+            throw new UnauthorizedException();
         }
 
         return conversationPersistenceManager.findAll(user.get().getId());
     }
 
-    public Optional<Conversation> getByID(UUID id) throws UnAuthorizedException {
+    public Optional<Conversation> getByID(UUID id) throws UnauthorizedException {
         Optional<User> user = userContext.getUserFromContext();
         if (user.isEmpty()) {
-            throw new UnAuthorizedException();
+            throw new UnauthorizedException();
         }
 
         return conversationPersistenceManager.findById(id, user.get().getId());
     }
 
     // TODO optimize this fetching mechanism
-    public List<Discussion> askLlmQuestion(Conversation conversation, String text) throws UnAuthorizedException {
+    public List<Discussion> askLlmQuestion(Conversation conversation, String text) throws UnauthorizedException {
 
         Optional<User> user = userContext.getUserFromContext();
 
         if (user.isEmpty()) {
-            throw new UnAuthorizedException();
+            throw new UnauthorizedException();
         }
 
         Discussion discussionFromUserParam =
@@ -106,11 +106,11 @@ public class ConversationService {
         conversationPersistenceManager.deleteAll();
     }
 
-    public Conversation editTitle(Conversation conversation, String title) throws UnAuthorizedException {
+    public Conversation editTitle(Conversation conversation, String title) throws UnauthorizedException {
         Optional<User> user = userContext.getUserFromContext();
 
         if (user.isEmpty()) {
-            throw new UnAuthorizedException();
+            throw new UnauthorizedException();
         }
         Conversation savedConversation = saveEditedTitle(conversation, title, user);
 

@@ -1,7 +1,8 @@
 package com.llm_service.llm_service.controller.user;
 
 import com.llm_service.llm_service.dto.User;
-import com.llm_service.llm_service.exception.UnAuthorizedException;
+import com.llm_service.llm_service.dto.ValidationErrorResponse;
+import com.llm_service.llm_service.exception.UnauthorizedException;
 import com.llm_service.llm_service.exception.user.UserAlreadyExistsException;
 import com.llm_service.llm_service.exception.user.UserNotFoundException;
 import com.llm_service.llm_service.exception.user.UsernameAlreadyExistsException;
@@ -39,8 +40,8 @@ public class UserController {
             })
     @Operation(summary = "get the current user")
     @GetMapping("/api/v1/me")
-    public ResponseEntity<UserResponse> register() throws UnAuthorizedException {
-        User user = authenticationService.getUser().orElseThrow(UnAuthorizedException::new);
+    public ResponseEntity<UserResponse> register() throws UnauthorizedException {
+        User user = authenticationService.getUser().orElseThrow(UnauthorizedException::new);
         return ResponseEntity.status(HttpStatus.OK).body(userApiMapper.map(user));
     }
 
@@ -101,5 +102,10 @@ public class UserController {
     @ExceptionHandler(AuthenticationException.class)
     ResponseEntity<String> handleAuthenticationException(AuthenticationException authenticationException) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(authenticationException.getMessage());
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<String> handleUnauthorized(UnauthorizedException unauthorizedException) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(unauthorizedException.getMessage());
     }
 }
