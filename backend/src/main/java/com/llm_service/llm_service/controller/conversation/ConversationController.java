@@ -43,12 +43,12 @@ public class ConversationController {
             @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int pageSize)
             throws UnauthorizedException {
 
-        Pageable pageable = PageRequest.of(page, pageSize, Sort.by("lastUpdatedOn").descending());
+        Pageable pageable =
+                PageRequest.of(page, pageSize, Sort.by("lastUpdatedOn").descending());
         List<Conversation> allConversations = conversationService.getAll(pageable);
 
-        List<ConversationResponseCompact> conversationResponseList = allConversations.stream()
-                .map(conversationApiMapper::mapCompact)
-                .toList();
+        List<ConversationResponseCompact> conversationResponseList =
+                allConversations.stream().map(conversationApiMapper::mapCompact).toList();
 
         return ResponseEntity.ok(conversationResponseList);
     }
