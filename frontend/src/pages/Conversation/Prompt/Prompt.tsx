@@ -10,12 +10,12 @@ interface PromptProps {
 }
 
 function Prompt({ id }: PromptProps) {
-  const { mutate, isPending } = useContinueConversation(id);
+  const { mutate, isPending } = useContinueConversation();
   const [textValue, setTextValue] = useState("");
 
   const submitQuestion = () => {
     setTextValue("");
-    mutate(textValue);
+    mutate({ text: textValue, id });
   };
 
   return (

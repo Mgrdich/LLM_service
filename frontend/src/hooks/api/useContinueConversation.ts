@@ -7,13 +7,13 @@ import toast from "react-hot-toast";
 import { getContinueConversationPath, Queries } from "./constants.ts";
 
 // TODO need to check the context switch case
-export default function useContinueConversation(id: ConversationId) {
+export default function useContinueConversation() {
   const callApi = useApi();
   const queryClient = useQueryClient();
   const tempId = "tempId";
 
-  return useMutation({
-    mutationFn: async (text: string) => {
+  return useMutation<Discussion[], void, { text: string; id: ConversationId }>({
+    mutationFn: async ({ text, id }) => {
       const discussions = await callApi<Discussion[]>({
         url: getContinueConversationPath(id),
         method: "PUT",
@@ -25,7 +25,7 @@ export default function useContinueConversation(id: ConversationId) {
       return discussions;
     },
     onMutate: async (variables) => {
-      const queryKey = [Queries.Conversation, id];
+      const queryKey = [Queries.Conversation, variables.id];
       queryClient.setQueryData(queryKey, (old: Conversation) => {
         const newData = {
           ...old,
@@ -34,7 +34,7 @@ export default function useContinueConversation(id: ConversationId) {
           ...old.discussions,
           {
             id: tempId,
-            text: variables,
+            text: variables.text,
             promptRole: PromptRole.User,
             lastUpdatedOn: new Date().toDateString(),
             createdOn: new Date().toDateString(),
@@ -44,8 +44,8 @@ export default function useContinueConversation(id: ConversationId) {
         return newData;
       });
     },
-    onSuccess: async (data) => {
-      const queryKey = [Queries.Conversation, id];
+    onSuccess: async (data, variables) => {
+      const queryKey = [Queries.Conversation, variables.id];
       queryClient.setQueryData(queryKey, (old: Conversation) => {
         const newData = {
           ...old,
