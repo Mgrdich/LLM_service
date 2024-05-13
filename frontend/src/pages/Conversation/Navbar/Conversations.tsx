@@ -73,7 +73,7 @@ function Conversations({ id }: ConversationProps) {
                   e.stopPropagation();
                   setModalConversation(conversation);
                 }}
-                className="bg-transparent hover:bg-transparent hover:text-blue-400"
+                className="bg-transparent hover:bg-transparent hover:text-blue-400 p-2"
               >
                 <span className="text-blue-400 hover:text-blue-900">Edit</span>
               </Button>
@@ -82,7 +82,7 @@ function Conversations({ id }: ConversationProps) {
                   e.stopPropagation();
                   onDelete(conversation.id);
                 }}
-                className="bg-transparent hover:bg-transparent hover:text-red-400"
+                className="bg-transparent hover:bg-transparent hover:text-red-400 p-2"
               >
                 <span className="text-red-400 hover:text-red-800">Delete</span>
               </Button>
