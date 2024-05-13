@@ -21,7 +21,7 @@ public class UsernameConstraintValidator implements ConstraintValidator<ValidUse
             errorMessages.add("Username must start with a letter.");
         }
 
-        if (!value.matches(".{8,30}")) {
+        if (!value.matches(".{4,30}")) {
             errorMessages.add("Username must be between 8 and 30 characters long.");
         }
 

@@ -1,4 +1,4 @@
-import { ComponentProps } from "react";
+import { ComponentProps, forwardRef } from "react";
 import { clsx } from "clsx";
 import Input from "./Input.tsx";
 
@@ -8,8 +8,8 @@ interface InputWithLabelProps extends ComponentProps<"input"> {
   labelColor?: "gray" | "white";
 }
 
-function InputWithLabel({ labelColor = "gray", type = "text", label, name, ...rest }: InputWithLabelProps) {
-  return (
+const InputWithLabel = forwardRef<HTMLInputElement, InputWithLabelProps>(
+  ({ labelColor = "gray", type = "text", label, ...rest }, ref) => (
     <label
       htmlFor={label}
       className={clsx(
@@ -18,9 +18,11 @@ function InputWithLabel({ labelColor = "gray", type = "text", label, name, ...re
       )}
     >
       {label}
-      <Input id={name} type={type} name={name} {...rest} />
+      <Input id={rest.name} type={type} {...rest} ref={ref} />
     </label>
-  );
-}
+  ),
+);
+
+InputWithLabel.displayName = "InputWithLabel";
 
 export default InputWithLabel;

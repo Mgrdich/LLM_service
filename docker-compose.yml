@@ -39,7 +39,6 @@ services:
         context: ./frontend/
         dockerfile: Dockerfile
       volumes:
-        - '/app/node_modules'
         - './frontend/:/app'
       ports:
         - "4040:80"  # Assuming you want to use port 8080 locally
