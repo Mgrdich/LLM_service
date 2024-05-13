@@ -18,6 +18,8 @@ export default function AnimateText({ text, speed }: AnimateTextProps) {
 
       return () => clearTimeout(timeout);
     }
+
+    return () => null;
   }, [index, text, speed, displayedText]);
 
   return <div className="typewriter">{displayedText}</div>;
