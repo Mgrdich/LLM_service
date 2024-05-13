@@ -1,7 +1,6 @@
 import InputWithLabel from "ui/InputWithLabel.tsx";
 import LinkText from "ui/LinkText.tsx";
 import { useNavigate } from "react-router-dom";
-import useRegister from "hooks/useRegister.ts";
 import Checkbox from "ui/Checkbox.tsx";
 import { Roles } from "models/User.ts";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -9,6 +8,7 @@ import ErrorLabel from "ui/ErrorLabel.tsx";
 import FormSubmitButton from "ui/FormSubmitButton.tsx";
 import { z, ZodType } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import useRegister from "hooks/api/useRegister.ts";
 
 type RegisterForm = {
   username: string;

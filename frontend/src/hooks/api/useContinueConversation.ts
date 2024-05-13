@@ -3,6 +3,7 @@ import useApi from "hooks/useApi.ts";
 import { ConversationId } from "models/Id.ts";
 import { Conversation } from "models/Conversation.ts";
 import { Discussion, PromptRole } from "models/Discussion.ts";
+import toast from "react-hot-toast";
 import { getContinueConversationPath, Queries } from "./constants.ts";
 
 // TODO need to check the context switch case
@@ -59,6 +60,10 @@ export default function useContinueConversation(id: ConversationId) {
 
         return newData;
       });
+    },
+    onError: () => {
+      // TODO integrate with BE error message
+      toast.error("Modal could not answer your question");
     },
   });
 }

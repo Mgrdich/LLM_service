@@ -1,7 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import { RolesType } from "models/User.ts";
-import useApi from "./useApi.ts";
-import { RegisterPath } from "./api/constants.ts";
+import useApi from "hooks/useApi.ts";
+import { ApiError } from "models/Errors.ts";
+import { RegisterPath } from "./constants.ts";
 
 interface RegisterRequest {
   username: string;
@@ -20,5 +22,16 @@ export default function useRegister() {
         body: { username, password, firstName, lastName, role },
         method: "POST",
       }),
+    onSuccess: () => {
+      toast.success("User created successfully");
+    },
+    onError: (err) => {
+      if (err instanceof ApiError) {
+        toast.error(err.message);
+        return;
+      }
+
+      toast.error("Something went wrong with user registration");
+    },
   });
 }

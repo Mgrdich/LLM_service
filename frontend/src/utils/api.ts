@@ -74,6 +74,13 @@ export const api = async <TData>({
     });
 
     if (!response.ok) {
+      const contentType = response.headers.get("Content-Type");
+
+      if (contentType && contentType.includes("text")) {
+        const errBody = await response.text();
+        throw new ApiError(response, null, errBody);
+      }
+
       const errBody = await response.json();
       throw new ApiError(response, errBody);
     }
