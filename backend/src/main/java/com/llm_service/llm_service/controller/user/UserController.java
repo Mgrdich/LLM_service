@@ -103,4 +103,9 @@ public class UserController {
     ResponseEntity<String> handleAuthenticationException(AuthenticationException authenticationException) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(authenticationException.getMessage());
     }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<String> handleUnAuthorized(UnauthorizedException unAuthorizedException) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(unAuthorizedException.getMessage());
+    }
 }
