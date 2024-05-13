@@ -1,29 +1,35 @@
 import Modal from "ui/Modal/Modal.tsx";
 import InputWithLabel from "ui/InputWithLabel.tsx";
-import { ConversationId } from "models/Id.ts";
 import Button from "ui/Button.tsx";
 import { useState } from "react";
 import useEditConversation from "hooks/api/useEditConversation.ts";
+import { ConversationCompact } from "models/Conversation.ts";
 
 interface EditModalProps {
-  id: ConversationId;
-  unSetId: () => void;
+  conversation: ConversationCompact;
+  unSet: () => void;
 }
 
-function EditConversationModal({ id, unSetId }: EditModalProps) {
-  const [title, setTitle] = useState("");
+function EditConversationModal({ conversation, unSet }: EditModalProps) {
+  const [title, setTitle] = useState(conversation?.title || "");
   const { mutateAsync } = useEditConversation();
 
   const onSubmit = async () => {
-    await mutateAsync({ title, id });
-    unSetId();
+    await mutateAsync({ title, id: conversation.id });
+    unSet();
   };
 
   return (
-    <Modal open={!!id} title="Edit the Converstaion title" onClose={unSetId}>
-      <InputWithLabel label="New title" value={title} onInput={(e) => setTitle(e.currentTarget.value)} />
+    <Modal open={!!conversation} title="Edit the Converstaion title" onClose={unSet}>
+      <InputWithLabel
+        labelColor="white"
+        label="New title"
+        value={title}
+        defaultValue={conversation?.title}
+        onInput={(e) => setTitle(e.currentTarget.value)}
+      />
 
-      <Button disabled={!title} onClick={onSubmit}>
+      <Button disabled={!title || conversation?.title === title} onClick={onSubmit}>
         Submit
       </Button>
     </Modal>

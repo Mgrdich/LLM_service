@@ -32,11 +32,16 @@ services:
 #        - SPRING_JPA_HIBERNATE_DDL_AUTO=update
 
 
-    run-fe:
-      container_name: llm_service_ui
+    run-build-fe:
+      container_name: "llm_service_ui"
+      stdin_open: true
       build:
         context: ./frontend/
+        dockerfile: Dockerfile
+      volumes:
+        - '/app/node_modules'
+        - './frontend/:/app'
+      ports:
+        - "4040:80"  # Assuming you want to use port 8080 locally
       depends_on:
         - db
-      ports:
-        - "4040:4040"
