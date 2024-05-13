@@ -32,7 +32,7 @@ export const RegisterSchema: ZodType<RegisterForm> = z
         passwordRegex,
         "Password should contain at least 1 lowercase and 1 uppercase letters and 1 special character and no spaces",
       ),
-    confirmPassword: z.string().regex(passwordRegex, "Password does not match!"),
+    confirmPassword: z.string(),
     firstName: z.string().min(3, "Minimum length should be 3").max(30, "Minimum length should be 30"),
     lastName: z.string().min(3, "Minimum length should be 3").max(30, "Minimum length should be 30"),
     premium: z.boolean(),
