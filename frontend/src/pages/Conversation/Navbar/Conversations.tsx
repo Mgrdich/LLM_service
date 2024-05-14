@@ -24,23 +24,8 @@ function Conversations({ id }: ConversationProps) {
   const [modalConversation, setModalConversation] = useState<ConversationCompact | null>(null);
 
   const onDelete = async (conversationId: ConversationId) => {
+    if (id === conversationId) return;
     await mutateAsync(conversationId);
-    const index = data?.findIndex((item) => item.id);
-
-    if (!index) return;
-
-    // TODO this needs to be tested
-
-    if (data?.[index - 1]) {
-      navigate(`/conversation/${data?.[index - 1].id}`);
-      return;
-    }
-
-    if (data?.[index + 1]) {
-      navigate(`/conversation/${data?.[index + 1].id}`);
-    }
-
-    navigate("/conversation");
   };
 
   return (
@@ -84,9 +69,18 @@ function Conversations({ id }: ConversationProps) {
                   e.stopPropagation();
                   onDelete(conversation.id);
                 }}
-                className="bg-transparent hover:bg-transparent hover:text-red-400 p-2"
+                className="bg-transparent hover:bg-transparent
+                 p-2 disabled:bg-transparent"
+                disabled={id === conversation.id}
               >
-                <span className="text-red-400 hover:text-red-800">Delete</span>
+                <span
+                  className={clsx({
+                    "text-red-400 hover:text-red-800": id !== conversation.id,
+                    "text-gray-500": id === conversation.id,
+                  })}
+                >
+                  Delete
+                </span>
               </Button>
             </div>
           </div>
