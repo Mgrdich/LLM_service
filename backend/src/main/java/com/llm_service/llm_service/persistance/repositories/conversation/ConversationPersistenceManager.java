@@ -5,9 +5,12 @@ import com.llm_service.llm_service.dto.User;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.data.domain.Pageable;
 
 public interface ConversationPersistenceManager {
     List<Conversation> findAll(UUID userId);
+
+    List<Conversation> findAll(UUID userId, Pageable pageable);
 
     Optional<Conversation> findById(UUID id, UUID userId);
 

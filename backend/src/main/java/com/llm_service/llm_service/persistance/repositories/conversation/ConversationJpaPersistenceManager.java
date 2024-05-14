@@ -2,10 +2,14 @@ package com.llm_service.llm_service.persistance.repositories.conversation;
 
 import com.llm_service.llm_service.dto.Conversation;
 import com.llm_service.llm_service.dto.User;
+import com.llm_service.llm_service.persistance.entities.ConversationEntity;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,6 +24,15 @@ public class ConversationJpaPersistenceManager implements ConversationPersistenc
                 .filter(conversationEntity -> conversationEntity.getUser().getId() == userId)
                 .map(conversationEntityMapper::map)
                 .toList();
+    }
+
+    public List<Conversation> findAll(UUID userId, Pageable pageable) {
+        Page<ConversationEntity> page = conversationRepository.findAll(pageable);
+        return page.stream()
+                .filter(conversationEntity ->
+                        conversationEntity.getUser().getId().equals(userId))
+                .map(conversationEntityMapper::map)
+                .collect(Collectors.toList());
     }
 
     @Override

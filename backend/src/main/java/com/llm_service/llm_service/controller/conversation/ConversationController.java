@@ -11,11 +11,12 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -29,7 +30,6 @@ public class ConversationController {
     private final ConversationService conversationService;
     private final ConversationApiMapper conversationApiMapper;
 
-    // TODO this should be paginated , maybe grouped by date
     @ApiResponses(
             value = {
                 @ApiResponse(
@@ -39,10 +39,18 @@ public class ConversationController {
             })
     @Operation(summary = "Get all conversations")
     @GetMapping(value = "/api/v1/paid/conversation")
-    public ResponseEntity<List<ConversationResponseCompact>> getAllConversations() throws UnauthorizedException {
-        return ResponseEntity.ok(conversationService.getAll().stream()
-                .map(conversationApiMapper::mapCompact)
-                .toList());
+    public ResponseEntity<List<ConversationResponseCompact>> getAllConversations(
+            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int pageSize)
+            throws UnauthorizedException {
+
+        Pageable pageable =
+                PageRequest.of(page, pageSize, Sort.by("lastUpdatedOn").descending());
+        List<Conversation> allConversations = conversationService.getAll(pageable);
+
+        List<ConversationResponseCompact> conversationResponseList =
+                allConversations.stream().map(conversationApiMapper::mapCompact).toList();
+
+        return ResponseEntity.ok(conversationResponseList);
     }
 
     @ApiResponses(
