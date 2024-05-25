@@ -10,7 +10,7 @@ on:
 
 env:
   node_version: "18.17.1"
-  pnpm_version: 8
+  pnpm_version: "9.1.2"
 
 jobs:
   lint:
@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: setup pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v4
         with:
           version: ${{ env.pnpm_version }}
           run_install: false
