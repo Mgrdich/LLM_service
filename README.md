@@ -7,7 +7,7 @@
 ## Running the frontend:
 1. Navigate to the frontend directory: `cd frontend`
 2. Install node `node:18.17.1`
-3. Install PNPM: `npm install -g pnpm` `pnpm:>=8.0.0`
+3. Install PNPM: `npm install -g pnpm@9.1.2` `pnpm:9.1.2`
 4. Install Dependencies: `pnpm install`
 5. start the application in dev mode: `pnpm dev`
 6. production build: `pnpm build`
